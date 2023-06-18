@@ -12,6 +12,10 @@ const statusMessage: Record<EmailCheckStatus, string> = {
 
 function EmailCheck({ status }: EmailCheckProps) {
   const message = status ? statusMessage[status] : '';
+  function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    console.log('이메일 중복 확인');
+  }
   return (
     <div>
       <input type='text' name='email' placeholder='이메일' />
@@ -22,7 +26,7 @@ function EmailCheck({ status }: EmailCheckProps) {
         <option value='daum.net'>daum.net</option>
       </select>
       <p>{message}</p>
-      <button>중복 확인</button>
+      <button onClick={handleClick}>중복 확인</button>
     </div>
   );
 }

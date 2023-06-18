@@ -12,11 +12,15 @@ const statusMessage: Record<NicknameCheckStatus, string> = {
 
 function NicknameCheck({ status }: NicknameCheckProps) {
   const message = status ? statusMessage[status] : '';
+  function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    console.log('닉네임 중복 확인');
+  }
   return (
     <div>
       <input type='text' name='nickname' placeholder='닉네임' />
       <div>{message}</div>
-      <button>중복 확인</button>
+      <button onClick={handleClick}>중복 확인</button>
     </div>
   );
 }
