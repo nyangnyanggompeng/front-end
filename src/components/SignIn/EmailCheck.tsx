@@ -29,7 +29,8 @@ function EmailCheck({ status }: EmailCheckProps) {
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    console.log('중복확인', email, domain);
+    // TODO : 중복확인 api 호출
+    console.log('이메일 중복 확인 :', email, domain);
   }
 
   return (
