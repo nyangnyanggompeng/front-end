@@ -15,14 +15,13 @@ if [[ $BRANCH_NAME != "main" && $BRANCH_NAME != "dev" && -z $ISSUE_NUMBER_IN_BRA
 fi
 
 # Error 2 : 만약 Commit 전체 내용 중에 "#<number>"가 있다면 에러를 출력하고 종료합니다.
-if [[ $(grep -c '\#[0-9]' $COMMIT_MSG_FILE) -gt 0 ]]; then
+if [[ $(grep -c '#[0-9]' $COMMIT_MSG_FILE) -gt 0 ]]; then
   echo "ERROR: Commit message cannot contain '#<number>'"
   exit 1
 fi
 
 # Success : commit message에 github issue 번호를 추가합니다.
 echo "$COMMIT_MSG_HEAD #${ISSUE_NUMBER_IN_BRANCH_NAME}" > $COMMIT_MSG_FILE
-cat $COMMIT_MSG_FILE
 if [[ -n $COMMIT_MSG_BODY ]]; then
   echo "$COMMIT_MSG_BODY" >> $COMMIT_MSG_FILE
 fi
