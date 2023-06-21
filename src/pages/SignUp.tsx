@@ -22,7 +22,7 @@ function SignUp() {
     const domain = formData.get('domain');
     const password = formData.get('password');
     const nickname = formData.get('nickname');
-    console.log(email, domain, password, nickname);
+    console.log('signup', email, domain, password, nickname);
   };
   return (
     <div>
