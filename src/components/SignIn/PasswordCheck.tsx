@@ -68,7 +68,7 @@ function PasswordCheck({ status }: PasswordCheckProps) {
   return (
     <div>
       <input
-        type='text'
+        type='password'
         name='password'
         placeholder='비밀번호'
         onChange={onChange}
