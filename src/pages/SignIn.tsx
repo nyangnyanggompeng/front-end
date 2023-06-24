@@ -1,14 +1,17 @@
+import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginInfo {
-  email: string;
+  userId: string;
   password: string;
 }
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const [error, setError] = useState(false);
   const [loginInfo, setLoginInfo] = useState<LoginInfo>({
-    email: '',
+    userId: '',
     password: '',
   });
 
@@ -22,40 +25,58 @@ const SignIn = () => {
   };
 
   const loginRequestHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    // 로그인 이벤트 로직
     e.preventDefault();
 
     // 입력된 값 유효성 검사
-    if (!loginInfo.email || !loginInfo.password) {
+    if (!loginInfo.userId || !loginInfo.password) {
       setError(true);
       return;
     }
 
     // 액세스 토큰 발급(로그인)
-    // 발급된 토큰으로 유저정보 가져오기
-    // 필요한 페이지로 리다이렉트
-    console.log('토큰 발급');
-    console.log('유저 정보 가져와서 리덕스 툴킷으로 스토어에 저장');
-    console.log('메인/gpt페이지로 리다이렉트');
+    await axios
+      .post('/login', {
+        loginInfo,
+      })
+      .then((res) => {
+        console.log('로그인로직');
 
-    console.log('로그인');
+        // const { accessToken } = res.data;
+        // console.log(accessToken);
+        // // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
+        // axios.defaults.headers.common[
+        //   'Authorization'
+        // ] = `Bearer ${accessToken}`;
+      })
+      .catch((err) => console.log(err));
+
+    // 발급된 토큰으로 유저정보 가져오기
+    // await axios
+    //   .get('/userinfo')
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => console.log(err));
+
+    // 필요한 페이지로 리다이렉트
+    // navigate(0); // 임시
   };
 
   return (
     <div>
       <form onSubmit={loginRequestHandler}>
         <div>
-          <label htmlFor='email'>이메일</label>
+          <label htmlFor='userId'>이메일</label>
           <input
             type='text'
-            id='email'
+            id='userId'
             placeholder='abcd@email.com'
-            value={loginInfo.email}
+            value={loginInfo.userId}
             onChange={handleOnChange}
           />
         </div>
         <div>
-          <label htmlFor='email'>비밀번호</label>
+          <label htmlFor='password'>비밀번호</label>
           <input
             type='text'
             id='password'
