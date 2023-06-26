@@ -21,7 +21,7 @@ export default function MyPage() {
       )}
       <div>
         <h1>MyPage</h1>
-        <UserInfo email={'hihi'} nickName={'hi'} profileImage={'hih'} />
+        <UserInfo />
         <button onClick={() => setModalType('EDIT')}>정보 수정</button>
         <button onClick={() => setModalType('CHANGEPASSWORD')}>
           비밀번호 변경
