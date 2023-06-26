@@ -26,7 +26,7 @@ export default function MyPage() {
         <button onClick={() => setModalType('CHANGEPASSWORD')}>
           비밀번호 변경
         </button>
-        {/* 북마크 */}
+        {/* TODO : 북마크 */}
         <button onClick={() => setModalType('DELETE')}>회원 탈퇴</button>
       </div>
     </>
