@@ -21,9 +21,19 @@ function SignUp() {
     const email = formData.get('email');
     const domain = formData.get('domain');
     const password = formData.get('password');
+    const passwordVerify = formData.get('passwordVerify');
     const nickname = formData.get('nickname');
-    console.log(email, domain, password, nickname);
+    // TODO : 회원가입 api 호출 후 결과에 따라 상태 변경
+    console.log(
+      '회원가입 폼 내용 :',
+      email,
+      domain,
+      password,
+      passwordVerify,
+      nickname
+    );
   };
+
   return (
     <div>
       <h1>회원 가입</h1>

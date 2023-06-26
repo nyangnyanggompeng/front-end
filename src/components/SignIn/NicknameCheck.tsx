@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { NicknameCheckStatus } from '../../types/userInfoTypes';
 
 type NicknameCheckProps = {
@@ -12,13 +13,22 @@ const statusMessage: Record<NicknameCheckStatus, string> = {
 
 function NicknameCheck({ status }: NicknameCheckProps) {
   const message = status ? statusMessage[status] : '';
+  const [nickname, setNickname] = useState<string>('');
+
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    console.log('닉네임 중복 확인');
+    // TODO : 중복확인 api 호출
+    console.log('닉네임 중복 확인 :', nickname);
   }
+
   return (
     <div>
-      <input type='text' name='nickname' placeholder='닉네임' />
+      <input
+        type='text'
+        name='nickname'
+        placeholder='닉네임'
+        onBlur={(e) => setNickname(e.target.value)}
+      />
       <div>{message}</div>
       <button onClick={handleClick}>중복 확인</button>
     </div>
