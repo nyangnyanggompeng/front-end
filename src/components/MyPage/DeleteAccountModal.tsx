@@ -1,4 +1,8 @@
-export function DeleteAccountModal() {
+type ModalProps = {
+  resetModal: () => void;
+};
+
+export function DeleteAccountModal({ resetModal }: ModalProps) {
   return (
     <div>
       <h1>회원 탈퇴</h1>

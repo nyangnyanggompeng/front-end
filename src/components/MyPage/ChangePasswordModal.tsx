@@ -1,4 +1,8 @@
-export function ChangePasswordModal() {
+type ModalProps = {
+  resetModal: () => void;
+};
+
+export function ChangePasswordModal({ resetModal }: ModalProps) {
   return (
     <div>
       <h1>비밀번호 변경</h1>

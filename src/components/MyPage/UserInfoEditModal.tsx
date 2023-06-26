@@ -1,4 +1,8 @@
-export function UserInfoEditModal() {
+type ModalProps = {
+  resetModal: () => void;
+};
+
+export function UserInfoEditModal({ resetModal }: ModalProps) {
   return (
     <div>
       <h1>정보 수정</h1>
