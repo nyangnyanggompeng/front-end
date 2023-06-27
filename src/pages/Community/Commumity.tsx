@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useSearchbar } from '../../components/Community/Community/hooks/useSearchBar';
 import { postType } from '../../types/communityTypes';
 import { SearchBar } from '../../components/Community/Community/components/SearchBar';
@@ -11,6 +11,7 @@ export function Community() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { searchResult } = useSearchbar();
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   useEffect(() => {
     // TODO : 현재 페이지에 맞게 게시물 목록 불러오기
     setPosts([
@@ -38,7 +39,7 @@ export function Community() {
     <div>
       <SearchBar totalPost={posts.length} />
       <PostList postList={postList} />
-      {/* 글쓰기 버튼 */}
+      <button onClick={() => navigate('/writing')}>글쓰기</button>
       {/* 페이지네이션 - currentPage, setCurrentPage 함수 전달 */}
     </div>
   );
