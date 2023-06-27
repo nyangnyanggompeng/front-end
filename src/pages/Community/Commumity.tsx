@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useSearchbar } from '../../components/Community/Community/hooks/useSearchBar';
 import { postType } from '../../types/communityTypes';
 import { SearchBar } from '../../components/Community/Community/components/SearchBar';
+import { PostList } from '../../components/Community/Community/components/PostList';
 
 export function Community() {
   // TODO : 게시물 목록 불러오기
@@ -18,14 +19,14 @@ export function Community() {
         title: '제목',
         content: '내용',
         writer: '작성자',
-        createdAt: '작성일',
+        createdAt: '2023-02-25T08:02:16.463Z',
       },
       {
         id: 2,
         title: '제목',
         content: '내용',
         writer: '작성자',
-        createdAt: '작성일',
+        createdAt: '2023-06-28T08:02:16.463Z',
       },
     ]);
   }, [currentPage]);
@@ -36,7 +37,7 @@ export function Community() {
   return (
     <div>
       <SearchBar totalPost={posts.length} />
-      {/* POST TABLE */}
+      <PostList postList={postList} />
       {/* 글쓰기 버튼 */}
       {/* 페이지네이션 - currentPage, setCurrentPage 함수 전달 */}
     </div>
