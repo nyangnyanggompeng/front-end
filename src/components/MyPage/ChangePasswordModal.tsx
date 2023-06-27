@@ -18,7 +18,7 @@ export function ChangePasswordModal({ resetModal }: ModalProps) {
       <div>비밀번호를 입력해주세요.</div>
       <form onSubmit={onSubmit}>
         {/* NOTE : 현재 비밀번호를 입력해야 할 수도 있음 */}
-        <input type='password' />
+        <input name='password' type='password' />
         {/* NOTE : 비밀번호 확인 입력이 있을수도 있음 */}
         <button type='submit'>확인</button>
       </form>
