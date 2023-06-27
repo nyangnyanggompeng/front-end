@@ -12,6 +12,7 @@ export function DeleteAccountModal({ resetModal }: ModalProps) {
   function onCancel(e: React.MouseEvent<Element, MouseEvent>) {
     e.preventDefault();
     console.log('회원 탈퇴 취소');
+    resetModal();
   }
   return (
     <ModalContainer resetModal={resetModal}>
