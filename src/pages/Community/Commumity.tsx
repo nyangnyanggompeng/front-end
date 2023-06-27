@@ -1,10 +1,15 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useSearchbar } from '../../components/Community/Community/hooks/useSearchBar';
 import { postType } from '../../types/communityTypes';
+import { SearchBar } from '../../components/Community/Community/components/SearchBar';
 
 export function Community() {
   // TODO : 게시물 목록 불러오기
   const [posts, setPosts] = useState<postType[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const { searchResult } = useSearchbar();
+  const [searchParams] = useSearchParams();
   useEffect(() => {
     // TODO : 현재 페이지에 맞게 게시물 목록 불러오기
     setPosts([
@@ -25,9 +30,12 @@ export function Community() {
     ]);
   }, [currentPage]);
 
+  // TODO : 쿼리 존재 여부에 따라서 어떤 게시물 목록을 불러올지 결정해야 할 듯
+  const postList = searchParams.get('searchKeyword') ? searchResult : posts;
+
   return (
     <div>
-      {/* SEARCH BAR - 총 글 개수, 검색바 */}
+      <SearchBar totalPost={posts.length} />
       {/* POST TABLE */}
       {/* 글쓰기 버튼 */}
       {/* 페이지네이션 - currentPage, setCurrentPage 함수 전달 */}
