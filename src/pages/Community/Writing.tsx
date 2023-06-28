@@ -1,8 +1,10 @@
-import { useRef } from 'react';
+import { useState, useRef } from 'react';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import { CancelModal } from '../../components/Community/Writing/components/CancelModal';
 
 export function Writing() {
+  const [cancelModalOpen, setCancelModalOpen] = useState(false);
   const editorRef = useRef<Editor>(null);
 
   function handleClick() {
@@ -11,13 +13,11 @@ export function Writing() {
     }
   }
 
-  function handleCancel() {
-    // TODO : 모달 띄워서 확인하고 취소하기
-    console.log('취소하기');
-  }
-
   return (
-    <div>
+    <>
+      {cancelModalOpen && (
+        <CancelModal resetModal={() => setCancelModalOpen(false)} />
+      )}
       <div>글쓰기</div>
       <input type='text' placeholder='제목' />
       <Editor
@@ -27,8 +27,8 @@ export function Writing() {
         initialEditType='wysiwyg'
         placeholder='글을 작성해주세요.' // TODO : 글자수 제한을 둘 수 있을지 확인해보기
       />
-      <button onClick={handleCancel}>취소하기</button>
+      <button onClick={() => setCancelModalOpen(true)}>취소하기</button>
       <button onClick={handleClick}>등록하기</button>
-    </div>
+    </>
   );
 }
