@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { Viewer } from '../components/Article/components/Viewer';
+import { Buttons } from '../components/Article/components/Buttons';
 
 export function Article() {
   const { id } = useParams();
@@ -28,8 +29,9 @@ export function Article() {
       <div>{post.writer}</div>
       <div>{getDate(post.createdAt)}</div>
       <Viewer content={post.content} />
-      {/* Comment props: comment, post id */}
-      {/* Article Buttons (삭제하기, 수정하기, 목록으로) */}
+      {/* TODO : comment : 댓글 Get 요청 api를 분리할지 그냥 둘지 이야기해보고 결정 */}
+      {/* Comment props: comment, post id  */}
+      <Buttons writerId={post.id} />
     </div>
   );
 }
