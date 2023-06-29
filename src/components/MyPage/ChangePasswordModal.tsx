@@ -1,10 +1,7 @@
+import { ModalPropsType } from '../Modal/ModalTypes';
 import { ModalContainer } from '../Modal/ModalContainer';
 
-type ModalProps = {
-  resetModal: () => void;
-};
-
-export function ChangePasswordModal({ resetModal }: ModalProps) {
+export function ChangePasswordModal({ resetModal }: ModalPropsType) {
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
