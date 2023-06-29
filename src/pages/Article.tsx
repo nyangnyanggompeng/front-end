@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { Viewer } from '../components/Article/components/Viewer';
 
 export function Article() {
   const { id } = useParams();
@@ -26,7 +27,7 @@ export function Article() {
       <div>{post.title}</div>
       <div>{post.writer}</div>
       <div>{getDate(post.createdAt)}</div>
-      {/* Content Viewer */}
+      <Viewer content={post.content} />
       {/* Comment props: comment, post id */}
       {/* Article Buttons (삭제하기, 수정하기, 목록으로) */}
     </div>
