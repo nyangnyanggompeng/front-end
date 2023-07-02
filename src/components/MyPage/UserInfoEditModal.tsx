@@ -1,5 +1,5 @@
 import { ModalContainer } from '../Modal/ModalContainer';
-import NicknameCheck from '../SignIn/NicknameCheck';
+import NicknameCheck from '../SignUp/NicknameCheck';
 
 type ModalProps = {
   resetModal: () => void;

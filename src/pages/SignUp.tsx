@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import EmailCheck from '../components/SignIn/EmailCheck';
-import PasswordCheck from '../components/SignIn/PasswordCheck';
-import NicknameCheck from '../components/SignIn/NicknameCheck';
+import EmailCheck from '../components/SignUp/EmailCheck';
+import PasswordCheck from '../components/SignUp/PasswordCheck';
+import NicknameCheck from '../components/SignUp/NicknameCheck';
 import {
   PasswordCheckStatus,
   NicknameCheckStatus,
