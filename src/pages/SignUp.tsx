@@ -18,9 +18,6 @@ const signupResultMessage: Record<signupStatusType, string> = {
 };
 
 function SignUp() {
-  const [passwordCheckStatus, setPasswordCheckStatus] =
-    useState<PasswordCheckStatus>();
-
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -45,7 +42,7 @@ function SignUp() {
       <h1>회원 가입</h1>
       <form onSubmit={onSubmit}>
         <EmailCheck />
-        <PasswordCheck status={passwordCheckStatus} />
+        <PasswordCheck />
         <NicknameCheck />
         <button type='submit'>회원 가입</button>
       </form>

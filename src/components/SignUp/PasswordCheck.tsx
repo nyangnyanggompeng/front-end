@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 import { PasswordCheckStatus } from '../../types/userInfoTypes';
 
-type PasswordCheckProps = {
-  status?: PasswordCheckStatus;
-};
-
 // TODO : 비밀번호 규칙 확정 필요
 const statusMessage: Record<PasswordCheckStatus, string> = {
   OK: '사용 가능한 비밀번호입니다.',
@@ -15,17 +11,15 @@ const statusMessage: Record<PasswordCheckStatus, string> = {
   MATCHED: '비밀번호가 일치합니다.',
 };
 
-function PasswordCheck({ status }: PasswordCheckProps) {
-  const [passwordStatus, setPasswordStatus] = useState<
-    PasswordCheckStatus | undefined
-  >(status);
+function PasswordCheck() {
   const [password, setPassword] = useState<string>('');
   const [passwordCheck, setPasswordCheck] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
 
   // TODO - useEffect 순서 고민
   useEffect(() => {
     if (password.length < 8 || password.length > 12) {
-      setPasswordStatus('INVALID_LENGTH');
+      setMessage(statusMessage['INVALID_LENGTH']);
       return;
     }
     const specialCharRegex = /[!@#$%^&*]/g;
@@ -40,22 +34,20 @@ function PasswordCheck({ status }: PasswordCheckProps) {
       koreanRegex.test(password) ||
       spaceRegex.test(password)
     ) {
-      setPasswordStatus('INVALID_CHARACTER');
+      setMessage(statusMessage['INVALID_CHARACTER']);
       return;
     }
-    setPasswordStatus('OK');
+    setMessage(statusMessage['OK']);
   }, [password]);
 
   useEffect(() => {
     if (passwordCheck.length === 0) return;
     if (password !== passwordCheck) {
-      setPasswordStatus('NOT_MATCHED');
+      setMessage(statusMessage['NOT_MATCHED']);
       return;
     }
-    setPasswordStatus('MATCHED');
+    setMessage(statusMessage['MATCHED']);
   }, [password, passwordCheck]);
-
-  const message = passwordStatus ? statusMessage[passwordStatus] : '';
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
