@@ -3,7 +3,6 @@ import EmailCheck from '../components/SignIn/EmailCheck';
 import PasswordCheck from '../components/SignIn/PasswordCheck';
 import NicknameCheck from '../components/SignIn/NicknameCheck';
 import {
-  EmailCheckStatus,
   PasswordCheckStatus,
   NicknameCheckStatus,
   signupFormType,
@@ -20,7 +19,6 @@ const signupResultMessage: Record<signupStatusType, string> = {
 };
 
 function SignUp() {
-  const [emailCheckStatus, setEmailCheckStatus] = useState<EmailCheckStatus>();
   const [passwordCheckStatus, setPasswordCheckStatus] =
     useState<PasswordCheckStatus>();
   const [nicknameCheckStatus, setNicknameCheckStatus] =
@@ -49,7 +47,7 @@ function SignUp() {
     <div>
       <h1>회원 가입</h1>
       <form onSubmit={onSubmit}>
-        <EmailCheck status={emailCheckStatus} />
+        <EmailCheck />
         <PasswordCheck status={passwordCheckStatus} />
         <NicknameCheck status={nicknameCheckStatus} />
         <button type='submit'>회원 가입</button>

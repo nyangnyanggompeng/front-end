@@ -1,21 +1,28 @@
-import { useState } from 'react';
-import { EmailCheckStatus } from '../../types/userInfoTypes';
-
-type EmailCheckProps = {
-  status?: EmailCheckStatus;
-};
+import { useState, useEffect } from 'react';
+import {
+  EmailCheckStatus,
+  emailCheckRequestType,
+} from '../../types/userInfoTypes';
+import { emailCheck } from '../../utils/signupFunc';
 
 const statusMessage: Record<EmailCheckStatus, string> = {
   OK: '사용 가능한 이메일입니다.',
   DUPLICATED: '이미 사용 중인 이메일입니다.',
-  INVALID: '이메일 형식이 올바르지 않습니다.',
+  INTERNAL_SERVER_ERROR: '서버 오류입니다. 잠시 후 다시 시도해주세요.',
 };
 
-function EmailCheck({ status }: EmailCheckProps) {
+// TODO : 비즈니스 로직 분리 필요
+function EmailCheck() {
   const [domainDisabled, setDomainDisabled] = useState<boolean>(true);
   const [email, setEmail] = useState<string>('');
   const [domain, setDomain] = useState<string>('naver.com');
-  const message = status ? statusMessage[status] : '';
+  const [status, setStatus] = useState<EmailCheckStatus | null>(null);
+  const [message, setMessage] = useState<string>('');
+
+  useEffect(() => {
+    const newMessage = status ? statusMessage[status] : '';
+    setMessage(newMessage);
+  }, [status]);
 
   function handleSelect(e: React.ChangeEvent<HTMLSelectElement>) {
     if (e.target.value === 'type') {
@@ -29,8 +36,13 @@ function EmailCheck({ status }: EmailCheckProps) {
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    // TODO : 중복확인 api 호출
-    console.log('이메일 중복 확인 :', email, domain);
+    const request: emailCheckRequestType = {
+      email: email,
+      domain: domain,
+    };
+    emailCheck(request)
+      .then((res: EmailCheckStatus) => setStatus(res))
+      .catch(() => setStatus('INTERNAL_SERVER_ERROR'));
   }
 
   return (
