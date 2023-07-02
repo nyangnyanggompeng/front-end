@@ -7,11 +7,7 @@ export type PasswordCheckStatus =
   | 'INVALID_CHARACTER'
   | 'NOT_MATCHED'
   | 'MATCHED';
-export type NicknameCheckStatus =
-  | 'OK'
-  | 'DUPLICATED'
-  | 'INVALID'
-  | ServerErrorType;
+export type NicknameCheckStatus = 'OK' | 'DUPLICATED' | ServerErrorType;
 // TODO : 논의 필요함
 export type signupStatusType =
   | 'OK'
@@ -29,4 +25,7 @@ export type signupFormType = {
 export type emailCheckRequestType = {
   email: string;
   domain: string;
+};
+export type nicknameCheckRequestType = {
+  nickname: string;
 };

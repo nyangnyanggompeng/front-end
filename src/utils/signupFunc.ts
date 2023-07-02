@@ -4,6 +4,8 @@ import {
   signupStatusType,
   EmailCheckStatus,
   emailCheckRequestType,
+  NicknameCheckStatus,
+  nicknameCheckRequestType,
 } from '../types/userInfoTypes';
 
 // TODO : 논의 필요
@@ -48,6 +50,19 @@ export async function emailCheck(
 ): Promise<EmailCheckStatus> {
   try {
     await axios.post('/register/idcheck', request);
+    return 'OK';
+  } catch (error: unknown) {
+    if (isAxiosError(error) && error.status === 400) return 'DUPLICATED';
+    return 'INTERNAL_SERVER_ERROR';
+  }
+}
+
+// TODO : api 명세 다시 확인 필요함.
+export async function nicknameCheck(
+  request: nicknameCheckRequestType
+): Promise<NicknameCheckStatus> {
+  try {
+    await axios.post('/register/nicknamecheck', request);
     return 'OK';
   } catch (error: unknown) {
     if (isAxiosError(error) && error.status === 400) return 'DUPLICATED';

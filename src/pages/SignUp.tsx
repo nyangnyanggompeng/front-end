@@ -4,7 +4,6 @@ import PasswordCheck from '../components/SignUp/PasswordCheck';
 import NicknameCheck from '../components/SignUp/NicknameCheck';
 import {
   PasswordCheckStatus,
-  NicknameCheckStatus,
   signupFormType,
   signupStatusType,
 } from '../types/userInfoTypes';
@@ -21,8 +20,6 @@ const signupResultMessage: Record<signupStatusType, string> = {
 function SignUp() {
   const [passwordCheckStatus, setPasswordCheckStatus] =
     useState<PasswordCheckStatus>();
-  const [nicknameCheckStatus, setNicknameCheckStatus] =
-    useState<NicknameCheckStatus>();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -49,7 +46,7 @@ function SignUp() {
       <form onSubmit={onSubmit}>
         <EmailCheck />
         <PasswordCheck status={passwordCheckStatus} />
-        <NicknameCheck status={nicknameCheckStatus} />
+        <NicknameCheck />
         <button type='submit'>회원 가입</button>
       </form>
     </div>
