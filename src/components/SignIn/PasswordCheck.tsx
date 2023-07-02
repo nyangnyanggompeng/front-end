@@ -77,7 +77,7 @@ function PasswordCheck({ status }: PasswordCheckProps) {
       />
       <input
         type='password'
-        name='passwordVerify'
+        name='password2'
         placeholder='비밀번호 확인'
         onChange={onChangeCheck}
       />

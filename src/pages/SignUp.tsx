@@ -21,7 +21,7 @@ function SignUp() {
     const email = formData.get('email');
     const domain = formData.get('domain');
     const password = formData.get('password');
-    const passwordVerify = formData.get('passwordVerify');
+    const password2 = formData.get('password2'); // TODO : password2 필드명 변경 논의 필요함.
     const nickname = formData.get('nickname');
     // TODO : 회원가입 api 호출 후 결과에 따라 상태 변경
     console.log(
@@ -29,7 +29,7 @@ function SignUp() {
       email,
       domain,
       password,
-      passwordVerify,
+      password2,
       nickname
     );
   };
