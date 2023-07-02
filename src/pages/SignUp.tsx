@@ -6,7 +6,18 @@ import {
   EmailCheckStatus,
   PasswordCheckStatus,
   NicknameCheckStatus,
+  signupFormType,
+  signupStatusType,
 } from '../types/userInfoTypes';
+import { signup } from '../utils/signupFunc';
+
+const signupResultMessage: Record<signupStatusType, string> = {
+  OK: '회원가입이 완료되었습니다.',
+  DUPLICATED_EMAIL: '이미 가입된 이메일입니다.',
+  PASSWORD_NOT_MATCHED: '비밀번호가 일치하지 않습니다.',
+  INVALID_NICKNAME: '사용 불가능한 이메일입니다.',
+  INTERNAL_SERVER_ERROR: '서버 오류입니다. 잠시 후 다시 시도해주세요.',
+};
 
 function SignUp() {
   const [emailCheckStatus, setEmailCheckStatus] = useState<EmailCheckStatus>();
@@ -18,20 +29,20 @@ function SignUp() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const email = formData.get('email');
-    const domain = formData.get('domain');
-    const password = formData.get('password');
-    const password2 = formData.get('password2'); // TODO : password2 필드명 변경 논의 필요함.
-    const nickname = formData.get('nickname');
-    // TODO : 회원가입 api 호출 후 결과에 따라 상태 변경
-    console.log(
-      '회원가입 폼 내용 :',
-      email,
-      domain,
-      password,
-      password2,
-      nickname
-    );
+    const requestForm: signupFormType = {
+      email: formData.get('email') as string,
+      domain: formData.get('domain') as string,
+      password: formData.get('password') as string,
+      password2: formData.get('password2') as string, // TODO : password2 필드명 논의 필요함.
+      nickname: formData.get('nickname') as string,
+    };
+    signup(requestForm)
+      .then((res: signupStatusType) => {
+        alert(signupResultMessage[res]);
+      })
+      .catch(() => {
+        alert(signupResultMessage['INTERNAL_SERVER_ERROR']);
+      });
   };
 
   return (
