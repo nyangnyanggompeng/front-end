@@ -21,6 +21,8 @@ function SignUp() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+    if (formData.get('domain') === 'type')
+      formData.set('domain', formData.get('domain-type') as string);
     const requestForm: signupFormType = {
       username: formData.get('username') as string,
       domain: formData.get('domain') as string,

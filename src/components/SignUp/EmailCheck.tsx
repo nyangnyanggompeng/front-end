@@ -49,23 +49,19 @@ function EmailCheck() {
     <div>
       <input
         type='text'
-        name='email'
+        name='username'
         placeholder='이메일'
         onBlur={(e) => setEmail(e.target.value)}
       />
       <span>@</span>
       <input
         type='text'
-        name='domain'
+        name='domain-type'
         disabled={domainDisabled}
         value={domain}
         onChange={(e) => setDomain(e.target.value)}
       />
-      <select
-        name='domain-list'
-        onChange={handleSelect}
-        defaultValue={'naver.com'}
-      >
+      <select name='domain' onChange={handleSelect} defaultValue={'naver.com'}>
         <option value='naver.com'>naver.com</option>
         <option value='gmail.com'>gmail.com</option>
         <option value='daum.net'>daum.net</option>
