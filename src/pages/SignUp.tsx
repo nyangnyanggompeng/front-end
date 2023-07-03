@@ -22,10 +22,10 @@ function SignUp() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const requestForm: signupFormType = {
-      email: formData.get('email') as string,
+      username: formData.get('username') as string,
       domain: formData.get('domain') as string,
       password: formData.get('password') as string,
-      password2: formData.get('password2') as string, // TODO : password2 필드명 논의 필요함.
+      passwordVerify: formData.get('passwordVerify') as string,
       nickname: formData.get('nickname') as string,
     };
     signup(requestForm)

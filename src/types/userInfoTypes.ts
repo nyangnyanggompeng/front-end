@@ -16,10 +16,10 @@ export type signupStatusType =
   | 'INVALID_NICKNAME'
   | ServerErrorType;
 export type signupFormType = {
-  email: string;
+  username: string;
   domain: string;
   password: string;
-  password2: string;
+  passwordVerify: string;
   nickname: string;
 };
 export type emailCheckRequestType = {

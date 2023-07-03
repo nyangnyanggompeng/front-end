@@ -69,7 +69,7 @@ function PasswordCheck() {
       />
       <input
         type='password'
-        name='password2'
+        name='passwordVerify'
         placeholder='비밀번호 확인'
         onChange={onChangeCheck}
       />
