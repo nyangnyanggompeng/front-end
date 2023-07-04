@@ -10,10 +10,13 @@ import {
 import { signup } from '../utils/signupFunc';
 
 const signupResultMessage: Record<signupStatusType, string> = {
-  OK: '회원가입이 완료되었습니다.',
-  DUPLICATED_EMAIL: '이미 가입된 이메일입니다.',
-  PASSWORD_NOT_MATCHED: '비밀번호가 일치하지 않습니다.',
-  INVALID_NICKNAME: '사용 불가능한 이메일입니다.',
+  USER_CREATED: '회원가입이 완료되었습니다.',
+  EMAIL_ALREADY_EXISTS: '이미 가입된 이메일입니다.',
+  NICKNAME_ALREADY_EXISTS: '이미 사용 중인 닉네임입니다.',
+  INVALID_PASSWORD: '유효하지 않은 비밀번호입니다.',
+  WRONG_PASSWORD: '비밀번호가 일치하지 않습니다.',
+  NICKNAME_NO_ENTERED: '닉네임을 입력해주세요.',
+  EMAIL_OR_PASSWORD_OR_NICKNAME_NO_ENTERED: '모든 입력을 해 주세요.',
   INTERNAL_SERVER_ERROR: '서버 오류입니다. 잠시 후 다시 시도해주세요.',
 };
 

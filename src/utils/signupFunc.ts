@@ -12,15 +12,19 @@ import {
 // TODO : 확장성을 고려할 것.
 function signupStatusTypeChecker(status: string) {
   switch (status) {
-    case 'OK':
+    case 'USER_CREATED':
       return true;
-    case 'DUPLICATED_EMAIL':
+    case 'EMAIL_ALREADY_EXISTS':
       return true;
-    case 'PASSWORD_NOT_MATCHED':
+    case 'NICKNAME_ALREADY_EXISTS':
       return true;
-    case 'INVALID_NICKNAME':
+    case 'INVALID_PASSWORD':
       return true;
-    case 'INTERNAL_SERVER_ERROR':
+    case 'WRONG_PASSWORD':
+      return true;
+    case 'NICKNAME_NO_ENTERED':
+      return true;
+    case 'EMAIL_OR_PASSWORD_OR_NICKNAME_NO_ENTERED':
       return true;
     default:
       return false;
@@ -32,8 +36,9 @@ export async function signup(
 ): Promise<signupStatusType> {
   try {
     await axios.post('/register/register_process', signupForm);
-    return 'OK';
+    return 'USER_CREATED';
   } catch (error: unknown) {
+    console.log(error);
     if (isAxiosError(error) && error.response) {
       const { errorCode } = error.response.data;
       if (signupStatusTypeChecker(errorCode))

@@ -10,10 +10,13 @@ export type PasswordCheckStatus =
 export type NicknameCheckStatus = 'OK' | 'DUPLICATED' | ServerErrorType;
 // TODO : 논의 필요함
 export type signupStatusType =
-  | 'OK'
-  | 'DUPLICATED_EMAIL'
-  | 'PASSWORD_NOT_MATCHED'
-  | 'INVALID_NICKNAME'
+  | 'USER_CREATED'
+  | 'EMAIL_ALREADY_EXISTS'
+  | 'NICKNAME_ALREADY_EXISTS'
+  | 'INVALID_PASSWORD'
+  | 'WRONG_PASSWORD'
+  | 'NICKNAME_NO_ENTERED'
+  | 'EMAIL_OR_PASSWORD_OR_NICKNAME_NO_ENTERED'
   | ServerErrorType;
 export type signupFormType = {
   username: string;
