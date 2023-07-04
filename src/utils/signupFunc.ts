@@ -1,39 +1,23 @@
 import axios, { isAxiosError } from 'axios';
 import {
-  signupFormType,
-  signupStatusType,
+  SignupFormType,
+  SignupStatus,
+  SignupStatusType,
   EmailCheckStatus,
-  emailCheckRequestType,
+  EmailCheckStatusType,
+  EmailCheckRequestType,
   NicknameCheckStatus,
-  nicknameCheckRequestType,
+  NicknameCheckRequestType,
 } from '../types/userInfoTypes';
 
-// TODO : 논의 필요
-// TODO : 확장성을 고려할 것.
-function signupStatusTypeChecker(status: string) {
-  switch (status) {
-    case 'USER_CREATED':
-      return true;
-    case 'EMAIL_ALREADY_EXISTS':
-      return true;
-    case 'NICKNAME_ALREADY_EXISTS':
-      return true;
-    case 'INVALID_PASSWORD':
-      return true;
-    case 'WRONG_PASSWORD':
-      return true;
-    case 'NICKNAME_NO_ENTERED':
-      return true;
-    case 'EMAIL_OR_PASSWORD_OR_NICKNAME_NO_ENTERED':
-      return true;
-    default:
-      return false;
-  }
+function SignupStatusTypeChecker(status: unknown) {
+  if (typeof status !== 'string') return false;
+  return SignupStatus.includes(status as SignupStatusType);
 }
 
 export async function signup(
-  signupForm: signupFormType
-): Promise<signupStatusType> {
+  signupForm: SignupFormType
+): Promise<SignupStatusType> {
   try {
     await axios.post('/register/register_process', signupForm);
     return 'USER_CREATED';
@@ -41,8 +25,8 @@ export async function signup(
     console.log(error);
     if (isAxiosError(error) && error.response) {
       const errorCode = error.response.data;
-      if (signupStatusTypeChecker(errorCode))
-        return errorCode as signupStatusType;
+      if (SignupStatusTypeChecker(errorCode))
+        return errorCode as SignupStatusType;
       else return 'INTERNAL_SERVER_ERROR';
     }
     return 'INTERNAL_SERVER_ERROR';
@@ -51,20 +35,21 @@ export async function signup(
 
 // TODO : api 명세 다시 확인 필요함.
 export async function emailCheck(
-  request: emailCheckRequestType
-): Promise<EmailCheckStatus> {
+  request: EmailCheckRequestType
+): Promise<EmailCheckStatusType> {
   try {
     await axios.post('/register/idcheck', request);
-    return 'OK';
+    return 'AVAILABLE_EMAIL';
   } catch (error: unknown) {
-    if (isAxiosError(error) && error.status === 400) return 'DUPLICATED';
+    if (isAxiosError(error) && error.status === 400)
+      return 'EMAIL_ALREADY_EXISTS';
     return 'INTERNAL_SERVER_ERROR';
   }
 }
 
 // TODO : api 명세 다시 확인 필요함.
 export async function nicknameCheck(
-  request: nicknameCheckRequestType
+  request: NicknameCheckRequestType
 ): Promise<NicknameCheckStatus> {
   try {
     await axios.post('/register/nicknamecheck', request);
