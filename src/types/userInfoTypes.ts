@@ -15,7 +15,14 @@ export type PasswordCheckStatus =
   | 'INVALID_CHARACTER'
   | 'NOT_MATCHED'
   | 'MATCHED';
-export type NicknameCheckStatus = 'OK' | 'DUPLICATED' | ServerErrorType;
+
+export const NicknameCheckStatus = [
+  'AVAILABLE_NICKNAME',
+  'NICKNAME_ALREADY_EXISTS',
+  'NICKNAME_NO_ENTERED',
+  ServerError,
+] as const;
+export type NicknameCheckStatusType = (typeof NicknameCheckStatus)[number];
 
 export const SignupStatus = [
   'USER_CREATED',

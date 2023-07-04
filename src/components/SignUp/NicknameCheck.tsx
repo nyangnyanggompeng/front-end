@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import {
-  NicknameCheckStatus,
-  nicknameCheckRequestType,
+  NicknameCheckStatusType,
+  NicknameCheckRequestType,
 } from '../../types/userInfoTypes';
 
 import { nicknameCheck } from '../../utils/signupFunc';
 
-const statusMessage: Record<NicknameCheckStatus, string> = {
-  OK: '사용 가능한 닉네임입니다.',
-  DUPLICATED: '이미 사용 중인 닉네임입니다.',
+const statusMessage: Record<NicknameCheckStatusType, string> = {
+  AVAILABLE_NICKNAME: '사용 가능한 닉네임입니다.',
+  NICKNAME_ALREADY_EXISTS: '이미 사용 중인 닉네임입니다.',
+  NICKNAME_NO_ENTERED: '닉네임을 입력해주세요',
   INTERNAL_SERVER_ERROR: '서버 오류입니다. 잠시 후 다시 시도해주세요.',
 };
 
@@ -18,7 +19,7 @@ function NicknameCheck() {
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    const request: nicknameCheckRequestType = {
+    const request: NicknameCheckRequestType = {
       nickname: nickname,
     };
     nicknameCheck(request)

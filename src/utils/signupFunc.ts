@@ -7,6 +7,7 @@ import {
   EmailCheckStatusType,
   EmailCheckRequestType,
   NicknameCheckStatus,
+  NicknameCheckStatusType,
   NicknameCheckRequestType,
 } from '../types/userInfoTypes';
 
@@ -58,12 +59,13 @@ export async function emailCheck(
 // TODO : api 명세 다시 확인 필요함.
 export async function nicknameCheck(
   request: NicknameCheckRequestType
-): Promise<NicknameCheckStatus> {
+): Promise<NicknameCheckStatusType> {
   try {
-    await axios.post('/register/nicknamecheck', request);
-    return 'OK';
+    await axios.post('/register/nickname_check', request);
+    return 'AVAILABLE_NICKNAME';
   } catch (error: unknown) {
-    if (isAxiosError(error) && error.status === 400) return 'DUPLICATED';
+    if (isAxiosError(error) && error.status === 400)
+      return 'NICKNAME_ALREADY_EXISTS';
     return 'INTERNAL_SERVER_ERROR';
   }
 }
