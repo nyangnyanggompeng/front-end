@@ -5,7 +5,7 @@ import { Editor } from '../components/Writing/Editor';
 
 export function Writing() {
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
-  const editorRef = useRef<Editor>(null);
+  const editorRef = useRef<typeof Editor>(null);
 
   useEffect(() => {
     // 뒤로가기, 새로고침, 창 끄기 등 현재 페이지를 벗어나는 경우에 경고 alert 띄우기
