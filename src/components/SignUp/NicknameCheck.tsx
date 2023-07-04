@@ -1,8 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-  NicknameStatusType,
-  NicknameRequestType,
-} from '../../types/SignUp/userInfoTypes';
+import { NicknameStatusType, NicknameRequestType } from '../../types/SignUp';
 
 import { nicknameCheck } from '../../utils/SignUp';
 

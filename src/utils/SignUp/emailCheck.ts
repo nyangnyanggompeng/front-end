@@ -3,7 +3,7 @@ import {
   EmailStatus,
   EmailStatusType,
   EmailRequestType,
-} from '../../types/SignUp/userInfoTypes';
+} from '../../types/SignUp';
 
 function EmailStatusTypeChecker(status: unknown) {
   if (typeof status !== 'string') return false;

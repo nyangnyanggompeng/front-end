@@ -1,10 +1,7 @@
 import EmailCheck from '../components/SignUp/EmailCheck';
 import PasswordCheck from '../components/SignUp/PasswordCheck';
 import NicknameCheck from '../components/SignUp/NicknameCheck';
-import {
-  SignupFormType,
-  SignupStatusType,
-} from '../types/SignUp/userInfoTypes';
+import { SignupFormType, SignupStatusType } from '../types/SignUp';
 import { signup } from '../utils/SignUp';
 
 const signupResultMessage: Record<SignupStatusType, string> = {
