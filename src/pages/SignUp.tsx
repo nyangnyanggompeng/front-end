@@ -5,7 +5,7 @@ import {
   SignupFormType,
   SignupStatusType,
 } from '../types/SignUp/userInfoTypes';
-import { signup } from '../utils/signupFunc';
+import { signup } from '../utils/SignUp';
 
 const signupResultMessage: Record<SignupStatusType, string> = {
   USER_CREATED: '회원가입이 완료되었습니다.',

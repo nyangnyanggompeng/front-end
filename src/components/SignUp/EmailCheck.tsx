@@ -3,7 +3,7 @@ import {
   EmailStatusType,
   EmailRequestType,
 } from '../../types/SignUp/userInfoTypes';
-import { emailCheck } from '../../utils/signupFunc';
+import { emailCheck } from '../../utils/SignUp';
 
 const statusMessage: Record<EmailStatusType, string> = {
   AVAILABLE_EMAIL: '사용 가능한 이메일입니다.',

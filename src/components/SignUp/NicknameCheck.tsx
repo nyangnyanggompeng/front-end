@@ -4,7 +4,7 @@ import {
   NicknameRequestType,
 } from '../../types/SignUp/userInfoTypes';
 
-import { nicknameCheck } from '../../utils/signupFunc';
+import { nicknameCheck } from '../../utils/SignUp';
 
 const statusMessage: Record<NicknameStatusType, string> = {
   AVAILABLE_NICKNAME: '사용 가능한 닉네임입니다.',
