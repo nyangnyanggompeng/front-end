@@ -1,9 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import SignUp from './pages/SignUp';
-import MyPage from './pages/MyPage';
-import SignIn from './pages/SignIn';
-import { Community } from './pages/Commumity';
-import { Writing } from './pages/Writing';
+import { Community, MyPage, SignIn, SignUp, Writing } from './pages';
 
 function Router() {
   return (

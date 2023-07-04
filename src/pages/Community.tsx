@@ -5,7 +5,7 @@ import { postType } from '../types/communityTypes';
 import { SearchBar } from '../components/Community/SearchBar';
 import { PostList } from '../components/Community/PostList';
 
-export function Community() {
+function Community() {
   // TODO : 게시물 목록 불러오기
   const [posts, setPosts] = useState<postType[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -44,3 +44,5 @@ export function Community() {
     </div>
   );
 }
+
+export default Community;
