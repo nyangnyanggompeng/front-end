@@ -2,6 +2,7 @@ import { useState } from 'react';
 import EmailCheck from '../components/SignIn/EmailCheck';
 import PasswordCheck from '../components/SignIn/PasswordCheck';
 import NicknameCheck from '../components/SignIn/NicknameCheck';
+
 import {
   EmailCheckStatus,
   PasswordCheckStatus,

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { postType } from '../../../../types/communityTypes';
+import { postType } from '../../types/communityTypes';
 
 type searchMode = 'TITLE' | 'CONTENT' | 'WRITER';
 

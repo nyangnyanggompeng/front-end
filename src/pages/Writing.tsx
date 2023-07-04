@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import { CancelModal } from '../../components/Community/Writing/components/CancelModal';
-import { Editor } from '../../components/Community/Writing/components/Editor';
+import { CancelModal } from '../components/Writing/CancelModal';
+import { Editor } from '../components/Writing/Editor';
 
 export function Writing() {
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
