@@ -40,7 +40,7 @@ export async function signup(
   } catch (error: unknown) {
     console.log(error);
     if (isAxiosError(error) && error.response) {
-      const { errorCode } = error.response.data;
+      const errorCode = error.response.data;
       if (signupStatusTypeChecker(errorCode))
         return errorCode as signupStatusType;
       else return 'INTERNAL_SERVER_ERROR';
