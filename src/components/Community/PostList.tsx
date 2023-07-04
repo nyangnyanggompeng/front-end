@@ -16,7 +16,7 @@ export function PostList({ postList }: PostListProps) {
           key={post.id}
           title={post.title}
           writer={post.writer}
-          createdAt={post.createdAt}
+          createdAt={post.updatedAt}
         />
       ))}
     </div>

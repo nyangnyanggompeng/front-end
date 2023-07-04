@@ -14,22 +14,6 @@ function Community() {
   const navigate = useNavigate();
   useEffect(() => {
     // TODO : 현재 페이지에 맞게 게시물 목록 불러오기
-    setPosts([
-      {
-        id: 1,
-        title: '제목',
-        content: '내용',
-        writer: '작성자',
-        createdAt: '2023-02-25T08:02:16.463Z',
-      },
-      {
-        id: 2,
-        title: '제목',
-        content: '내용',
-        writer: '작성자',
-        createdAt: '2023-06-28T08:02:16.463Z',
-      },
-    ]);
   }, [currentPage]);
 
   // TODO : 쿼리 존재 여부에 따라서 어떤 게시물 목록을 불러올지 결정해야 할 듯
