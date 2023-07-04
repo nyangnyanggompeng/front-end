@@ -1,6 +1,10 @@
 // TODO : 회원가입 api 구현 완료되면 업데이트 필요함
 type ServerErrorType = 'INTERNAL_SERVER_ERROR';
-export type EmailCheckStatus = 'OK' | 'DUPLICATED' | ServerErrorType;
+export type EmailCheckStatus =
+  | 'AVAILABLE_EMAIL'
+  | 'EMAIL_ALREADY_EXISTS'
+  | 'EMAIL_NO_ENTERED'
+  | ServerErrorType;
 export type PasswordCheckStatus =
   | 'OK'
   | 'INVALID_LENGTH'
