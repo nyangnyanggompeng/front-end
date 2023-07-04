@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { PasswordStatus } from '../../types/SignUp/userInfoTypes';
+import { PasswordStatusType } from '../../types/SignUp';
 
 // TODO : 비밀번호 규칙 확정 필요
-const statusMessage: Record<PasswordStatus, string> = {
+const statusMessage: Record<PasswordStatusType, string> = {
   OK: '사용 가능한 비밀번호입니다.',
   INVALID_LENGTH: '8자 이상 12자 이하로 입력해주세요.',
   INVALID_CHARACTER:
