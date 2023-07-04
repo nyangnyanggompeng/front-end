@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useSearchbar } from '../hooks/Community/useSearchBar';
-import { postType } from '../types/communityTypes';
+import { postType } from '../types/Community/communityTypes';
 import { SearchBar } from '../components/Community/SearchBar';
 import { PostList } from '../components/Community/PostList';
 

@@ -1,4 +1,4 @@
-import { postType } from '../../types/communityTypes';
+import { postType } from '../../types/Community/communityTypes';
 import { PostListItem } from './PostListItem';
 
 type PostListProps = {

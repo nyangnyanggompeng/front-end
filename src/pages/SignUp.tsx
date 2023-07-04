@@ -7,7 +7,7 @@ import {
   EmailCheckStatus,
   PasswordCheckStatus,
   NicknameCheckStatus,
-} from '../types/userInfoTypes';
+} from '../types/Signup/userInfoTypes';
 
 function SignUp() {
   const [emailCheckStatus, setEmailCheckStatus] = useState<EmailCheckStatus>();
