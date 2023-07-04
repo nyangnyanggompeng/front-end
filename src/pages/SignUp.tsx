@@ -1,15 +1,13 @@
-import { useState } from 'react';
 import EmailCheck from '../components/SignUp/EmailCheck';
 import PasswordCheck from '../components/SignUp/PasswordCheck';
 import NicknameCheck from '../components/SignUp/NicknameCheck';
 import {
-  PasswordStatus,
-  signupFormType,
-  signupStatusType,
-} from '../types/userInfoTypes';
+  SignupFormType,
+  SignupStatusType,
+} from '../types/Signup/userInfoTypes';
 import { signup } from '../utils/signupFunc';
 
-const signupResultMessage: Record<signupStatusType, string> = {
+const signupResultMessage: Record<SignupStatusType, string> = {
   USER_CREATED: '회원가입이 완료되었습니다.',
   EMAIL_ALREADY_EXISTS: '이미 가입된 이메일입니다.',
   NICKNAME_ALREADY_EXISTS: '이미 사용 중인 닉네임입니다.',
@@ -26,7 +24,7 @@ function SignUp() {
     const formData = new FormData(e.currentTarget);
     if (formData.get('domain') === 'type')
       formData.set('domain', formData.get('domain-type') as string);
-    const requestForm: signupFormType = {
+    const requestForm: SignupFormType = {
       username: formData.get('username') as string,
       domain: formData.get('domain') as string,
       password: formData.get('password') as string,
@@ -34,7 +32,7 @@ function SignUp() {
       nickname: formData.get('nickname') as string,
     };
     signup(requestForm)
-      .then((res: signupStatusType) => {
+      .then((res: SignupStatusType) => {
         alert(signupResultMessage[res]);
       })
       .catch(() => {

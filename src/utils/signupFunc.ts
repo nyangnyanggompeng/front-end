@@ -9,7 +9,7 @@ import {
   NicknameStatus,
   NicknameStatusType,
   NicknameRequestType,
-} from '../types/userInfoTypes';
+} from '../types/Signup/userInfoTypes';
 
 function SignupStatusTypeChecker(status: unknown) {
   if (typeof status !== 'string') return false;
