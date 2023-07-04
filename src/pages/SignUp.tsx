@@ -3,7 +3,7 @@ import EmailCheck from '../components/SignUp/EmailCheck';
 import PasswordCheck from '../components/SignUp/PasswordCheck';
 import NicknameCheck from '../components/SignUp/NicknameCheck';
 import {
-  PasswordCheckStatus,
+  PasswordStatus,
   signupFormType,
   signupStatusType,
 } from '../types/userInfoTypes';

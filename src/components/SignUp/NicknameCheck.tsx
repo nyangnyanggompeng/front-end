@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import {
-  NicknameCheckStatusType,
-  NicknameCheckRequestType,
+  NicknameStatusType,
+  NicknameRequestType,
 } from '../../types/userInfoTypes';
 
 import { nicknameCheck } from '../../utils/signupFunc';
 
-const statusMessage: Record<NicknameCheckStatusType, string> = {
+const statusMessage: Record<NicknameStatusType, string> = {
   AVAILABLE_NICKNAME: '사용 가능한 닉네임입니다.',
   NICKNAME_ALREADY_EXISTS: '이미 사용 중인 닉네임입니다.',
   NICKNAME_NO_ENTERED: '닉네임을 입력해주세요',
@@ -19,7 +19,7 @@ function NicknameCheck() {
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    const request: NicknameCheckRequestType = {
+    const request: NicknameRequestType = {
       nickname: nickname,
     };
     nicknameCheck(request)

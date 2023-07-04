@@ -3,12 +3,12 @@ import {
   SignupFormType,
   SignupStatus,
   SignupStatusType,
-  EmailCheckStatus,
-  EmailCheckStatusType,
-  EmailCheckRequestType,
-  NicknameCheckStatus,
-  NicknameCheckStatusType,
-  NicknameCheckRequestType,
+  EmailStatus,
+  EmailStatusType,
+  EmailRequestType,
+  NicknameStatus,
+  NicknameStatusType,
+  NicknameRequestType,
 } from '../types/userInfoTypes';
 
 function SignupStatusTypeChecker(status: unknown) {
@@ -16,14 +16,14 @@ function SignupStatusTypeChecker(status: unknown) {
   return SignupStatus.includes(status as SignupStatusType);
 }
 
-function EmailCheckStatusTypeChecker(status: unknown) {
+function EmailStatusTypeChecker(status: unknown) {
   if (typeof status !== 'string') return false;
-  return EmailCheckStatus.includes(status as EmailCheckStatusType);
+  return EmailStatus.includes(status as EmailStatusType);
 }
 
-function NicknameCheckStatusTypeChecker(status: unknown) {
+function NicknameStatusTypeChecker(status: unknown) {
   if (typeof status !== 'string') return false;
-  return NicknameCheckStatus.includes(status as NicknameCheckStatusType);
+  return NicknameStatus.includes(status as NicknameStatusType);
 }
 
 export async function signup(
@@ -45,16 +45,16 @@ export async function signup(
 }
 
 export async function emailCheck(
-  request: EmailCheckRequestType
-): Promise<EmailCheckStatusType> {
+  request: EmailRequestType
+): Promise<EmailStatusType> {
   try {
     await axios.post('/register/idcheck', request);
     return 'AVAILABLE_EMAIL';
   } catch (error: unknown) {
     if (isAxiosError(error) && error.response) {
       const errorCode = error.response.data;
-      if (EmailCheckStatusTypeChecker(errorCode))
-        return errorCode as EmailCheckStatusType;
+      if (EmailStatusTypeChecker(errorCode))
+        return errorCode as EmailStatusType;
       else return 'INTERNAL_SERVER_ERROR';
     }
     return 'INTERNAL_SERVER_ERROR';
@@ -62,16 +62,16 @@ export async function emailCheck(
 }
 
 export async function nicknameCheck(
-  request: NicknameCheckRequestType
-): Promise<NicknameCheckStatusType> {
+  request: NicknameRequestType
+): Promise<NicknameStatusType> {
   try {
     await axios.post('/register/nickname_check', request);
     return 'AVAILABLE_NICKNAME';
   } catch (error: unknown) {
     if (isAxiosError(error) && error.response) {
       const errorCode = error.response.data;
-      if (NicknameCheckStatusTypeChecker(errorCode))
-        return errorCode as NicknameCheckStatusType;
+      if (NicknameStatusTypeChecker(errorCode))
+        return errorCode as NicknameStatusType;
       return 'INTERNAL_SERVER_ERROR';
     }
     return 'INTERNAL_SERVER_ERROR';

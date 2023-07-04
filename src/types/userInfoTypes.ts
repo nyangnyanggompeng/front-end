@@ -1,28 +1,28 @@
 export const ServerError = 'INTERNAL_SERVER_ERROR';
 export type ServerErrorType = typeof ServerError;
 
-export const EmailCheckStatus = [
+export const EmailStatus = [
   'AVAILABLE_EMAIL',
   'EMAIL_ALREADY_EXISTS',
   'EMAIL_NO_ENTERED',
   ServerError,
 ] as const;
-export type EmailCheckStatusType = (typeof EmailCheckStatus)[number];
+export type EmailStatusType = (typeof EmailStatus)[number];
 
-export type PasswordCheckStatus =
+export type PasswordStatus =
   | 'OK'
   | 'INVALID_LENGTH'
   | 'INVALID_CHARACTER'
   | 'NOT_MATCHED'
   | 'MATCHED';
 
-export const NicknameCheckStatus = [
+export const NicknameStatus = [
   'AVAILABLE_NICKNAME',
   'NICKNAME_ALREADY_EXISTS',
   'NICKNAME_NO_ENTERED',
   ServerError,
 ] as const;
-export type NicknameCheckStatusType = (typeof NicknameCheckStatus)[number];
+export type NicknameStatusType = (typeof NicknameStatus)[number];
 
 export const SignupStatus = [
   'USER_CREATED',
@@ -43,10 +43,10 @@ export type SignupFormType = {
   passwordVerify: string;
   nickname: string;
 };
-export type EmailCheckRequestType = {
+export type EmailRequestType = {
   username: string;
   domain: string;
 };
-export type NicknameCheckRequestType = {
+export type NicknameRequestType = {
   nickname: string;
 };
