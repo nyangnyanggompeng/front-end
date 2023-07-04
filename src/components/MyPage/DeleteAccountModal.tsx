@@ -1,10 +1,7 @@
+import { ModalPropsType } from '../Modal/ModalTypes';
 import { ModalContainer } from '../Modal/ModalContainer';
 
-type ModalProps = {
-  resetModal: () => void;
-};
-
-export function DeleteAccountModal({ resetModal }: ModalProps) {
+export function DeleteAccountModal({ resetModal }: ModalPropsType) {
   function onClick(e: React.MouseEvent<Element, MouseEvent>) {
     e.preventDefault();
     console.log('회원 탈퇴');

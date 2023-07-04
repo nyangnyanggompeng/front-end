@@ -1,14 +1,14 @@
+import { ModalPropsType } from './ModalTypes';
 import {
   ModalOverlayStyles,
   ModalContainerStyles,
 } from './ModalContainer.styles';
 
-type ModalProps = {
-  resetModal: () => void;
+type ModalContainerProps = ModalPropsType & {
   children: React.ReactNode;
 };
 
-export function ModalContainer({ resetModal, children }: ModalProps) {
+export function ModalContainer({ resetModal, children }: ModalContainerProps) {
   function onClick(e: React.MouseEvent<HTMLDivElement>) {
     if (e.target === e.currentTarget) {
       resetModal();

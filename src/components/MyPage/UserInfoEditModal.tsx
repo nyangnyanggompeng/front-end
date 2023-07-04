@@ -1,11 +1,8 @@
+import { ModalPropsType } from '../Modal/ModalTypes';
 import { ModalContainer } from '../Modal/ModalContainer';
 import NicknameCheck from '../SignUp/NicknameCheck';
 
-type ModalProps = {
-  resetModal: () => void;
-};
-
-export function UserInfoEditModal({ resetModal }: ModalProps) {
+export function UserInfoEditModal({ resetModal }: ModalPropsType) {
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
