@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
+import { Editor as TuiEditor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { CancelModal } from '../components/Writing/CancelModal';
 import { Editor } from '../components/Writing/Editor';
 
 export function Writing() {
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
-  const editorRef = useRef<typeof Editor>(null);
+  const editorRef = useRef<TuiEditor>(null);
 
   useEffect(() => {
     // 뒤로가기, 새로고침, 창 끄기 등 현재 페이지를 벗어나는 경우에 경고 alert 띄우기
@@ -44,3 +45,5 @@ export function Writing() {
     </>
   );
 }
+
+export default Writing;
