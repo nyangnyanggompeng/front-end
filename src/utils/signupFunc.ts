@@ -15,6 +15,11 @@ function SignupStatusTypeChecker(status: unknown) {
   return SignupStatus.includes(status as SignupStatusType);
 }
 
+function EmailCheckStatusTypeChecker(status: unknown) {
+  if (typeof status !== 'string') return false;
+  return EmailCheckStatus.includes(status as EmailCheckStatusType);
+}
+
 export async function signup(
   signupForm: SignupFormType
 ): Promise<SignupStatusType> {
@@ -33,7 +38,6 @@ export async function signup(
   }
 }
 
-// TODO : api 명세 다시 확인 필요함.
 export async function emailCheck(
   request: EmailCheckRequestType
 ): Promise<EmailCheckStatusType> {
@@ -41,8 +45,12 @@ export async function emailCheck(
     await axios.post('/register/idcheck', request);
     return 'AVAILABLE_EMAIL';
   } catch (error: unknown) {
-    if (isAxiosError(error) && error.status === 400)
-      return 'EMAIL_ALREADY_EXISTS';
+    if (isAxiosError(error) && error.response) {
+      const errorCode = error.response.data;
+      if (EmailCheckStatusTypeChecker(errorCode))
+        return errorCode as EmailCheckStatusType;
+      else return 'INTERNAL_SERVER_ERROR';
+    }
     return 'INTERNAL_SERVER_ERROR';
   }
 }

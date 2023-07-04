@@ -37,7 +37,7 @@ export type SignupFormType = {
   nickname: string;
 };
 export type EmailCheckRequestType = {
-  email: string;
+  username: string;
   domain: string;
 };
 export type NicknameCheckRequestType = {

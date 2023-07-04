@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import {
-  EmailCheckStatus,
-  emailCheckRequestType,
+  EmailCheckStatusType,
+  EmailCheckRequestType,
 } from '../../types/userInfoTypes';
 import { emailCheck } from '../../utils/signupFunc';
 
-const statusMessage: Record<EmailCheckStatus, string> = {
+const statusMessage: Record<EmailCheckStatusType, string> = {
   AVAILABLE_EMAIL: '사용 가능한 이메일입니다.',
   EMAIL_ALREADY_EXISTS: '이미 사용 중인 이메일입니다.',
   EMAIL_NO_ENTERED: '이메일과 도메인을 입력해주세요',
@@ -15,9 +15,9 @@ const statusMessage: Record<EmailCheckStatus, string> = {
 // TODO : 비즈니스 로직 분리 필요
 function EmailCheck() {
   const [domainDisabled, setDomainDisabled] = useState<boolean>(true);
-  const [email, setEmail] = useState<string>('');
+  const [username, setUsername] = useState<string>('');
   const [domain, setDomain] = useState<string>('naver.com');
-  const [status, setStatus] = useState<EmailCheckStatus | null>(null);
+  const [status, setStatus] = useState<EmailCheckStatusType | null>(null);
   const [message, setMessage] = useState<string>('');
 
   useEffect(() => {
@@ -37,12 +37,12 @@ function EmailCheck() {
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    const request: emailCheckRequestType = {
-      email: email,
+    const request: EmailCheckRequestType = {
+      username: username,
       domain: domain,
     };
     emailCheck(request)
-      .then((res: EmailCheckStatus) => setStatus(res))
+      .then((res: EmailCheckStatusType) => setStatus(res))
       .catch(() => setStatus('INTERNAL_SERVER_ERROR'));
   }
 
@@ -52,7 +52,7 @@ function EmailCheck() {
         type='text'
         name='username'
         placeholder='이메일'
-        onBlur={(e) => setEmail(e.target.value)}
+        onBlur={(e) => setUsername(e.target.value)}
       />
       <span>@</span>
       <input
