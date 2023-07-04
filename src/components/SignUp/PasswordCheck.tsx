@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { PasswordStatus } from '../../types/Signup/userInfoTypes';
+import { PasswordStatus } from '../../types/SignUp/userInfoTypes';
 
 // TODO : 비밀번호 규칙 확정 필요
 const statusMessage: Record<PasswordStatus, string> = {

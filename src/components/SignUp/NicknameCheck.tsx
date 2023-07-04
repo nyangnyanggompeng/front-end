@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import {
   NicknameStatusType,
   NicknameRequestType,
-} from '../../types/Signup/userInfoTypes';
+} from '../../types/SignUp/userInfoTypes';
 
 import { nicknameCheck } from '../../utils/signupFunc';
 

@@ -4,7 +4,7 @@ import NicknameCheck from '../components/SignUp/NicknameCheck';
 import {
   SignupFormType,
   SignupStatusType,
-} from '../types/Signup/userInfoTypes';
+} from '../types/SignUp/userInfoTypes';
 import { signup } from '../utils/signupFunc';
 
 const signupResultMessage: Record<SignupStatusType, string> = {

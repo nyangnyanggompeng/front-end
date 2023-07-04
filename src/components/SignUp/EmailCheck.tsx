@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import {
   EmailStatusType,
   EmailRequestType,
-} from '../../types/Signup/userInfoTypes';
+} from '../../types/SignUp/userInfoTypes';
 import { emailCheck } from '../../utils/signupFunc';
 
 const statusMessage: Record<EmailStatusType, string> = {
