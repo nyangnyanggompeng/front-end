@@ -30,7 +30,6 @@ export const SignupStatus = [
   'NICKNAME_ALREADY_EXISTS',
   'INVALID_PASSWORD',
   'WRONG_PASSWORD',
-  'NICKNAME_NO_ENTERED',
   'EMAIL_OR_PASSWORD_OR_NICKNAME_NO_ENTERED',
   ServerError,
 ] as const;

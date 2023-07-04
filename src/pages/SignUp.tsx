@@ -13,8 +13,7 @@ const signupResultMessage: Record<SignupStatusType, string> = {
   NICKNAME_ALREADY_EXISTS: '이미 사용 중인 닉네임입니다.',
   INVALID_PASSWORD: '유효하지 않은 비밀번호입니다.',
   WRONG_PASSWORD: '비밀번호가 일치하지 않습니다.',
-  NICKNAME_NO_ENTERED: '닉네임을 입력해주세요.',
-  EMAIL_OR_PASSWORD_OR_NICKNAME_NO_ENTERED: '모든 입력을 해 주세요.',
+  EMAIL_OR_PASSWORD_OR_NICKNAME_NO_ENTERED: '입력되지 않은 항목이 있습니다.',
   INTERNAL_SERVER_ERROR: '서버 오류입니다. 잠시 후 다시 시도해주세요.',
 };
 
