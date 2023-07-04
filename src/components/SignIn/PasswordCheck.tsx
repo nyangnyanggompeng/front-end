@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { PasswordCheckStatus } from '../../types/userInfoTypes';
+import { PasswordCheckStatus } from '../../types/Signup/userInfoTypes';
 
 type PasswordCheckProps = {
   status?: PasswordCheckStatus;

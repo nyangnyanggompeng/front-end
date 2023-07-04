@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { ModalContainer } from '../../../Modal/ModalContainer';
-import { ModalPropsType } from '../../../Modal/ModalTypes';
+import { ModalContainer } from '../Modal/ModalContainer';
+import { ModalPropsType } from '../Modal/ModalTypes';
 
 export function CancelModal({ resetModal }: ModalPropsType) {
   const navigate = useNavigate();
