@@ -21,6 +21,11 @@ function EmailCheckStatusTypeChecker(status: unknown) {
   return EmailCheckStatus.includes(status as EmailCheckStatusType);
 }
 
+function NicknameCheckStatusTypeChecker(status: unknown) {
+  if (typeof status !== 'string') return false;
+  return NicknameCheckStatus.includes(status as NicknameCheckStatusType);
+}
+
 export async function signup(
   signupForm: SignupFormType
 ): Promise<SignupStatusType> {
@@ -56,7 +61,6 @@ export async function emailCheck(
   }
 }
 
-// TODO : api 명세 다시 확인 필요함.
 export async function nicknameCheck(
   request: NicknameCheckRequestType
 ): Promise<NicknameCheckStatusType> {
@@ -64,8 +68,12 @@ export async function nicknameCheck(
     await axios.post('/register/nickname_check', request);
     return 'AVAILABLE_NICKNAME';
   } catch (error: unknown) {
-    if (isAxiosError(error) && error.status === 400)
-      return 'NICKNAME_ALREADY_EXISTS';
+    if (isAxiosError(error) && error.response) {
+      const errorCode = error.response.data;
+      if (NicknameCheckStatusTypeChecker(errorCode))
+        return errorCode as NicknameCheckStatusType;
+      return 'INTERNAL_SERVER_ERROR';
+    }
     return 'INTERNAL_SERVER_ERROR';
   }
 }
