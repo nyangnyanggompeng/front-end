@@ -33,13 +33,23 @@ const SignIn = () => {
       return;
     }
 
+    const [username, domain] = loginInfo.userId.split('@');
+
+    const data = {
+      username,
+      domain,
+      password: loginInfo.password,
+    };
+
+    console.log(data);
+
     // 액세스 토큰 발급(로그인)
     await axios
-      .post('/login', {
-        loginInfo,
+      .post('/users/login', {
+        data,
       })
       .then((res) => {
-        console.log('로그인로직');
+        console.log(res.data);
 
         // const { accessToken } = res.data;
         // console.log(accessToken);
@@ -78,7 +88,7 @@ const SignIn = () => {
         <div>
           <label htmlFor='password'>비밀번호</label>
           <input
-            type='text'
+            type='password'
             id='password'
             placeholder='password'
             value={loginInfo.password}
