@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { postType } from '../types/Community/communityTypes';
-import { SearchBar } from '../components/Community/SearchBar';
 import { PostList } from '../components/Community/PostList';
 
 function Community() {
@@ -15,7 +14,6 @@ function Community() {
 
   return (
     <div>
-      <SearchBar totalPost={posts.length} />
       <PostList postList={posts} />
       <button onClick={() => navigate('/writing')}>글쓰기</button>
       {/* 페이지네이션 - currentPage, setCurrentPage 함수 전달 */}
