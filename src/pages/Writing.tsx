@@ -33,7 +33,6 @@ export function Writing() {
   function beforeunloadHandler(e: BeforeUnloadEvent) {
     e.preventDefault();
     e.returnValue = '';
-    console.log('beforeunload');
   }
 
   function handleClick() {
