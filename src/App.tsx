@@ -7,6 +7,8 @@ function App() {
   axios.defaults.baseURL = VITE_SERVER_URL;
   axios.defaults.headers.post['Content-Type'] = 'application/json';
   axios.defaults.withCredentials = true;
+  // ngrok error
+  axios.defaults.headers['ngrok-skip-brower-warning'] = '69420';
 
   return (
     <>
