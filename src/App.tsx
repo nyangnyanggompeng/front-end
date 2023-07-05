@@ -1,5 +1,7 @@
 import Router from './Router';
 import axios from 'axios';
+import Header from './components/Common/Header';
+import Footer from './components/Common/Footer';
 
 function App() {
   const { VITE_SERVER_URL } = import.meta.env;
@@ -11,6 +13,8 @@ function App() {
   return (
     <>
       <Router />
+      <Header />
+      <Footer />
     </>
   );
 }
