@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NicknameCheckStatus } from '../../types/userInfoTypes';
+import { NicknameCheckStatus } from '../../types/Signup/userInfoTypes';
 
 type NicknameCheckProps = {
   status?: NicknameCheckStatus;

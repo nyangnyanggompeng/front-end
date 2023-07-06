@@ -1,4 +1,4 @@
-import { useSearchbar } from '../hooks/useSearchBar';
+import { useSearchbar } from '../../hooks/Community/useSearchBar';
 
 type SearchBarProps = {
   totalPost: number;

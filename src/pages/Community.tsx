@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useSearchbar } from '../../components/Community/Community/hooks/useSearchBar';
-import { postType } from '../../types/communityTypes';
-import { SearchBar } from '../../components/Community/Community/components/SearchBar';
-import { PostList } from '../../components/Community/Community/components/PostList';
+import { useSearchbar } from '../hooks/Community/useSearchBar';
+import { postType } from '../types/Community/communityTypes';
+import { SearchBar } from '../components/Community/SearchBar';
+import { PostList } from '../components/Community/PostList';
 
-export function Community() {
+function Community() {
   // TODO : 게시물 목록 불러오기
   const [posts, setPosts] = useState<postType[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -44,3 +44,5 @@ export function Community() {
     </div>
   );
 }
+
+export default Community;
