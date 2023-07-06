@@ -9,14 +9,19 @@ function Community() {
   // TODO : 게시물 목록 불러오기
   const [posts, setPosts] = useState<ArticleType[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
+    setIsLoading(true);
     getArticles(currentPage)
       .then((articles: ArticleType[]) => setPosts(articles))
       .catch(() => {
         alert('서버 오류입니다. 잠시 후 다시 시도해주세요.');
-      });
+      })
+      .finally(() => setIsLoading(false));
   }, [currentPage]);
+
+  if (isLoading) return <div>로딩중</div>;
 
   return (
     <div>
