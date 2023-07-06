@@ -59,7 +59,8 @@ const SignIn = () => {
         ...data,
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
+        console.log('토큰발급');
       })
       .catch((err) => {
         // 400대 에러
@@ -74,12 +75,12 @@ const SignIn = () => {
       });
 
     // 발급된 토큰으로 유저정보 가져오기
-    // await axios
-    //   .get('/userinfo')
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => console.log(err));
+    axios
+      .get('/users/auth')
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
 
     // 필요한 페이지로 리다이렉트
     // navigate(0); // 임시
