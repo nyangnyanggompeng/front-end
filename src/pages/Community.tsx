@@ -22,7 +22,11 @@ function Community() {
     <div>
       <ArticleList articleList={posts} />
       <button onClick={() => navigate('/writing')}>글쓰기</button>
-      <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPage={10} // TODO : 임시로 넣은 값이므로 구현되면 수정해야 함.
+      />
     </div>
   );
 }
