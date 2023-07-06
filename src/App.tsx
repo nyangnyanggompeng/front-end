@@ -2,6 +2,12 @@ import Router from './Router';
 import axios from 'axios';
 import Header from './components/Common/Header';
 import Footer from './components/Common/Footer';
+import GlobalStyle from './GlobalStyle';
+import Button from './components/Common/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import theme from './theme';
+import { ThemeProvider } from '@emotion/react';
 
 function App() {
   const { VITE_SERVER_URL } = import.meta.env;
@@ -12,9 +18,16 @@ function App() {
 
   return (
     <>
-      <Router />
-      <Header />
-      <Footer />
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <Router />
+        <Button onClick={() => console.log('클릭이벤트')}>
+          <FontAwesomeIcon icon={faMagnifyingGlass} />
+          룰루랄라
+        </Button>
+        <Header />
+        <Footer />
+      </ThemeProvider>
     </>
   );
 }
