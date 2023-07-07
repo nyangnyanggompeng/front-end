@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import Content from '../components/Article/Content';
 import { Buttons } from '../components/Article/Buttons';
 import useGetArticleDetail from '../hooks/Article/useGetArticleDetail';
+import CommentContainer from '../components/Article/CommentContainer';
 
 function Article() {
   const { id } = useParams();
@@ -14,6 +15,7 @@ function Article() {
   return (
     <div>
       <Content articleDetail={articleDetail} />
+      <CommentContainer postId={id} />
       <Buttons writerId={articleDetail.userId} />
     </div>
   );

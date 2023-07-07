@@ -6,6 +6,12 @@ export type CommentType = {
   userId: number;
 };
 
+export type CommentDataType = {
+  Comment: CommentType[];
+  numberOfComment: number;
+  totalPages: number;
+};
+
 export type CommentWriteType = {
   content: string;
 };

@@ -26,7 +26,7 @@ export default function CommentList({ postId }: CommentListProps) {
       </ul>
       {/* TODO : 페이지네이션 적용하기 */}
       <button onClick={() => setCurrentPage(currentPage - 1)}>prev</button>
-      <button onClick={() => setCurrentPage(currentPage + 1)}>prev</button>
+      <button onClick={() => setCurrentPage(currentPage + 1)}>next</button>
     </div>
   );
 }
