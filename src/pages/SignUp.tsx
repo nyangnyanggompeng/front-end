@@ -22,6 +22,10 @@ function SignUp() {
       alert('이메일 중복확인을 해 주세요.');
       return;
     }
+    if (formData.get('isNicknameChecked') === 'FALSE') {
+      alert('닉네임 중복확인을 해 주세요.');
+      return;
+    }
     if (formData.get('domain') === 'type')
       formData.set('domain', formData.get('domain-type') as string);
     const requestForm: SignupFormType = {

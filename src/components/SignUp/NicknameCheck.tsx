@@ -13,6 +13,14 @@ const statusMessage: Record<NicknameStatusType, string> = {
 function NicknameCheck() {
   const [nickname, setNickname] = useState<string>('');
   const [message, setMessage] = useState<string>('');
+  const [isNicknameChecked, setIsNicknameChecked] = useState<'TRUE' | 'FALSE'>(
+    'FALSE'
+  );
+
+  useEffect(() => {
+    setIsNicknameChecked('FALSE');
+    setMessage('');
+  }, [nickname]);
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
@@ -20,8 +28,16 @@ function NicknameCheck() {
       nickname: nickname,
     };
     nicknameCheck(request)
-      .then((res) => setMessage(statusMessage[res]))
-      .catch(() => setMessage(statusMessage['INTERNAL_SERVER_ERROR']));
+      .then((res) => {
+        res === 'AVAILABLE_NICKNAME'
+          ? setIsNicknameChecked('TRUE')
+          : setIsNicknameChecked('FALSE');
+        setMessage(statusMessage[res]);
+      })
+      .catch(() => {
+        setIsNicknameChecked('FALSE');
+        setMessage(statusMessage['INTERNAL_SERVER_ERROR']);
+      });
   }
 
   return (
@@ -34,6 +50,7 @@ function NicknameCheck() {
       />
       <div>{message}</div>
       <button onClick={handleClick}>중복 확인</button>
+      <input type='hidden' name='isNicknameChecked' value={isNicknameChecked} />
     </div>
   );
 }
