@@ -1,8 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import SignUp from './pages/SignUp';
-import MyPage from './pages/MyPage';
-import SignIn from './pages/SignIn';
 import { Article } from './pages/Article';
+import { Community, MyPage, SignIn, SignUp, Writing } from './pages';
 
 function Router() {
   return (
@@ -13,6 +11,8 @@ function Router() {
         <Route path='/my-page' element={<MyPage />} />
         <Route path='/sign-in' element={<SignIn />} />
         <Route path='/article/:id' element={<Article />} />
+        <Route path='/community' element={<Community />} />
+        <Route path='/writing' element={<Writing />} />
       </Routes>
     </BrowserRouter>
   );

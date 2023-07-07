@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { EmailCheckStatus } from '../../types/userInfoTypes';
+import { EmailCheckStatus } from '../../types/Signup/userInfoTypes';
 
 type EmailCheckProps = {
   status?: EmailCheckStatus;
