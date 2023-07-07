@@ -1,7 +1,9 @@
 import axios from 'axios';
-import { ArticleType } from '../../types/Community/communityTypes';
+import { ArticleDataType } from '../../types/Community/communityTypes';
 
-export async function getArticles(currentPage: number): Promise<ArticleType[]> {
+export async function getArticles(
+  currentPage: number
+): Promise<ArticleDataType> {
   try {
     const res = await axios.get(`/board/${currentPage}`);
     if (res.data) return res.data;

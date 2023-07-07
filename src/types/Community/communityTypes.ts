@@ -7,3 +7,9 @@ export type ArticleType = {
   numOfComment: number;
   userId: number;
 };
+
+export type ArticleDataType = {
+  post: ArticleType[];
+  numberOfPost: number;
+  totalPages: number;
+};
