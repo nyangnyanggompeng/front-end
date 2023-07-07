@@ -3,7 +3,7 @@ type ArticleInfoBaseType = {
   writer: string;
   title: string;
   createdAt: string;
-  userId: string;
+  userId: number;
 };
 
 export type ArticleDataItemType = ArticleInfoBaseType & {

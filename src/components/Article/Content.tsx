@@ -1,23 +1,17 @@
+import { ArticleDetailType } from '../../types/Community/articleTypes';
 import { Viewer } from './Viewer';
 
 type ContentProps = {
-  postId: number;
+  articleDetail: ArticleDetailType;
 };
 
-function Content({ postId }: ContentProps) {
-  const post = {
-    id: 1,
-    writer: '냥냥곰펭',
-    title: '안녕하세요',
-    content: '안녕하세요. 냥냥곰펭입니다.',
-    createdAt: '2021-10-01 12:00:00',
-  };
+function Content({ articleDetail }: ContentProps) {
   return (
     <div>
-      <div>{post.title}</div>
-      <div>{post.writer}</div>
-      <div>{getDate(post.createdAt)}</div>
-      <Viewer content={post.content} />
+      <div>{articleDetail.title}</div>
+      <div>{articleDetail.writer}</div>
+      <div>{getDate(articleDetail.createdAt)}</div>
+      <Viewer content={articleDetail.content} />
     </div>
   );
 }
