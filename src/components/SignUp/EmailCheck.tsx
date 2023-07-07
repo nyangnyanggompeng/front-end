@@ -16,11 +16,19 @@ function EmailCheck() {
   const [domain, setDomain] = useState<string>('naver.com');
   const [status, setStatus] = useState<EmailStatusType | null>(null);
   const [message, setMessage] = useState<string>('');
+  const [isEmailChecked, setIsEmailChecked] = useState<'TRUE' | 'FALSE'>(
+    'FALSE'
+  );
 
   useEffect(() => {
     const newMessage = status ? statusMessage[status] : '';
     setMessage(newMessage);
   }, [status]);
+
+  useEffect(() => {
+    setIsEmailChecked('FALSE');
+    setMessage('');
+  }, [username, domain]);
 
   function handleSelect(e: React.ChangeEvent<HTMLSelectElement>) {
     if (e.target.value === 'type') {
@@ -39,8 +47,16 @@ function EmailCheck() {
       domain: domain,
     };
     emailCheck(request)
-      .then((res: EmailStatusType) => setStatus(res))
-      .catch(() => setStatus('INTERNAL_SERVER_ERROR'));
+      .then((res: EmailStatusType) => {
+        res === 'AVAILABLE_EMAIL'
+          ? setIsEmailChecked('TRUE')
+          : setIsEmailChecked('FALSE');
+        setStatus(res);
+      })
+      .catch(() => {
+        setIsEmailChecked('FALSE');
+        setStatus('INTERNAL_SERVER_ERROR');
+      });
   }
 
   return (
@@ -67,6 +83,7 @@ function EmailCheck() {
       </select>
       <p>{message}</p>
       <button onClick={handleClick}>중복 확인</button>
+      <input type='hidden' name='isEmailChecked' value={isEmailChecked} />
     </div>
   );
 }

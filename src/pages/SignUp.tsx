@@ -18,6 +18,10 @@ function SignUp() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+    if (formData.get('isEmailChecked') === 'FALSE') {
+      alert('이메일 중복확인을 해 주세요.');
+      return;
+    }
     if (formData.get('domain') === 'type')
       formData.set('domain', formData.get('domain-type') as string);
     const requestForm: SignupFormType = {
