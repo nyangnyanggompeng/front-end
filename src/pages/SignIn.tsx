@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { logoutHandler } from '../utils/SignIn/userFunc';
 
 interface LoginInfo {
   userId: string;
@@ -112,6 +113,9 @@ const SignIn = () => {
         {error && <p className='err-msg'>{error}</p>}
         <button type='submit'>로그인</button>
       </form>
+      <button type='button' onClick={logoutHandler}>
+        로그아웃
+      </button>
       <p>
         비밀번호를 잊으셨나요?<a href='#'>비밀번호 찾기</a>
       </p>
