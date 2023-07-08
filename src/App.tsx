@@ -3,11 +3,9 @@ import axios from 'axios';
 import Header from './components/Common/Header';
 import Footer from './components/Common/Footer';
 import GlobalStyle from './GlobalStyle';
-import Button from './components/Common/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import theme from './theme';
 import { ThemeProvider } from '@emotion/react';
+import { useState } from 'react';
+import { darkMode, lightMode } from './theme';
 
 function App() {
   const { VITE_SERVER_URL } = import.meta.env;
@@ -16,16 +14,20 @@ function App() {
   axios.defaults.headers.post['Content-Type'] = 'application/json';
   axios.defaults.withCredentials = true;
 
+  const [isDark, setIsDark] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+
   return (
     <>
-      <GlobalStyle />
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={isDark ? darkMode : lightMode}>
+        <GlobalStyle />
+        <Header
+          isDark={isDark}
+          setIsDark={setIsDark}
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}
+        />
         <Router />
-        <Button onClick={() => console.log('클릭이벤트')}>
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
-          룰루랄라
-        </Button>
-        <Header />
         <Footer />
       </ThemeProvider>
     </>
