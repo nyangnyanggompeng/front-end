@@ -9,7 +9,7 @@ export type ArticleType = {
 };
 
 export type ArticleDataType = {
-  post: ArticleType[];
+  Post: ArticleType[];
   numberOfPost: number;
   totalPages: number;
 };

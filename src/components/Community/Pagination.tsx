@@ -14,12 +14,12 @@ function Pagination({
   setCurrentPage,
   totalPage,
 }: PaginationProps) {
-  const [pageArray, setPageArray] = useState<number[]>([1, 2, 3, 4, 5]);
+  const [pageArray, setPageArray] = useState<number[]>([1]);
   useEffect(() => {
     const startPage = Math.ceil(currentPage / (OFFSET + 1) - 1) * 5 + 1;
-    if (startPage !== pageArray[0]) {
-      const endPage =
-        startPage + OFFSET > totalPage ? totalPage : startPage + OFFSET;
+    const endPage =
+      startPage + OFFSET > totalPage ? totalPage : startPage + OFFSET;
+    if (startPage !== pageArray.at(0) || endPage !== pageArray.at(-1)) {
       setPageArray(
         Array.from(new Array(endPage - startPage + 1), (x, i) => i + startPage)
       );
