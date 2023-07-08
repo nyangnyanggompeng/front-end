@@ -1,6 +1,6 @@
-import { Theme, css } from '@emotion/react';
+import { ColorMode, css } from '@emotion/react';
 
-// theme의 type을 Theme로 설정했더니 에러가 나서 임시로 any 타입 줌
+// theme의 type을 ColorMode로 설정했더니 에러가 나서 임시로 any 타입 지정
 const StyledBtn = (theme: any) =>
   css({
     display: 'flex',
@@ -11,11 +11,12 @@ const StyledBtn = (theme: any) =>
     borderRadius: '0.5rem',
     backgroundColor: `${theme.orange1}`,
     padding: '1rem 2rem',
+    border: `1px solid transparent`,
 
     '&.sub': {
       color: `${theme.orange1}`,
-      backgroundColor: `${theme.white}`,
-      border: `1px solid ${theme.orange1}`,
+      backgroundColor: 'transparent',
+      borderColor: `${theme.orange1}`,
     },
 
     '&.disable': {
