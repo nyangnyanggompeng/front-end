@@ -12,7 +12,7 @@ import { postArticle } from '../utils/Writing/postArticle';
 
 const statusMessage: Record<WritingStatusType, string> = {
   SUCCESS: '게시물 등록에 성공했습니다',
-  BAD_REQUEST: '제목, 혹은 내용이 null 입니다.',
+  BAD_REQUEST: '제목 혹은 내용이 입력되지 않았습니다.',
   INTERNAL_SERVER_ERROR: '서버 오류입니다. 잠시 후 다시 시도해주세요.',
 };
 
@@ -41,7 +41,12 @@ export function Writing() {
         content: editorRef.current.getInstance().getMarkdown(),
         title: titleRef.current.value,
       };
-      if (newArticle.content !== null && newArticle.title !== null) {
+      if (
+        newArticle.content !== null &&
+        newArticle.content !== '' &&
+        newArticle.title !== null &&
+        newArticle.title !== ''
+      ) {
         postArticle(newArticle)
           .then((status: WritingStatusType) => {
             alert(statusMessage[status]);
@@ -50,7 +55,7 @@ export function Writing() {
           .catch(() => {
             alert(statusMessage['INTERNAL_SERVER_ERROR']);
           });
-      }
+      } else alert(statusMessage['BAD_REQUEST']);
     }
   }
 

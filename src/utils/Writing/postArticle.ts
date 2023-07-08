@@ -12,7 +12,7 @@ export async function postArticle(
     return 'SUCCESS';
   } catch (error: unknown) {
     if (isAxiosError(error)) {
-      switch (error.status) {
+      switch (error.response?.status) {
         case 400:
           return 'BAD_REQUEST';
         case 500:
