@@ -1,10 +1,10 @@
-import { ColorMode, css } from '@emotion/react';
+import { Theme, css, useTheme } from '@emotion/react';
 import logo from '../../asset/logo.png';
 import { Link } from 'react-router-dom';
 
-const StyledFooter = (theme: any) =>
+const StyledFooter = (theme: Theme) =>
   css({
-    backgroundColor: `${theme.blue1}`,
+    backgroundColor: `${theme.headFoot}`,
     padding: '2rem 0',
     a: {
       marginTop: '2rem',
@@ -14,8 +14,10 @@ const StyledFooter = (theme: any) =>
   });
 
 const Footer = () => {
+  const theme = useTheme();
+
   return (
-    <footer css={StyledFooter}>
+    <footer css={StyledFooter(theme)}>
       <div className='inner'>
         <Link to='/'>
           <img src={logo} alt='인터뷰 연구소' />

@@ -1,4 +1,4 @@
-import { ColorMode, css } from '@emotion/react';
+import { Theme, css, useTheme } from '@emotion/react';
 import logo from '../../asset/logo.png';
 import Button from './Button';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
@@ -6,9 +6,9 @@ import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { logoutHandler } from '../../utils/SignIn/userFunc';
 
-const StyledHeader = (theme: any) =>
+const StyledHeader = (theme: Theme) =>
   css({
-    backgroundColor: `${theme.blue1}`,
+    backgroundColor: `${theme.headFoot}`,
     padding: '2rem 0',
 
     '.inner': {
@@ -98,13 +98,14 @@ type HeaderProps = {
 };
 
 const Header = ({ isDark, setIsDark, isLogin, setIsLogin }: HeaderProps) => {
+  const theme = useTheme();
   const navigate = useNavigate();
   const onChange = () => {
     setIsDark(!isDark);
   };
 
   return (
-    <header css={StyledHeader}>
+    <header css={StyledHeader(theme)}>
       <div className='inner'>
         <h1>
           <Link to='/'>

@@ -1,7 +1,6 @@
-import { ColorMode, css } from '@emotion/react';
+import { Theme, css, useTheme } from '@emotion/react';
 
-// theme의 type을 ColorMode로 설정했더니 에러가 나서 임시로 any 타입 지정
-const StyledBtn = (theme: any) =>
+const StyledBtn = (theme: Theme) =>
   css({
     display: 'flex',
     justifyContent: 'center',
@@ -33,12 +32,13 @@ interface BtnProps {
 }
 
 const Button = (props: BtnProps) => {
+  const theme = useTheme();
   const { children, type = 'button', onClick, status = 'main' } = props;
   return (
     <button
       type={type}
       onClick={onClick}
-      css={StyledBtn}
+      css={StyledBtn(theme)}
       className={status}
       disabled={status === 'disable' ? true : false}
     >
