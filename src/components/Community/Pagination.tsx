@@ -5,7 +5,6 @@ const OFFSET = 4;
 type PaginationProps = {
   currentPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
-  // TODO : 총 페이지를 알아야 함.
   totalPage: number;
 };
 

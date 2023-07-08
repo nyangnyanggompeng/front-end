@@ -6,7 +6,6 @@ import Pagination from '../components/Community/Pagination';
 import { getArticles } from '../utils/Community/getArticles';
 
 function Community() {
-  // TODO : 게시물 목록 불러오기
   const [ArticleData, setArticleData] = useState<ArticleDataType>();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState(false);
