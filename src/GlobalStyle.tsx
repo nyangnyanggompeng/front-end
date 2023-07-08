@@ -1,67 +1,70 @@
-import { Global, css } from '@emotion/react';
+import { Global, Theme, css } from '@emotion/react';
 
-const style = css`
-  // reset 적용
-  * {
-    margin: 0;
-    padding: 0;
-    font: inherit;
-    color: inherit;
-  }
-  *,
-  :after,
-  :before {
-    box-sizing: border-box;
-    flex-shrink: 0;
-  }
-  :root {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-    cursor: default;
-    line-height: 1.5;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    tab-size: 4;
-  }
-  html {
-    font-size: 62.5%;
-  }
+const style = (theme: Theme) =>
+  css({
+    '*': {
+      margin: 0,
+      padding: 0,
+      font: 'inherit',
+      color: 'inherit',
+    },
 
-  body {
-    font-size: 1.6rem;
-  }
-  img,
-  picture,
-  video,
-  canvas,
-  svg {
-    display: block;
-    max-width: 100%;
-  }
-  button {
-    background: none;
-    border: 0;
-    cursor: pointer;
-  }
-  a {
-    text-decoration: none;
-  }
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
-  }
-  ul,
-  li {
-    list-style: none;
-  }
+    '*, :after, :before': {
+      boxSizing: 'border-box',
+      flexShrink: 0,
+    },
 
-  /* custom css */
-  .inner {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-`;
+    ':root': {
+      WebkitTapHighlightColor: 'transparent',
+      WebkitTextSizeAdjust: '100%',
+      textSizeAdjust: '100%',
+      cursor: 'default',
+      lineHeight: 1.5,
+      overflowWrap: 'break-word',
+      wordBreak: 'break-word',
+      tabSize: 4,
+    },
+
+    html: {
+      fontSize: '62.5%',
+    },
+
+    body: {
+      fontSize: '1.6rem',
+      backgroundColor: `${theme.bgColor}`,
+      color: `${theme.fontColor}`,
+    },
+
+    'img, picture, video, canvas, svg': {
+      display: 'block',
+      maxWidth: '100%',
+    },
+
+    button: {
+      background: 'none',
+      border: 0,
+      cursor: 'pointer',
+    },
+
+    a: {
+      textDecoration: 'none',
+    },
+
+    table: {
+      borderCollapse: 'collapse',
+      borderSpacing: 0,
+    },
+
+    'ul,li': {
+      listStyle: 'none',
+    },
+
+    /* custom css */
+    '.inner': {
+      maxWidth: 1200,
+      margin: '0 auto',
+    },
+  });
 
 const GlobalStyle = () => {
   return <Global styles={style} />;

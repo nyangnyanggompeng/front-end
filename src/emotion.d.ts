@@ -1,7 +1,7 @@
 import '@emotion/react';
 
 declare module '@emotion/react' {
-  export interface ColorMode {
+  export interface Theme {
     blue1: string;
     blue2: string;
     orange1: string;
@@ -12,5 +12,8 @@ declare module '@emotion/react' {
     gray2: string;
     black: string;
     white: string;
+    headFoot: string;
+    bgColor: string;
+    fontColor: string;
   }
 }
