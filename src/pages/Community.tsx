@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArticleDataType } from '../types/Community/communityTypes';
 import { ArticleList } from '../components/Community/ArticleList';
-import Pagination from '../components/Community/Pagination';
+import Pagination from '../components/Common/Pagination';
 import { getArticles } from '../utils/Community/getArticles';
 
 function Community() {
