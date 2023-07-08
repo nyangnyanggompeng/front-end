@@ -51,6 +51,16 @@ const style = css`
     border-collapse: collapse;
     border-spacing: 0;
   }
+  ul,
+  li {
+    list-style: none;
+  }
+
+  /* custom css */
+  .inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 `;
 
 const GlobalStyle = () => {
