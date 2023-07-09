@@ -1,20 +1,23 @@
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { faEraser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
 
 interface InterviewItemProps {
+  id: number;
   type: string;
   title: string;
   createdAt: string;
 }
 
-const InterviewItem = ({ type, title, createdAt }: InterviewItemProps) => {
+const InterviewItem = ({ id, type, title, createdAt }: InterviewItemProps) => {
+  const navigate = useNavigate();
   const parseDate = (date: string) => {
     const newDate = new Date(date);
     return newDate.toLocaleDateString();
   };
   return (
-    <li>
+    <li onClick={() => navigate(`/interview-room/${id}`)}>
       <div className='left'>
         <input type='checkbox' />
       </div>
