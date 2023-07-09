@@ -6,7 +6,7 @@ export async function postComment(
   postId: number
 ) {
   // TODO : 임시로 추가한 로그인 유저 id. 이후에 삭제 예정
-  const user_id = 1;
+  const user_id = 10;
   try {
     await axios.post(`/board/${postId}/comments/${user_id}`, commentForm);
     return;
