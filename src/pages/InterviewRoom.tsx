@@ -95,6 +95,7 @@ const InterviewRoom = () => {
                 return (
                   <InterviewItem
                     key={item.id}
+                    id={item.id}
                     type={item.type}
                     title={item.name}
                     createdAt={item.createdAt}
