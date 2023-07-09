@@ -3,7 +3,7 @@ import useGetComments from '../../hooks/Article/useGetComments';
 import CommentItem from './CommentItem';
 
 type CommentListProps = {
-  postId?: string;
+  postId: number;
 };
 
 export default function CommentList({ postId }: CommentListProps) {
@@ -21,7 +21,7 @@ export default function CommentList({ postId }: CommentListProps) {
           <div>등록된 댓글이 없습니다.</div>
         ) : (
           data.Comment.map((comment) => (
-            <CommentItem key={comment.id} comment={comment} />
+            <CommentItem key={comment.id} comment={comment} postId={postId} />
           ))
         )}
       </ul>

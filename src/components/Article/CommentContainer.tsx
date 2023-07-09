@@ -37,9 +37,11 @@ export default function CommentContainer({ postId }: CommentContainerProps) {
       .catch(() => alert('서버 오류입니다. 잠시 후 다시 시도해주세요.'));
   }
 
+  if (!postId || isNaN(parseInt(postId))) return null;
+
   return (
     <div>
-      <CommentList postId={postId} />
+      <CommentList postId={parseInt(postId)} />
       <form onSubmit={handlePostComment}>
         <textarea
           ref={commentRef}
