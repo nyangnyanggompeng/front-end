@@ -1,5 +1,8 @@
 import Router from './Router';
 import axios from 'axios';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 function App() {
   const { VITE_SERVER_URL } = import.meta.env;
@@ -11,7 +14,9 @@ function App() {
   axios.defaults.withCredentials = true;
   return (
     <>
-      <Router />
+      <QueryClientProvider client={queryClient}>
+        <Router />
+      </QueryClientProvider>
     </>
   );
 }
