@@ -16,7 +16,7 @@ function Article() {
     <div>
       <Content articleDetail={articleDetail} />
       <CommentContainer postId={id} />
-      <Buttons writerId={articleDetail.userId} />
+      <Buttons writerId={articleDetail.userId} postId={id} />
     </div>
   );
 }
