@@ -14,16 +14,10 @@ function EmailCheck() {
   const [domainDisabled, setDomainDisabled] = useState<boolean>(true);
   const [username, setUsername] = useState<string>('');
   const [domain, setDomain] = useState<string>('naver.com');
-  const [status, setStatus] = useState<EmailStatusType | null>(null);
   const [message, setMessage] = useState<string>('');
   const [isEmailChecked, setIsEmailChecked] = useState<'TRUE' | 'FALSE'>(
     'FALSE'
   );
-
-  useEffect(() => {
-    const newMessage = status ? statusMessage[status] : '';
-    setMessage(newMessage);
-  }, [status]);
 
   useEffect(() => {
     setIsEmailChecked('FALSE');
@@ -51,11 +45,11 @@ function EmailCheck() {
         res === 'AVAILABLE_EMAIL'
           ? setIsEmailChecked('TRUE')
           : setIsEmailChecked('FALSE');
-        setStatus(res);
+        setMessage(statusMessage[res]);
       })
       .catch(() => {
         setIsEmailChecked('FALSE');
-        setStatus('INTERNAL_SERVER_ERROR');
+        setMessage(statusMessage['INTERNAL_SERVER_ERROR']);
       });
   }
 
