@@ -40,7 +40,6 @@ export default function CommentContainer({ postId }: CommentContainerProps) {
   return (
     <div>
       <CommentList postId={postId} />
-      {/* TODO : 입력창 추가하기 */}
       <form onSubmit={handlePostComment}>
         <textarea
           ref={commentRef}
