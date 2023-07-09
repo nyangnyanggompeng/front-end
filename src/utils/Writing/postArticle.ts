@@ -8,7 +8,7 @@ export async function postArticle(
   newArticle: ArticleType
 ): Promise<WritingStatusType> {
   // TODO : 현재 로그인한 유저의 Id, 임시로 넣은 것이므로 추후 삭제 필요함.
-  const user_id = 1;
+  const user_id = 10;
   try {
     await axios.post(`/board/${user_id}`, newArticle);
     return 'SUCCESS';
