@@ -1,12 +1,16 @@
+import { useRef } from 'react';
 import CommentList from './CommentList';
 import { CommentWriteType } from '../../types/Community/commentTypes';
 import { postComment } from '../../utils/Community/postComment';
+import { useQueryClient } from '@tanstack/react-query';
 
 type CommentContainerProps = {
   postId?: string;
 };
 
 export default function CommentContainer({ postId }: CommentContainerProps) {
+  const commentRef = useRef<HTMLTextAreaElement>(null);
+  const queryClient = useQueryClient();
   function handlePostComment(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -23,7 +27,13 @@ export default function CommentContainer({ postId }: CommentContainerProps) {
       content: newComment,
     };
     postComment(commentForm, parseInt(postId))
-      .then(() => alert('댓글 등록에 성공했습니다.'))
+      .then(() => {
+        alert('댓글 등록에 성공했습니다.');
+        queryClient.invalidateQueries({ queryKey: ['comments'] });
+        if (commentRef.current) {
+          commentRef.current.value = '';
+        }
+      })
       .catch(() => alert('서버 오류입니다. 잠시 후 다시 시도해주세요.'));
   }
 
@@ -33,6 +43,7 @@ export default function CommentContainer({ postId }: CommentContainerProps) {
       {/* TODO : 입력창 추가하기 */}
       <form onSubmit={handlePostComment}>
         <textarea
+          ref={commentRef}
           name='newComment'
           placeholder='댓글을 작성해주세요.'
         ></textarea>
