@@ -3,7 +3,8 @@ import { Community, MyPage, SignIn, SignUp, Writing } from './pages';
 
 function Router() {
   return (
-    <BrowserRouter>
+    // <BrowserRouter>
+    <Routes>
       <Routes>
         {/* <Route path='/' element={<Home />} /> */}
         <Route path='/sign-up' element={<SignUp />} />
@@ -15,7 +16,8 @@ function Router() {
         {/* path='/community/writing */}
         <Route path='/writing' element={<Writing />} />
       </Routes>
-    </BrowserRouter>
+    </Routes>
+    // </BrowserRouter>
   );
 }
 
