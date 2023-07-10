@@ -29,7 +29,7 @@ type WritingProps = {
   mode: 'WRITE' | 'EDIT';
 };
 
-function Writing({ mode }: WritingProps) {
+function EditArticle({ mode }: WritingProps) {
   const navigate = useNavigate();
   const { id } = useParams();
   const [articleData, setArticleData] = useState<ArticleWriteType | null>(null);
@@ -117,4 +117,4 @@ function Writing({ mode }: WritingProps) {
   );
 }
 
-export default Writing;
+export default EditArticle;
