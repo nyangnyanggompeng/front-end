@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import BookMark from './BookMark';
 
 export default function MyPageContentContainer() {
   const [content, setContent] = useState<
@@ -10,7 +11,7 @@ export default function MyPageContentContainer() {
       <button onClick={() => setContent('MYARTICLE')}>작성한 글</button>
       <button onClick={() => setContent('MYCOMMENT')}>작성한 댓글</button>
       <div>
-        {content === 'BOOKMARK' && <div>BOOKMARK</div>}
+        {content === 'BOOKMARK' && <BookMark />}
         {content === 'MYARTICLE' && <div>MYARTICLE</div>}
         {content === 'MYCOMMENT' && <div>MYCOMMENT</div>}
       </div>
