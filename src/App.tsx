@@ -1,7 +1,7 @@
 import Router from './Router';
 import axios from 'axios';
-import Header from './components/Common/Header';
-import Footer from './components/Common/Footer';
+import Header from './components/Layout/Header';
+import Footer from './components/Layout/Footer';
 import GlobalStyle from './GlobalStyle';
 import { ThemeProvider } from '@emotion/react';
 import { useState } from 'react';
