@@ -37,6 +37,7 @@ const StyledInterviewRoom = (theme: Theme) =>
     },
     h4: {
       fontSize: '1.4rem',
+      color: `${theme.gray1}`,
     },
     '.search-box': {
       width: '30%',
@@ -55,10 +56,14 @@ const StyledInterviewRoom = (theme: Theme) =>
       justifyContent: 'flex-end',
       alignItems: 'center',
       gap: '1rem',
+      marginBottom: '3rem',
     },
 
     '.interview-list': {
       marginBottom: '5rem',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '3rem',
       '.message': {
         fontSize: '3rem',
         fontWeight: 700,
@@ -87,7 +92,8 @@ const InterviewRoom = () => {
       const res = await axios.get(`/chatgpt/list/8/${currentPage}`);
       setInterviewData(res.data);
     } catch (err) {
-      console.log(err);
+      alert('서버 에러입니다. 잠시 후 다시 접속해 주세요.');
+      setInterviewData(null);
     }
   };
 
@@ -102,7 +108,7 @@ const InterviewRoom = () => {
           <h2>인터뷰 룸</h2>
           <div className='subtit'>
             <div className='left'>
-              <h3>전체 {interviewData?.totalPages || 0}개</h3>
+              <h3>전체 {interviewData?.numberOfList || 0}개</h3>
               <h4>채팅방은 최대 30개까지 생성할 수 있습니다.</h4>
             </div>
             <div className='search-box'>
