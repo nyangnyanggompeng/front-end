@@ -1,5 +1,11 @@
 import Router from './Router';
 import axios from 'axios';
+import Header from './components/Common/Header';
+import Footer from './components/Common/Footer';
+import GlobalStyle from './GlobalStyle';
+import { ThemeProvider } from '@emotion/react';
+import { useState } from 'react';
+import { darkMode, lightMode } from './theme';
 
 function App() {
   const { VITE_SERVER_URL } = import.meta.env;
@@ -10,9 +16,22 @@ function App() {
   // ngrok error
   axios.defaults.headers['ngrok-skip-brower-warning'] = '69420';
 
+  const [isDark, setIsDark] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+
   return (
     <>
-      <Router />
+      <ThemeProvider theme={isDark ? darkMode : lightMode}>
+        <GlobalStyle />
+        <Header
+          isDark={isDark}
+          setIsDark={setIsDark}
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}
+        />
+        <Router />
+        <Footer />
+      </ThemeProvider>
     </>
   );
 }
