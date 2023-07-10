@@ -1,14 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Editor as TuiEditor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { CancelModal } from '../components/Writing/CancelModal';
-import { Editor } from '../components/Writing/Editor';
+import { Editor } from '../components/Common/Editor';
 import {
   ArticleType,
   WritingStatusType,
 } from '../types/Community/writingTypes';
 import { postArticle } from '../utils/Writing/postArticle';
+import useHandleUnloadEvent from '../hooks/Article/useHandleUnloadEvent';
 
 const statusMessage: Record<WritingStatusType, string> = {
   SUCCESS: '게시물 등록에 성공했습니다',
@@ -16,24 +17,12 @@ const statusMessage: Record<WritingStatusType, string> = {
   INTERNAL_SERVER_ERROR: '서버 오류입니다. 잠시 후 다시 시도해주세요.',
 };
 
-export function Writing() {
+function Writing() {
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
   const navigate = useNavigate();
   const editorRef = useRef<TuiEditor>(null);
   const titleRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    // 뒤로가기, 새로고침, 창 끄기 등 현재 페이지를 벗어나는 경우에 경고 alert 띄우기
-    window.addEventListener('beforeunload', beforeunloadHandler);
-    return () => {
-      window.removeEventListener('beforeunload', beforeunloadHandler);
-    };
-  }, []);
-
-  function beforeunloadHandler(e: BeforeUnloadEvent) {
-    e.preventDefault();
-    e.returnValue = '';
-  }
+  useHandleUnloadEvent();
 
   function handleClick() {
     if (editorRef.current && titleRef.current) {
