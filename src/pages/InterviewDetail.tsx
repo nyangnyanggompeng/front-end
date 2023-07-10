@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Button from '../components/Layout/Button';
+import Button from '../components/Common/Button';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import ReplyItem from '../components/Interview/ReplyItem';
 

@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEraser, faPlus } from '@fortawesome/free-solid-svg-icons';
-import Button from '../components/Layout/Button';
+import Button from '../components/Common/Button';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import InterviewItem from '../components/Interview/InterviewItem';
 import axios from 'axios';

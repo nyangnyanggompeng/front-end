@@ -1,6 +1,6 @@
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Button from '../Layout/Button';
+import Button from '../Common/Button';
 import MessageItem from './MessageItem';
 
 const ReplyItem = () => {
