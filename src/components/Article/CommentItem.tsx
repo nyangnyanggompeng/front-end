@@ -1,12 +1,23 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { CommentType } from '../../types/Community/commentTypes';
+import {
+  CommentStatusType,
+  CommentType,
+  CommentWriteType,
+} from '../../types/Community/commentTypes';
 import { getDate } from '../../utils/Common/getDate';
 import { deleteComments } from '../../utils/Community/deleteComments';
 import { useState } from 'react';
+import { updateComments } from '../../utils/Community/updateComments';
 
 type CommentItemProps = {
   comment: CommentType;
   postId: number;
+};
+
+const statusMessage: Record<CommentStatusType, string> = {
+  UPDATE_COMMENT_SUCCESS: '댓글 삭제에 성공했습니다.',
+  INTERNAL_SERVER_ERROR: '댓글 삭제에 실패했습니다.',
+  CONTENT_NO_ENTERED: '수정할 댓글을 작성해주세요.',
 };
 
 export default function CommentItem({ comment, postId }: CommentItemProps) {
@@ -19,10 +30,10 @@ export default function CommentItem({ comment, postId }: CommentItemProps) {
     deleteComments(postId, comment.id)
       .then(() => {
         queryClient.invalidateQueries({ queryKey: ['comments'] });
-        alert('댓글 삭제에 성공했습니다.');
+        alert(statusMessage['UPDATE_COMMENT_SUCCESS']);
       })
-      .catch(() => {
-        alert('댓글 삭제에 실패했습니다.');
+      .catch((e: CommentStatusType) => {
+        alert(statusMessage[e]);
       });
   }
 
@@ -31,10 +42,20 @@ export default function CommentItem({ comment, postId }: CommentItemProps) {
     const formData = new FormData(e.currentTarget);
     const newComment = formData.get('newComment') as string;
     if (!newComment) {
-      alert('댓글을 작성해주세요.');
+      alert('수정할 댓글을 작성해주세요.');
       return;
     }
-    // TODO : 수정된 댓글을 서버에 보내는 함수 필요함.
+    const commentForm: CommentWriteType = {
+      content: newComment,
+    };
+    updateComments(postId, comment.id, commentForm)
+      .then(() => {
+        queryClient.invalidateQueries({ queryKey: ['comments'] });
+        alert('댓글 수정에 성공했습니다.');
+      })
+      .catch(() => {
+        alert('댓글 수정에 실패했습니다.');
+      });
     setIsEdit(false);
   }
 
@@ -50,8 +71,8 @@ export default function CommentItem({ comment, postId }: CommentItemProps) {
       )}
       {isEdit ? (
         <form onSubmit={onEditHander}>
-          <input></input>
-          <button>작성 완료</button>
+          <input name='newComment' />
+          <button type='submit'>작성 완료</button>
           <button onClick={() => setIsEdit(false)}>수정 취소</button>
         </form>
       ) : (

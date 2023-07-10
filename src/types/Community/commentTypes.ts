@@ -15,3 +15,8 @@ export type CommentDataType = {
 export type CommentWriteType = {
   content: string;
 };
+
+export type CommentStatusType =
+  | 'UPDATE_COMMENT_SUCCESS'
+  | 'INTERNAL_SERVER_ERROR'
+  | 'CONTENT_NO_ENTERED';
