@@ -65,6 +65,34 @@ const style = (theme: Theme) =>
       maxWidth: 1200,
       margin: '0 auto',
     },
+
+    '.container': {
+      padding: '5rem 0',
+    },
+
+    // 페이지 제목
+    h2: {
+      fontSize: '3.6rem',
+      fontWeight: 700,
+      marginBottom: '2.5rem',
+    },
+
+    // 페이지 서브타이틀
+    h3: {
+      fontSize: '3rem',
+      fontWeight: 700,
+    },
+
+    input: {
+      border: `1px solid ${theme.gray1}`,
+      borderRadius: 5,
+      padding: '1rem 1.5rem',
+      width: '100%',
+
+      '&::placeholder': {
+        color: `${theme.gray2}`,
+      },
+    },
   });
 
 const GlobalStyle = () => {
