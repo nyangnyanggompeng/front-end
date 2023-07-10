@@ -1,3 +1,4 @@
+import { Theme, css, useTheme } from '@emotion/react';
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { faEraser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,21 +11,83 @@ interface InterviewItemProps {
   createdAt: string;
 }
 
+const StyledInterviewItem = (theme: Theme) =>
+  css({
+    border: `1px solid ${theme.gray2}`,
+    borderRadius: 5,
+    padding: '2rem',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: '2rem',
+
+    '.left': {
+      flex: '0 0 5%',
+    },
+    '.mid': {
+      flexGrow: 1,
+      width: '80%',
+      '.type': {
+        display: 'inline-block',
+        borderRadius: 5,
+        padding: `0.5rem 1rem`,
+        fontSize: '1.4rem',
+        backgroundColor: `${theme.gray2}`,
+
+        '&.일반': {
+          backgroundColor: `${theme.yellow}`,
+        },
+        '&.기술': {
+          backgroundColor: `${theme.blue2}`,
+          color: `${theme.white}`,
+        },
+        '&.인성': {
+          backgroundColor: `${theme.green}`,
+          color: `${theme.white}`,
+        },
+      },
+      '.title': {
+        fontSize: '2.4rem',
+        margin: '1rem 0',
+        width: '100%',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+      },
+      '.date': {
+        fontSize: '1.4rem',
+        color: `${theme.gray1}`,
+      },
+    },
+    '.right': {
+      flex: '0 0 5%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+  });
+
 const InterviewItem = ({ id, type, title, createdAt }: InterviewItemProps) => {
   const navigate = useNavigate();
+  const theme = useTheme();
   const parseDate = (date: string) => {
     const newDate = new Date(date);
     return newDate.toLocaleDateString();
   };
   return (
-    <li onClick={() => navigate(`/interview-room/${id}`)}>
+    <li
+      css={StyledInterviewItem(theme)}
+      onClick={() => navigate(`/interview-room/${id}`)}
+    >
       <div className='left'>
         <input type='checkbox' />
       </div>
       <div className='mid'>
-        <span className='type'>{type === '' ? '작성 전' : type}</span>
+        <span className={!type ? 'type' : `type ${type}`}>
+          {!type ? '작성 전' : `${type}면접`}
+        </span>
         <p className='title'>{title}</p>
-        <p className='created-at'>{parseDate(createdAt)}</p>
+        <p className='date'>{parseDate(createdAt)}</p>
       </div>
       <div className='right'>
         <button type='button' className='btn-edit'>
