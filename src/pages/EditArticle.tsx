@@ -12,11 +12,17 @@ import { postArticle } from '../utils/Writing/postArticle';
 import { getArticleDetail } from '../utils/Community/getArticleDetail';
 import useHandleUnloadEvent from '../hooks/Article/useHandleUnloadEvent';
 import { ArticleDetailType } from '../types/Community/articleTypes';
+import { updateArticle } from '../utils/Community/updateArticle';
 
-const statusMessage: Record<ArticleWriteStateType, string> = {
+const statusMessage: Record<
+  ArticleWriteStateType | 'UNAUTHORIZED' | 'BAD_ACCESS',
+  string
+> = {
   OK: '게시물 등록에 성공했습니다',
   BAD_REQUEST: '제목 혹은 내용이 입력되지 않았습니다.',
   INTERNAL_SERVER_ERROR: '서버 오류입니다. 잠시 후 다시 시도해주세요.',
+  UNAUTHORIZED: '권한이 없습니다.',
+  BAD_ACCESS: '잘못된 접근입니다.',
 };
 
 type WritingProps = {
@@ -38,7 +44,7 @@ function Writing({ mode }: WritingProps) {
     if (mode === 'EDIT') {
       // error case 1: EDIT mode, but id is undefined
       if (id === undefined || isNaN(parseInt(id))) {
-        alert('잘못된 접근입니다.');
+        alert(statusMessage['BAD_ACCESS']);
         navigate('/community');
         return;
       }
@@ -46,7 +52,7 @@ function Writing({ mode }: WritingProps) {
         const { title, content, userId } = data;
         // error case 2: EDIT mode, but userId is not matched
         if (userId !== currentUserID) {
-          alert('잘못된 접근입니다.');
+          alert(statusMessage['UNAUTHORIZED']);
           navigate('/community');
           return;
         }
@@ -80,9 +86,15 @@ function Writing({ mode }: WritingProps) {
         }
         // EDIT mode
         if (id === undefined || isNaN(parseInt(id))) {
-          alert('postID를 찾을 수 없습니다.');
+          alert(statusMessage['BAD_ACCESS']);
           return;
         }
+        updateArticle(article, parseInt(id))
+          .then(() => {
+            alert(statusMessage['OK']);
+            navigate(`/community/${id}`);
+          })
+          .catch((err: ArticleEditErrorState) => alert(statusMessage[err]));
       } else alert(statusMessage['BAD_REQUEST']);
     }
   }
