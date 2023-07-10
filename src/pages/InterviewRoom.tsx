@@ -6,6 +6,7 @@ import InterviewItem from '../components/Interview/InterviewItem';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { ModalContainer } from '../components/Modal/ModalContainer';
+import Pagination from '../components/Common/Pagination';
 
 interface InterviewListData {
   id: number;
@@ -15,41 +16,22 @@ interface InterviewListData {
 }
 
 interface InterviewData {
-  List: InterviewListData;
+  List: InterviewListData[];
   numberOfList: number;
   totalPages: number;
 }
 
 const InterviewRoom = () => {
-  const dummy = {
-    List: [
-      {
-        id: 2,
-        name: '대화목록2',
-        type: '',
-        createdAt: '2023-07-07T15:50:44.000Z',
-      },
-      {
-        id: 1,
-        name: '대화목록1',
-        type: '',
-        createdAt: '2023-07-07T15:50:35.000Z',
-      },
-    ],
-    numberOfList: 2,
-    totalPages: 1,
-  };
-
-  const [interviewList, setInterviewList] = useState<InterviewListData[] | []>(
-    []
+  const [interviewData, setInterviewData] = useState<InterviewData | null>(
+    null
   );
+  const [currentPage, setCurrentPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
 
   const getList = async () => {
     try {
-      // const res = await axios.get('/chatgpt/list/1');
-      // setInterviewList(res.data);
-      setInterviewList(dummy.List);
+      const res = await axios.get(`/chatgpt/list/8/${currentPage}`);
+      setInterviewData(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -66,7 +48,7 @@ const InterviewRoom = () => {
           <h2>인터뷰 룸</h2>
           <div className='subtit'>
             <div className='left'>
-              <h3>전체 {dummy.numberOfList}개</h3>
+              <h3>전체 {interviewData?.totalPages || 0}개</h3>
               <h4>채팅방은 최대 30개까지 생성할 수 있습니다.</h4>
             </div>
             <div>검색</div>
@@ -85,13 +67,13 @@ const InterviewRoom = () => {
             </Button>
           </div>
           <ul className='interview-list'>
-            {interviewList.length === 0 ? (
+            {interviewData?.List.length === 0 ? (
               <div>
                 인터뷰 룸이 존재하지 않습니다. <br />
                 새로운 인터뷰 룸을 생성해 보세요!
               </div>
             ) : (
-              interviewList.map((item) => {
+              interviewData?.List.map((item) => {
                 return (
                   <InterviewItem
                     key={item.id}
@@ -104,8 +86,11 @@ const InterviewRoom = () => {
               })
             )}
           </ul>
-          {/* TODO : 페이지네이션 추가 */}
-          <div>pagenation</div>
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPage={interviewData?.totalPages || 0}
+          />
         </div>
       </main>
       {isOpen && (
