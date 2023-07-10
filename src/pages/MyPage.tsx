@@ -3,6 +3,7 @@ import UserInfo from '../components/MyPage/UserInfo';
 import DeleteAccountModal from '../components/MyPage/DeleteAccountModal';
 import ChangePasswordModal from '../components/MyPage/ChangePasswordModal';
 import UserInfoEditModal from '../components/MyPage/UserInfoEditModal';
+import MyPageContentContainer from '../components/MyPage/MyPageContentContainer';
 
 type ModalType = 'DELETE' | 'EDIT' | 'CHANGEPASSWORD' | null;
 
@@ -26,8 +27,8 @@ export default function MyPage() {
         <button onClick={() => setModalType('CHANGEPASSWORD')}>
           비밀번호 변경
         </button>
-        {/* TODO : 북마크 */}
         <button onClick={() => setModalType('DELETE')}>회원 탈퇴</button>
+        <MyPageContentContainer />
       </div>
     </>
   );
