@@ -32,7 +32,11 @@ export function Buttons({ writerId, postId }: ButtonsProps) {
   return (
     <div>
       {isWriter && <button onClick={onDeleteHander}>삭제하기</button>}
-      {isWriter && <button>수정하기</button>}
+      {isWriter && (
+        <button onClick={() => navigate(`/community/edit/${postId}`)}>
+          수정하기
+        </button>
+      )}
       <button onClick={() => navigate('/community')}>목록으로</button>
     </div>
   );

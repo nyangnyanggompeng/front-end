@@ -2,7 +2,7 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor as TuiEditor } from '@toast-ui/react-editor';
 
 interface Props {
-  content?: string;
+  content: string;
   editorRef: React.MutableRefObject<any>;
 }
 
@@ -20,7 +20,7 @@ export const Editor = ({ content, editorRef }: Props) => {
       {editorRef && (
         <TuiEditor
           ref={editorRef}
-          initialValue={content || ' '}
+          initialValue={content}
           initialEditType='wysiwyg'
           hideModeSwitch={true}
           height='600px'
