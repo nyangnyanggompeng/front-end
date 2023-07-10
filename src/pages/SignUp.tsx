@@ -1,47 +1,56 @@
-import { useState } from 'react';
-import EmailCheck from '../components/SignIn/EmailCheck';
-import PasswordCheck from '../components/SignIn/PasswordCheck';
-import NicknameCheck from '../components/SignIn/NicknameCheck';
+import EmailCheck from '../components/SignUp/EmailCheck';
+import PasswordCheck from '../components/SignUp/PasswordCheck';
+import NicknameCheck from '../components/SignUp/NicknameCheck';
+import { SignupFormType, SignupStatusType } from '../types/SignUp';
+import { signup } from '../utils/SignUp';
 
-import {
-  EmailCheckStatus,
-  PasswordCheckStatus,
-  NicknameCheckStatus,
-} from '../types/Signup/userInfoTypes';
+const signupResultMessage: Record<SignupStatusType, string> = {
+  USER_CREATED: '회원가입이 완료되었습니다.',
+  EMAIL_ALREADY_EXISTS: '이미 가입된 이메일입니다.',
+  NICKNAME_ALREADY_EXISTS: '이미 사용 중인 닉네임입니다.',
+  INVALID_PASSWORD: '유효하지 않은 비밀번호입니다.',
+  WRONG_PASSWORD: '비밀번호가 일치하지 않습니다.',
+  EMAIL_OR_PASSWORD_OR_NICKNAME_NO_ENTERED: '입력되지 않은 항목이 있습니다.',
+  INTERNAL_SERVER_ERROR: '서버 오류입니다. 잠시 후 다시 시도해주세요.',
+};
 
 function SignUp() {
-  const [emailCheckStatus, setEmailCheckStatus] = useState<EmailCheckStatus>();
-  const [passwordCheckStatus, setPasswordCheckStatus] =
-    useState<PasswordCheckStatus>();
-  const [nicknameCheckStatus, setNicknameCheckStatus] =
-    useState<NicknameCheckStatus>();
-
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const email = formData.get('email');
-    const domain = formData.get('domain');
-    const password = formData.get('password');
-    const passwordVerify = formData.get('passwordVerify');
-    const nickname = formData.get('nickname');
-    // TODO : 회원가입 api 호출 후 결과에 따라 상태 변경
-    console.log(
-      '회원가입 폼 내용 :',
-      email,
-      domain,
-      password,
-      passwordVerify,
-      nickname
-    );
+    if (formData.get('isEmailChecked') === 'FALSE') {
+      alert('이메일 중복확인을 해 주세요.');
+      return;
+    }
+    if (formData.get('isNicknameChecked') === 'FALSE') {
+      alert('닉네임 중복확인을 해 주세요.');
+      return;
+    }
+    if (formData.get('domain') === 'type')
+      formData.set('domain', formData.get('domain-type') as string);
+    const requestForm: SignupFormType = {
+      username: formData.get('username') as string,
+      domain: formData.get('domain') as string,
+      password: formData.get('password') as string,
+      passwordVerify: formData.get('passwordVerify') as string,
+      nickname: formData.get('nickname') as string,
+    };
+    signup(requestForm)
+      .then((res: SignupStatusType) => {
+        alert(signupResultMessage[res]);
+      })
+      .catch(() => {
+        alert(signupResultMessage['INTERNAL_SERVER_ERROR']);
+      });
   };
 
   return (
     <div>
       <h1>회원 가입</h1>
       <form onSubmit={onSubmit}>
-        <EmailCheck status={emailCheckStatus} />
-        <PasswordCheck status={passwordCheckStatus} />
-        <NicknameCheck status={nicknameCheckStatus} />
+        <EmailCheck />
+        <PasswordCheck />
+        <NicknameCheck />
         <button type='submit'>회원 가입</button>
       </form>
     </div>

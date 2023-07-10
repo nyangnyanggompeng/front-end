@@ -1,6 +1,6 @@
 import { ModalPropsType } from '../Modal/ModalTypes';
 import { ModalContainer } from '../Modal/ModalContainer';
-import NicknameCheck from '../SignIn/NicknameCheck';
+import NicknameCheck from '../SignUp/NicknameCheck';
 
 export function UserInfoEditModal({ resetModal }: ModalPropsType) {
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {

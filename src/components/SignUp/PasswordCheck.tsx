@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react';
-import { PasswordCheckStatus } from '../../types/Signup/userInfoTypes';
-
-type PasswordCheckProps = {
-  status?: PasswordCheckStatus;
-};
+import { PasswordStatusType } from '../../types/SignUp';
 
 // TODO : 비밀번호 규칙 확정 필요
-const statusMessage: Record<PasswordCheckStatus, string> = {
+const statusMessage: Record<PasswordStatusType, string> = {
   OK: '사용 가능한 비밀번호입니다.',
   INVALID_LENGTH: '8자 이상 12자 이하로 입력해주세요.',
   INVALID_CHARACTER:
@@ -15,17 +11,15 @@ const statusMessage: Record<PasswordCheckStatus, string> = {
   MATCHED: '비밀번호가 일치합니다.',
 };
 
-function PasswordCheck({ status }: PasswordCheckProps) {
-  const [passwordStatus, setPasswordStatus] = useState<
-    PasswordCheckStatus | undefined
-  >(status);
+function PasswordCheck() {
   const [password, setPassword] = useState<string>('');
   const [passwordCheck, setPasswordCheck] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
 
   // TODO - useEffect 순서 고민
   useEffect(() => {
     if (password.length < 8 || password.length > 12) {
-      setPasswordStatus('INVALID_LENGTH');
+      setMessage(statusMessage['INVALID_LENGTH']);
       return;
     }
     const specialCharRegex = /[!@#$%^&*]/g;
@@ -40,22 +34,20 @@ function PasswordCheck({ status }: PasswordCheckProps) {
       koreanRegex.test(password) ||
       spaceRegex.test(password)
     ) {
-      setPasswordStatus('INVALID_CHARACTER');
+      setMessage(statusMessage['INVALID_CHARACTER']);
       return;
     }
-    setPasswordStatus('OK');
+    setMessage(statusMessage['OK']);
   }, [password]);
 
   useEffect(() => {
     if (passwordCheck.length === 0) return;
     if (password !== passwordCheck) {
-      setPasswordStatus('NOT_MATCHED');
+      setMessage(statusMessage['NOT_MATCHED']);
       return;
     }
-    setPasswordStatus('MATCHED');
+    setMessage(statusMessage['MATCHED']);
   }, [password, passwordCheck]);
-
-  const message = passwordStatus ? statusMessage[passwordStatus] : '';
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -81,6 +73,7 @@ function PasswordCheck({ status }: PasswordCheckProps) {
         placeholder='비밀번호 확인'
         onChange={onChangeCheck}
       />
+      {/* TODO : 메시지가 없는 경우 컴포넌트 자체는 유지시키고 hidden 속성을 추가하기 */}
       <p>{message}</p>
     </div>
   );
