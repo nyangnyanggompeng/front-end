@@ -13,8 +13,6 @@ function App() {
   axios.defaults.baseURL = VITE_SERVER_URL;
   axios.defaults.headers['Content-Type'] = 'application/json';
   axios.defaults.withCredentials = true;
-  // ngrok error
-  axios.defaults.headers['ngrok-skip-brower-warning'] = '69420';
 
   const [isDark, setIsDark] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
