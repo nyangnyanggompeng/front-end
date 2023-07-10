@@ -73,6 +73,7 @@ function PasswordCheck() {
         placeholder='비밀번호 확인'
         onChange={onChangeCheck}
       />
+      {/* TODO : 메시지가 없는 경우 컴포넌트 자체는 유지시키고 hidden 속성을 추가하기 */}
       <p>{message}</p>
     </div>
   );

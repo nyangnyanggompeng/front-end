@@ -75,6 +75,7 @@ function EmailCheck() {
         <option value='daum.net'>daum.net</option>
         <option value='type'>직접 입력</option>
       </select>
+      {/* TODO : 메시지가 없는 경우 컴포넌트 자체는 유지시키고 hidden 속성을 추가하기 */}
       <p>{message}</p>
       <button onClick={handleClick}>중복 확인</button>
       <input type='hidden' name='isEmailChecked' value={isEmailChecked} />
