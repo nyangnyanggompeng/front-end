@@ -33,6 +33,7 @@ const style = (theme: Theme) =>
       fontSize: '1.6rem',
       backgroundColor: `${theme.bgColor}`,
       color: `${theme.fontColor}`,
+      fontFamily: `'Noto Sans KR','Apple SD Gothic Neo', arial, sans-serif`,
     },
 
     'img, picture, video, canvas, svg': {
