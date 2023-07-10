@@ -1,12 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEraser, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faEraser, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import Button from '../components/Common/Button';
-import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import { faComments, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import InterviewItem from '../components/Interview/InterviewItem';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { ModalContainer } from '../components/Modal/ModalContainer';
 import Pagination from '../components/Common/Pagination';
+import { Theme, css, useTheme } from '@emotion/react';
 
 interface InterviewListData {
   id: number;
@@ -21,7 +22,60 @@ interface InterviewData {
   totalPages: number;
 }
 
+const StyledInterviewRoom = (theme: Theme) =>
+  css({
+    '.subtit': {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      borderBottom: `1px solid ${theme.gray2}`,
+      paddingBottom: '3rem',
+      marginBottom: '3rem',
+    },
+    h3: {
+      marginBottom: '0.5rem',
+    },
+    h4: {
+      fontSize: '1.4rem',
+    },
+    '.search-box': {
+      width: '30%',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      gap: '1rem',
+
+      input: {
+        width: '70%',
+      },
+    },
+
+    '.btns': {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      alignItems: 'center',
+      gap: '1rem',
+    },
+
+    '.interview-list': {
+      marginBottom: '5rem',
+      '.message': {
+        fontSize: '3rem',
+        fontWeight: 700,
+        textAlign: 'center',
+        margin: '10rem 0',
+
+        svg: {
+          display: 'block',
+          margin: '0 auto 3rem',
+          fontSize: '8rem',
+        },
+      },
+    },
+  });
+
 const InterviewRoom = () => {
+  const theme = useTheme();
   const [interviewData, setInterviewData] = useState<InterviewData | null>(
     null
   );
@@ -43,7 +97,7 @@ const InterviewRoom = () => {
 
   return (
     <>
-      <main>
+      <main css={StyledInterviewRoom(theme)}>
         <div className='inner'>
           <h2>인터뷰 룸</h2>
           <div className='subtit'>
@@ -51,7 +105,13 @@ const InterviewRoom = () => {
               <h3>전체 {interviewData?.totalPages || 0}개</h3>
               <h4>채팅방은 최대 30개까지 생성할 수 있습니다.</h4>
             </div>
-            <div>검색</div>
+            <div className='search-box'>
+              <input type='text' placeholder='인터뷰 이름을 입력해주세요' />
+              <Button onClick={() => console.log('검색')}>
+                <FontAwesomeIcon icon={faSearch} />
+                검색
+              </Button>
+            </div>
           </div>
           <div className='btns'>
             <Button status='sub' onClick={() => console.log('전체삭제')}>
@@ -68,7 +128,8 @@ const InterviewRoom = () => {
           </div>
           <ul className='interview-list'>
             {interviewData?.List.length === 0 ? (
-              <div>
+              <div className='message'>
+                <FontAwesomeIcon icon={faComments} />
                 인터뷰 룸이 존재하지 않습니다. <br />
                 새로운 인터뷰 룸을 생성해 보세요!
               </div>
