@@ -26,7 +26,9 @@ function App() {
           isLogin={isLogin}
           setIsLogin={setIsLogin}
         />
-        <Router />
+        <section className='container'>
+          <Router />
+        </section>
         <Footer />
       </ThemeProvider>
     </>
