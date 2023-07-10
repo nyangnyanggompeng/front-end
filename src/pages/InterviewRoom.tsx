@@ -125,6 +125,17 @@ const InterviewRoom = () => {
     }
   };
 
+  const deleteChat = async (id: number) => {
+    try {
+      axios.put(`/chatgpt/list/${id}`);
+      alert('인터뷰가 삭제되었습니다.');
+      getList();
+    } catch (err) {
+      if (axios.isAxiosError(err))
+        alert('서버 에러입니다. 잠시 후 다시 시도해 주세요.');
+    }
+  };
+
   useEffect(() => {
     getList();
   }, []);
@@ -176,6 +187,7 @@ const InterviewRoom = () => {
                     type={item.type}
                     title={item.name}
                     createdAt={item.createdAt}
+                    deleteChat={deleteChat}
                   />
                 );
               })

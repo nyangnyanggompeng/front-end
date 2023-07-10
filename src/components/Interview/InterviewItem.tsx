@@ -9,6 +9,7 @@ interface InterviewItemProps {
   type: string;
   title: string;
   createdAt: string;
+  deleteChat(id: number): void;
 }
 
 const StyledInterviewItem = (theme: Theme) =>
@@ -67,18 +68,22 @@ const StyledInterviewItem = (theme: Theme) =>
     },
   });
 
-const InterviewItem = ({ id, type, title, createdAt }: InterviewItemProps) => {
+const InterviewItem = ({
+  id,
+  type,
+  title,
+  createdAt,
+  deleteChat,
+}: InterviewItemProps) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const parseDate = (date: string) => {
     const newDate = new Date(date);
     return newDate.toLocaleDateString();
   };
+
   return (
-    <li
-      css={StyledInterviewItem(theme)}
-      onClick={() => navigate(`/interview-room/${id}`)}
-    >
+    <li css={StyledInterviewItem(theme)}>
       <div className='left'>
         <input type='checkbox' />
       </div>
@@ -86,14 +91,20 @@ const InterviewItem = ({ id, type, title, createdAt }: InterviewItemProps) => {
         <span className={!type ? 'type' : `type ${type}`}>
           {!type ? '작성 전' : `${type}면접`}
         </span>
-        <p className='title'>{title}</p>
+        <p className='title' onClick={() => navigate(`/interview-room/${id}`)}>
+          {title}
+        </p>
         <p className='date'>{parseDate(createdAt)}</p>
       </div>
       <div className='right'>
         <button type='button' className='btn-edit'>
           <FontAwesomeIcon icon={faPenToSquare} />
         </button>
-        <button type='button' className='btn-delete'>
+        <button
+          type='button'
+          className='btn-delete'
+          onClick={() => deleteChat(id)}
+        >
           <FontAwesomeIcon icon={faEraser} />
         </button>
       </div>
