@@ -86,6 +86,7 @@ const InterviewRoom = () => {
   );
   const [currentPage, setCurrentPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
+  const [chatName, setChatName] = useState('');
 
   const getList = async () => {
     try {
@@ -94,6 +95,33 @@ const InterviewRoom = () => {
     } catch (err) {
       alert('서버 에러입니다. 잠시 후 다시 접속해 주세요.');
       setInterviewData(null);
+    }
+  };
+
+  const createNewChat = async () => {
+    try {
+      if (!chatName) {
+        alert('인터뷰 이름을 입력해주세요.');
+        return;
+      }
+      const res = await axios.post(`/chatgpt/list/8`, { name: chatName });
+      // TODO : id, type, name, createdAt 받아서 navigate로 상세페이지에 넘겨주기
+      console.log(res.data);
+      setChatName('');
+      setIsOpen(false);
+      getList();
+    } catch (err) {
+      // TODO : 에러처리 타입별로 나눠서 다시 해주기
+      if (axios.isAxiosError(err)) {
+        if (err.response?.data === 'LIST_NAME_ALREADY_EXISTS') {
+          alert('이미 있는 이름입니다. 다시 입력해 주세요.');
+        }
+        if (err.response?.data === 'UNABLE_TO_CREATE_LIST_ANYMORE') {
+          alert('인터뷰를 더 만들 수 없습니다.');
+          setChatName('');
+          setIsOpen(false);
+        }
+      }
     }
   };
 
@@ -162,16 +190,21 @@ const InterviewRoom = () => {
       </main>
       {isOpen && (
         <ModalContainer resetModal={() => setIsOpen(!isOpen)}>
-          <h2>새 인터뷰 만들기</h2>
+          <p>새 인터뷰 만들기</p>
           <div className='input-box'>
             <label htmlFor='newInterviewName'>인터뷰 이름</label>
-            <input type='text' id='newInterviewName' />
+            <input
+              type='text'
+              id='newInterviewName'
+              value={chatName}
+              onChange={(e) => setChatName(e.target.value)}
+            />
           </div>
           <div className='btn-box'>
             <Button status='sub' onClick={() => setIsOpen(false)}>
               취소
             </Button>
-            <Button onClick={() => console.log('인터뷰 생성')}>완료</Button>
+            <Button onClick={createNewChat}>완료</Button>
           </div>
         </ModalContainer>
       )}
