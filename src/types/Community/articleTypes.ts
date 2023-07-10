@@ -24,3 +24,9 @@ export type ArticleWriteType = {
   title: string;
   content: string;
 };
+
+export type ArticleWriteStateType =
+  | 'OK'
+  | 'INTERNAL_SERVER_ERROR'
+  | 'BAD_REQUEST';
+export type ArticleEditErrorState = ArticleWriteStateType;
