@@ -18,6 +18,7 @@ export function ArticleList({ articleList }: ArticleListProps) {
           writer={article.writer}
           createdAt={article.createdAt}
           numOfComment={article.numOfComment}
+          id={article.id}
         />
       ))}
     </div>
