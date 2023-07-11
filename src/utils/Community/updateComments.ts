@@ -2,8 +2,8 @@ import axios from 'axios';
 import { CommentWriteType } from '../../types/Community/commentTypes';
 
 export async function updateComments(
-  commentId: number,
   postId: number,
+  commentId: number,
   body: CommentWriteType
 ) {
   try {

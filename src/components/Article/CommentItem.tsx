@@ -71,7 +71,7 @@ export default function CommentItem({ comment, postId }: CommentItemProps) {
       )}
       {isEdit ? (
         <form onSubmit={onEditHander}>
-          <input name='newComment' />
+          <input name='newComment' defaultValue={comment.content} />
           <button type='submit'>작성 완료</button>
           <button onClick={() => setIsEdit(false)}>수정 취소</button>
         </form>
