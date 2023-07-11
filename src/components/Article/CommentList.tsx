@@ -15,7 +15,9 @@ export default function CommentList({ postId }: CommentListProps) {
 
   return (
     <div>
-      {data.numberOfComment !== 0 && <div>`댓글 ${data.numberOfComment}`</div>}
+      {data.numberOfComment !== 0 && (
+        <div>{`댓글 ${data.numberOfComment}`}</div>
+      )}
       <ul>
         {data.numberOfComment === 0 ? (
           <div>등록된 댓글이 없습니다.</div>
