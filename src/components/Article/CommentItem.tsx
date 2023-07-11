@@ -22,8 +22,8 @@ const statusMessage: Record<CommentStatusType, string> = {
 
 export default function CommentItem({ comment, postId }: CommentItemProps) {
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  // TODO : 현재 로그인된 유저의 id가 필요함.
-  const currentUserId = 10;
+  // ANCHOR : 테스트 유저 id, [8, 9, 10]
+  const currentUserId = 8;
   const queryClient = useQueryClient();
   function onDeleteHander(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
@@ -65,15 +65,15 @@ export default function CommentItem({ comment, postId }: CommentItemProps) {
       <div>{getDate(new Date(comment.createdAt))}</div>
       {currentUserId === comment.userId && (
         <div>
-          <button onClick={() => setIsEdit(true)}>수정</button>
-          <button onClick={onDeleteHander}>삭제</button>
+          <button onClick={() => setIsEdit(true)}>✏️ 수정</button>
+          <button onClick={onDeleteHander}>🗑 삭제</button>
         </div>
       )}
       {isEdit ? (
         <form onSubmit={onEditHander}>
           <input name='newComment' defaultValue={comment.content} />
-          <button type='submit'>작성 완료</button>
-          <button onClick={() => setIsEdit(false)}>수정 취소</button>
+          <button type='submit'>✏️ 작성 완료</button>
+          <button onClick={() => setIsEdit(false)}>❌ 수정 취소</button>
         </form>
       ) : (
         <div>{comment.content}</div>

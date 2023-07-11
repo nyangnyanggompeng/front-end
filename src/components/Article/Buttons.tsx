@@ -10,8 +10,8 @@ type ButtonsProps = {
 export function Buttons({ writerId, postId }: ButtonsProps) {
   const navigate = useNavigate();
   const [isWriter, setIsWriter] = useState(false);
-  // TODO : store에 저장되어 있는 유저의 id 가져오기
-  const userId = 1; // DUMMY DATA
+  // ANCHOR : 테스트 유저 id, [8, 9, 10]
+  const userId = 8;
   useEffect(() => {
     if (userId === writerId) setIsWriter(true);
     else setIsWriter(false);
@@ -31,13 +31,13 @@ export function Buttons({ writerId, postId }: ButtonsProps) {
 
   return (
     <div>
-      {isWriter && <button onClick={onDeleteHander}>삭제하기</button>}
+      {isWriter && <button onClick={onDeleteHander}> 🗑 삭제하기</button>}
       {isWriter && (
         <button onClick={() => navigate(`/community/edit/${postId}`)}>
-          수정하기
+          ✏️ 수정하기
         </button>
       )}
-      <button onClick={() => navigate('/community')}>목록으로</button>
+      <button onClick={() => navigate('/community')}> ↩️ 목록으로</button>
     </div>
   );
 }
