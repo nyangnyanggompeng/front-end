@@ -14,11 +14,12 @@ export default function MyCommentItem({
 }: MyCommentItemProps) {
   return (
     <div>
-      <input
-        style={{ visibility: isDeleteMode ? 'visible' : 'hidden' }}
-        type='checkbox'
-        onChange={(e) => selectHandler(e.target.checked, myComment.id)}
-      />
+      {isDeleteMode && (
+        <input
+          type='checkbox'
+          onChange={(e) => selectHandler(e.target.checked, myComment.id)}
+        />
+      )}
       <div>{myComment.writer}</div>
       <div>{getDate(new Date(myComment.createdAt))}</div>
       <div>{myComment.content}</div>

@@ -14,11 +14,13 @@ export default function MyArticleItem({
 }: MyArticleItemProps) {
   return (
     <div>
-      <input
-        style={{ visibility: isDeleteMode ? 'visible' : 'hidden' }}
-        type='checkbox'
-        onChange={(e) => selectHandler(e.target.checked, myArticle.id)}
-      />
+      {isDeleteMode && (
+        <input
+          style={{ visibility: isDeleteMode ? 'visible' : 'hidden' }}
+          type='checkbox'
+          onChange={(e) => selectHandler(e.target.checked, myArticle.id)}
+        />
+      )}
       <ArticleListItem
         key={myArticle.id}
         title={myArticle.title}
