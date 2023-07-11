@@ -23,7 +23,7 @@ const statusMessage: Record<CommentStatusType, string> = {
 export default function CommentItem({ comment, postId }: CommentItemProps) {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   // ANCHOR : 테스트 유저 id, [8, 9, 10]
-  const currentUserId = 8;
+  const currentUserId = 17;
   const queryClient = useQueryClient();
   function onDeleteHander(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();

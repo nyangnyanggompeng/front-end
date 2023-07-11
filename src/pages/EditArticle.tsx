@@ -38,7 +38,7 @@ function EditArticle({ mode }: WritingProps) {
   useHandleUnloadEvent();
 
   // ANCHOR : 테스트 유저 id, [8, 9, 10]
-  const currentUserID = 8;
+  const currentUserID = 17;
 
   useEffect(() => {
     if (mode === 'EDIT') {
@@ -106,7 +106,7 @@ function EditArticle({ mode }: WritingProps) {
         type='text'
         placeholder='제목'
         ref={titleRef}
-        value={articleData ? articleData.title : ''}
+        defaultValue={articleData ? articleData.title : ''}
       />
       <Editor
         editorRef={editorRef}

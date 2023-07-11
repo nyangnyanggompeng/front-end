@@ -10,8 +10,8 @@ type ButtonsProps = {
 export function Buttons({ writerId, postId }: ButtonsProps) {
   const navigate = useNavigate();
   const [isWriter, setIsWriter] = useState(false);
-  // ANCHOR : 테스트 유저 id, [8, 9, 10]
-  const userId = 8;
+  // ANCHOR : 테스트 유저 id, 기본적인 테스트는 17로 진행함
+  const userId = 17;
   useEffect(() => {
     if (userId === writerId) setIsWriter(true);
     else setIsWriter(false);
