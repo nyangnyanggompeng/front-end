@@ -110,9 +110,9 @@ const InterviewRoom = () => {
       const res = await axios.post(`/chatgpt/lists/8`, { name: chatName });
       setChatName('');
       setIsOpen(false);
-      navigate(`/interview-room/${res.data.id}`, {
-        state: res.data,
-      });
+      // navigate(`/interview-room/${res.data.id}`, {
+      //   state: res.data,
+      // });
     } catch (err) {
       // TODO : 에러처리 타입별로 나눠서 다시 해주기
       if (axios.isAxiosError(err)) {
@@ -130,8 +130,33 @@ const InterviewRoom = () => {
 
   const deleteChat = async (id: number) => {
     try {
-      axios.put(`/chatgpt/lists/${id}`);
-      alert('인터뷰가 삭제되었습니다.');
+      if (
+        confirm(
+          '모든 인터뷰가 삭제되고 이 내용은 복구할 수 없습니다. 정말 삭제하시겠습니까?'
+        )
+      ) {
+        axios.put('/chatgpt/lists/', { listIdList: [id] });
+        alert('인터뷰가 삭제되었습니다.');
+        getList();
+      }
+    } catch (err) {
+      if (axios.isAxiosError(err))
+        alert('서버 에러입니다. 잠시 후 다시 시도해 주세요.');
+    }
+  };
+
+  const deleteAllChat = async () => {
+    try {
+      if (
+        window.confirm(
+          '모든 인터뷰가 삭제되고, 이 내용은 복구할 수 없습니다. 정말 삭제하시겠습니까?'
+        )
+      ) {
+        const filtered = interviewData?.List.map((item) => item.id);
+        await axios.put('/chatgpt/lists/', { listIdList: filtered });
+        alert('모든 인터뷰가 삭제되었습니다.');
+        getList();
+      }
     } catch (err) {
       if (axios.isAxiosError(err))
         alert('서버 에러입니다. 잠시 후 다시 시도해 주세요.');
@@ -161,7 +186,7 @@ const InterviewRoom = () => {
             </div>
           </div>
           <div className='btns'>
-            <Button status='sub' onClick={() => console.log('전체삭제')}>
+            <Button status='sub' onClick={deleteAllChat}>
               <FontAwesomeIcon icon={faTrashCan} />
               전체삭제
             </Button>
