@@ -4,7 +4,6 @@ import { BookMarkData } from '../../types/MyPage/BookMarkTypes';
 
 export default function useGetBookMark(currentPage: number) {
   // TODO : 이후에 api 작업시에 실제 데이터로 대체할 것
-  //   const { data, isLoading, error } = useQuery('getBookMark', getBookMark);
   //   const { isLoading, isError, data, error } = useQuery({
   //     queryKey: ['bookmarks', currentPage],
   //     queryFn: () => getBookMark(currentPage),
