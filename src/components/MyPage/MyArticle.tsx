@@ -31,6 +31,9 @@ export default function MyArticle() {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       // 삭제 요청 보내기
       console.log(selectedArticle);
+      // 성공하면 삭제 모드 해제
+      alert('삭제되었습니다.');
+      setIsDeleteMode(false);
     }
   }
 
