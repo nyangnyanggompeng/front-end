@@ -1,25 +1,65 @@
 import { useState } from 'react';
 import useGetMyArticle from '../../hooks/MyPage/useGetMyArticle';
 import { MyArticleType } from '../../types/MyPage/MyArticleTypes';
-import { ArticleListItem } from '../Community/ArticleListItem';
 import Pagination from '../Common/Pagination';
+import MyArticleItem from './MyArticleItem';
 
 export default function MyArticle() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedArticle, setSelectedArticle] = useState<Set<number>>(
+    new Set()
+  );
+  const [isDeleteMode, setIsDeleteMode] = useState(false);
   const { isLoading, isError, error, myArticleData } =
     useGetMyArticle(currentPage);
   if (isLoading) return <div>로딩중</div>;
   if (isError) return <div>{error}</div>;
+
+  function handleSelectArticle(checked: boolean, id: number) {
+    setSelectedArticle((prev) => {
+      if (checked) prev.add(id);
+      else prev.delete(id);
+      return prev;
+    });
+  }
+
+  function deleteHandler() {
+    if (selectedArticle.size === 0) {
+      alert('삭제할 게시글을 선택해주세요.');
+      return;
+    }
+    if (window.confirm('정말 삭제하시겠습니까?')) {
+      // 삭제 요청 보내기
+      console.log(selectedArticle);
+    }
+  }
+
   return (
     <div>
       <div>{`전체 ${myArticleData.numberOfPost}개`}</div>
+      <div>
+        {isDeleteMode ? (
+          <>
+            <button onClick={() => setIsDeleteMode(false)}>❌ 취소</button>
+            <button onClick={() => deleteHandler()}>🗑삭제하기</button>
+          </>
+        ) : (
+          <button
+            onClick={() => {
+              setIsDeleteMode(true);
+              setSelectedArticle(new Set());
+            }}
+          >
+            🗑 선택 삭제
+          </button>
+        )}
+      </div>
       {myArticleData.post.map((post: MyArticleType) => (
-        <ArticleListItem
+        <MyArticleItem
           key={post.id}
-          title={post.title}
-          writer={post.writer}
-          createdAt={post.createdAt}
-          numOfComment={post.numOfComment}
+          isDeleteMode={isDeleteMode}
+          myArticle={post}
+          selectHandler={handleSelectArticle}
         />
       ))}
       <Pagination
