@@ -2,21 +2,58 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../components/Common/Button';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import ReplyItem from '../components/Interview/ReplyItem';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { parseDate } from '../utils/Interview/InterviewFn';
+
+export interface InterviewDetailData {
+  id: number;
+  questionNum: number;
+  sender: 'user' | 'assistant';
+  content: string;
+  bookmark: boolean;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+  listId: number;
+}
 
 const InterviewDetail = () => {
+  const location = useLocation();
+  const { id, type, name, createdAt } = location.state;
+  const [detailData, setDetailData] = useState<InterviewDetailData[]>([]);
+
+  console.log(id, type, name, createdAt);
+
+  const getChatData = async () => {
+    try {
+      const res = await axios.get(`/chatgpt/contents/${id}`);
+      setDetailData(res.data);
+    } catch (err) {
+      console.log(err);
+      setDetailData([]);
+    }
+  };
+
+  useEffect(() => {
+    getChatData();
+  }, []);
+
   return (
     <main>
       <div className='inner'>
         <h2>인터뷰 룸</h2>
         <div className='title'>
-          <span className='type'>인성면접</span>
-          <h3>채팅방 제목 랄랄라</h3>
+          <span className='type'>{type}</span>
+          <h3>{name}</h3>
+          <span className='date'>{parseDate(createdAt)}</span>
         </div>
         <form>
           <div>
             <p>면접 유형</p>
             <label>
-              <input type='radio' checked name='type' value='normal' />
+              <input type='radio' defaultChecked name='type' value='normal' />
               일반 면접
             </label>
             <label>
@@ -60,7 +97,10 @@ const InterviewDetail = () => {
               자기소개서를 입력하고 <br />
               면접 예상 질문을 받아보세요!
             </div>
-            <ReplyItem />
+            {/* 전체 배열의 개수만큼 출력하는게 아니라 퀘스천 넘버의 가장 큰 숫자만큼? 반복 */}
+            {detailData.map((question) => {
+              return <ReplyItem key={question.id} question={question} />;
+            })}
           </ul>
         </div>
       </div>
