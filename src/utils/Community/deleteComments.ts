@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function deleteComments(commentId: number, postId: number) {
+export async function deleteComments(postId: number, commentId: number) {
   try {
     await axios.put(`/board/${postId}/comments/${commentId}`);
     return;
