@@ -16,7 +16,6 @@ export default function MyArticleItem({
     <div>
       {isDeleteMode && (
         <input
-          style={{ visibility: isDeleteMode ? 'visible' : 'hidden' }}
           type='checkbox'
           onChange={(e) => selectHandler(e.target.checked, myArticle.id)}
         />
