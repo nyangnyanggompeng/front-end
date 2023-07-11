@@ -85,6 +85,7 @@ const style = (theme: Theme) =>
 
     input: {
       border: `1px solid ${theme.gray1}`,
+      backgroundColor: 'transparent',
       borderRadius: 5,
       padding: '1rem 1.5rem',
       width: '100%',
