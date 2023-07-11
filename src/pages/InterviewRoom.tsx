@@ -89,6 +89,12 @@ const InterviewRoom = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
   const [chatName, setChatName] = useState('');
+  const [isSelectMode, setIsSelectMode] = useState(false);
+  const [checkedArr, setCheckedArr] = useState<number[] | []>([]);
+
+  const onChangeCheck = (id: number) => {
+    setCheckedArr([...checkedArr, id]);
+  };
 
   const getList = async () => {
     try {
@@ -114,7 +120,6 @@ const InterviewRoom = () => {
       //   state: res.data,
       // });
     } catch (err) {
-      // TODO : 에러처리 타입별로 나눠서 다시 해주기
       if (axios.isAxiosError(err)) {
         if (err.response?.data === 'LIST_NAME_ALREADY_EXISTS') {
           alert('이미 있는 이름입니다. 다시 입력해 주세요.');
@@ -163,9 +168,29 @@ const InterviewRoom = () => {
     }
   };
 
+  const deleteSelectedChat = async () => {
+    setIsSelectMode(!isSelectMode);
+
+    if (isSelectMode) {
+      try {
+        if (
+          window.confirm(
+            `선택한 인터뷰가 삭제되고, 이 내용은 복구할 수 없습니다.\n정말 삭제하시겠습니까?`
+          )
+        ) {
+          await axios.put('/chatgpt/lists', { listIdList: checkedArr });
+          getList();
+        }
+      } catch (err) {
+        if (axios.isAxiosError(err))
+          alert('서버 에러입니다. 잠시 후 다시 시도해 주세요.');
+      }
+    }
+  };
+
   useEffect(() => {
     getList();
-  }, []);
+  }, [currentPage]);
 
   return (
     <>
@@ -190,16 +215,16 @@ const InterviewRoom = () => {
               <FontAwesomeIcon icon={faTrashCan} />
               전체삭제
             </Button>
-            <Button status='sub' onClick={() => console.log('선택삭제')}>
+            <Button status='sub' onClick={deleteSelectedChat}>
               <FontAwesomeIcon icon={faEraser} />
-              선택삭제
+              {isSelectMode ? '삭제하기' : '선택삭제'}
             </Button>
             <Button onClick={() => setIsOpen(true)}>
               <FontAwesomeIcon icon={faPlus} />새 인터뷰
             </Button>
           </div>
           <ul className='interview-list'>
-            {!interviewData ? (
+            {!interviewData || interviewData.List.length === 0 ? (
               <div className='message'>
                 <FontAwesomeIcon icon={faComments} />
                 인터뷰 룸이 존재하지 않습니다. <br />
@@ -215,6 +240,8 @@ const InterviewRoom = () => {
                     name={item.name}
                     createdAt={item.createdAt}
                     deleteChat={deleteChat}
+                    isSelectMode={isSelectMode}
+                    onChangeCheck={onChangeCheck}
                   />
                 );
               })

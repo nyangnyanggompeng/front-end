@@ -11,6 +11,8 @@ interface InterviewItemProps {
   name: string;
   createdAt: string;
   deleteChat(id: number): void;
+  isSelectMode: boolean;
+  onChangeCheck(id: number): void;
 }
 
 const StyledInterviewItem = (theme: Theme) =>
@@ -25,6 +27,9 @@ const StyledInterviewItem = (theme: Theme) =>
 
     '.left': {
       flex: '0 0 5%',
+      '.checkbox': {
+        padding: '1rem',
+      },
     },
     '.mid': {
       flexGrow: 1,
@@ -76,15 +81,21 @@ const InterviewItem = ({
   name,
   createdAt,
   deleteChat,
+  isSelectMode,
+  onChangeCheck,
 }: InterviewItemProps) => {
   const navigate = useNavigate();
   const theme = useTheme();
 
   return (
     <li css={StyledInterviewItem(theme)}>
-      <div className='left'>
-        <input type='checkbox' />
-      </div>
+      {isSelectMode && (
+        <div className='left'>
+          <label className='checkbox' onClick={() => onChangeCheck(id)}>
+            <input type='checkbox' />
+          </label>
+        </div>
+      )}
       <div className='mid'>
         <span className={!type ? 'type' : `type ${type}`}>
           {!type ? '작성 전' : `${type}면접`}
