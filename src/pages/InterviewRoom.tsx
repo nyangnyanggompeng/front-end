@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { ModalContainer } from '../components/Modal/ModalContainer';
 import Pagination from '../components/Common/Pagination';
 import { Theme, css, useTheme } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 
 interface InterviewListData {
   id: number;
@@ -81,6 +82,7 @@ const StyledInterviewRoom = (theme: Theme) =>
 
 const InterviewRoom = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [interviewData, setInterviewData] = useState<InterviewData | null>(
     null
   );
@@ -90,7 +92,7 @@ const InterviewRoom = () => {
 
   const getList = async () => {
     try {
-      const res = await axios.get(`/chatgpt/list/8/${currentPage}`);
+      const res = await axios.get(`/chatgpt/lists/8/${currentPage}`);
       setInterviewData(res.data);
     } catch (err) {
       alert('서버 에러입니다. 잠시 후 다시 접속해 주세요.');
@@ -104,12 +106,13 @@ const InterviewRoom = () => {
         alert('인터뷰 이름을 입력해주세요.');
         return;
       }
-      const res = await axios.post(`/chatgpt/list/8`, { name: chatName });
-      // TODO : id, type, name, createdAt 받아서 navigate로 상세페이지에 넘겨주기
-      console.log(res.data);
+
+      const res = await axios.post(`/chatgpt/lists/8`, { name: chatName });
       setChatName('');
       setIsOpen(false);
-      getList();
+      navigate(`/interview-room/${res.data.id}`, {
+        state: res.data,
+      });
     } catch (err) {
       // TODO : 에러처리 타입별로 나눠서 다시 해주기
       if (axios.isAxiosError(err)) {
@@ -127,9 +130,8 @@ const InterviewRoom = () => {
 
   const deleteChat = async (id: number) => {
     try {
-      axios.put(`/chatgpt/list/${id}`);
+      axios.put(`/chatgpt/lists/${id}`);
       alert('인터뷰가 삭제되었습니다.');
-      getList();
     } catch (err) {
       if (axios.isAxiosError(err))
         alert('서버 에러입니다. 잠시 후 다시 시도해 주세요.');
@@ -172,7 +174,7 @@ const InterviewRoom = () => {
             </Button>
           </div>
           <ul className='interview-list'>
-            {interviewData?.List.length === 0 ? (
+            {!interviewData ? (
               <div className='message'>
                 <FontAwesomeIcon icon={faComments} />
                 인터뷰 룸이 존재하지 않습니다. <br />
@@ -185,7 +187,7 @@ const InterviewRoom = () => {
                     key={item.id}
                     id={item.id}
                     type={item.type}
-                    title={item.name}
+                    name={item.name}
                     createdAt={item.createdAt}
                     deleteChat={deleteChat}
                   />

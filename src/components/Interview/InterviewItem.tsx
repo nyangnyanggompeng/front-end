@@ -3,11 +3,12 @@ import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { faEraser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
+import { parseDate } from '../../utils/Interview/InterviewFn';
 
 interface InterviewItemProps {
   id: number;
   type: string;
-  title: string;
+  name: string;
   createdAt: string;
   deleteChat(id: number): void;
 }
@@ -54,6 +55,7 @@ const StyledInterviewItem = (theme: Theme) =>
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
+        cursor: 'pointer',
       },
       '.date': {
         fontSize: '1.4rem',
@@ -71,16 +73,12 @@ const StyledInterviewItem = (theme: Theme) =>
 const InterviewItem = ({
   id,
   type,
-  title,
+  name,
   createdAt,
   deleteChat,
 }: InterviewItemProps) => {
   const navigate = useNavigate();
   const theme = useTheme();
-  const parseDate = (date: string) => {
-    const newDate = new Date(date);
-    return newDate.toLocaleDateString();
-  };
 
   return (
     <li css={StyledInterviewItem(theme)}>
@@ -91,8 +89,15 @@ const InterviewItem = ({
         <span className={!type ? 'type' : `type ${type}`}>
           {!type ? '작성 전' : `${type}면접`}
         </span>
-        <p className='title' onClick={() => navigate(`/interview-room/${id}`)}>
-          {title}
+        <p
+          className='title'
+          onClick={() =>
+            navigate(`/interview-room/${id}`, {
+              state: { id, type, name, createdAt },
+            })
+          }
+        >
+          {name}
         </p>
         <p className='date'>{parseDate(createdAt)}</p>
       </div>
