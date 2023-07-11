@@ -112,7 +112,9 @@ function EditArticle({ mode }: WritingProps) {
         editorRef={editorRef}
         content={articleData ? articleData.content : ' '}
       />
-      <button onClick={handleClick}>등록하기</button>
+      <button onClick={handleClick}>
+        {mode === 'WRITE' ? '등록하기' : '수정하기'}
+      </button>
     </>
   );
 }

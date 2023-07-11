@@ -1,5 +1,6 @@
-import '@toast-ui/editor/dist/toastui-editor.css';
+import { useEffect } from 'react';
 import { Editor as TuiEditor } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
 
 interface Props {
   content: string;
@@ -7,6 +8,12 @@ interface Props {
 }
 
 export const Editor = ({ content, editorRef }: Props) => {
+  useEffect(() => {
+    if (editorRef.current) {
+      editorRef.current.getInstance().setMarkdown(content);
+    }
+  }, [content, editorRef]);
+
   const toolbarItems = [
     ['heading', 'bold', 'italic', 'strike'],
     ['hr', 'quote'],
@@ -20,7 +27,6 @@ export const Editor = ({ content, editorRef }: Props) => {
       {editorRef && (
         <TuiEditor
           ref={editorRef}
-          initialValue={content}
           initialEditType='wysiwyg'
           hideModeSwitch={true}
           height='600px'
