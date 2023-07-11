@@ -151,6 +151,11 @@ const InterviewRoom = () => {
   };
 
   const deleteAllChat = async () => {
+    if (interviewData?.List.length === 0) {
+      alert('삭제할 수 있는 인터뷰가 없습니다.');
+      return;
+    }
+
     try {
       if (
         window.confirm(
@@ -169,6 +174,10 @@ const InterviewRoom = () => {
   };
 
   const deleteSelectedChat = async () => {
+    if (interviewData?.List.length === 0) {
+      alert('삭제할 수 있는 인터뷰가 없습니다.');
+      return;
+    }
     setIsSelectMode(!isSelectMode);
 
     if (isSelectMode) {
@@ -267,7 +276,12 @@ const InterviewRoom = () => {
             />
           </div>
           <div className='btn-box'>
-            <Button status='sub' onClick={() => setIsOpen(false)}>
+            <Button
+              status='sub'
+              onClick={() => {
+                setIsOpen(false), setChatName('');
+              }}
+            >
               취소
             </Button>
             <Button onClick={createNewChat}>완료</Button>
