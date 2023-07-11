@@ -37,8 +37,8 @@ function EditArticle({ mode }: WritingProps) {
   const titleRef = useRef<HTMLInputElement>(null);
   useHandleUnloadEvent();
 
-  // TODO : 현재 로그인한 유저의 ID를 받아오는 로직 필요
-  const currentUserID = 10;
+  // ANCHOR : 테스트 유저 id, [8, 9, 10]
+  const currentUserID = 8;
 
   useEffect(() => {
     if (mode === 'EDIT') {
