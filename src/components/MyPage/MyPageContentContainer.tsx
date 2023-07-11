@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import BookMark from './BookMark';
 import MyArticle from './MyArticle';
+import MyComment from './MyComment';
 
 export default function MyPageContentContainer() {
   const [content, setContent] = useState<
@@ -14,7 +15,7 @@ export default function MyPageContentContainer() {
       <div>
         {content === 'BOOKMARK' && <BookMark />}
         {content === 'MYARTICLE' && <MyArticle />}
-        {content === 'MYCOMMENT' && <div>MYCOMMENT</div>}
+        {content === 'MYCOMMENT' && <MyComment />}
       </div>
     </div>
   );
