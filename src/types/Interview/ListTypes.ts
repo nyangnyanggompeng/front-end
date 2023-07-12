@@ -23,15 +23,3 @@ export const errMsg: Record<errTypes, string> = {
   LIST_NAME_ALREADY_EXISTS: '이미 있는 이름입니다. 다시 입력해 주세요.',
   UNABLE_TO_CREATE_LIST_ANYMORE: '인터뷰를 더 만들 수 없습니다.',
 };
-
-export interface InterviewDetailData {
-  id: number;
-  questionNum: number;
-  sender: 'user' | 'assistant';
-  content: string;
-  bookmark: boolean;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
-  listId: number;
-}

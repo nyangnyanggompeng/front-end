@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { parseDate } from '../utils/Interview/interviewListFn';
-import { InterviewDetailData } from '../types/Interview/ListTypes';
+import { InterviewDetailData } from '../types/Interview/detailTypes';
 
 const InterviewDetail = () => {
   const location = useLocation();
