@@ -5,19 +5,8 @@ import ReplyItem from '../components/Interview/ReplyItem';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { parseDate } from '../utils/Interview/InterviewFn';
-
-export interface InterviewDetailData {
-  id: number;
-  questionNum: number;
-  sender: 'user' | 'assistant';
-  content: string;
-  bookmark: boolean;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
-  listId: number;
-}
+import { parseDate } from '../utils/Interview/interviewListFn';
+import { InterviewDetailData } from '../types/Interview/ListTypes';
 
 const InterviewDetail = () => {
   const location = useLocation();

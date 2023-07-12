@@ -3,7 +3,7 @@ import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { faCheck, faEraser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
-import { parseDate } from '../../utils/Interview/InterviewFn';
+import { parseDate } from '../../utils/Interview/interviewListFn';
 import { useState } from 'react';
 
 interface InterviewItemProps {

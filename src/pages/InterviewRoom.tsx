@@ -9,19 +9,8 @@ import { ModalContainer } from '../components/Modal/ModalContainer';
 import Pagination from '../components/Common/Pagination';
 import { Theme, css, useTheme } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
-
-interface InterviewListData {
-  id: number;
-  name: string;
-  type: string;
-  createdAt: string;
-}
-
-interface InterviewData {
-  List: InterviewListData[];
-  numberOfList: number;
-  totalPages: number;
-}
+import { InterviewData, errMsg } from '../types/Interview/ListTypes';
+import { getList } from '../utils/Interview/interviewListFn';
 
 const StyledInterviewRoom = (theme: Theme) =>
   css({
@@ -91,21 +80,6 @@ const InterviewRoom = () => {
   const [chatName, setChatName] = useState('');
   const [isSelectMode, setIsSelectMode] = useState(false);
   const [checkedArr, setCheckedArr] = useState<number[] | []>([]);
-  const errMsg = {
-    INTERNAL_SERVER_ERROR: '서버 에러입니다. 잠시 후 다시 접속해 주세요.',
-  };
-
-  const getList = async () => {
-    try {
-      const res = await axios.get(`/chatgpt/lists/8/${currentPage}`);
-      setInterviewData(res.data);
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        alert(errMsg.INTERNAL_SERVER_ERROR);
-        setInterviewData(null);
-      }
-    }
-  };
 
   const onChangeCheck = (id: number) => {
     setCheckedArr([...checkedArr, id]);
@@ -118,7 +92,6 @@ const InterviewRoom = () => {
         return;
       }
       await axios.patch(`/chatgpt/lists/${id}`, { name });
-      getList();
     } catch (err) {
       if (axios.isAxiosError(err)) {
         switch (err.status) {
@@ -146,18 +119,19 @@ const InterviewRoom = () => {
       });
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        if (err.response?.data === 'LIST_NAME_NO_ENTERED') {
-          alert('이름을 입력해 주세요.');
+        switch (err.response.data) {
+          case 'LIST_NAME_NO_ENTERED':
+            return alert(errMsg.LIST_NAME_NO_ENTERED);
+          case 'LIST_NAME_ALREADY_EXISTS':
+            return alert(errMsg.LIST_NAME_ALREADY_EXISTS);
+          case 'UNABLE_TO_CREATE_LIST_ANYMORE': {
+            setChatName('');
+            setIsOpen(false);
+            return alert(errMsg.LIST_NAME_NO_ENTERED);
+          }
+          default:
+            return alert(errMsg.INTERNAL_SERVER_ERROR);
         }
-        if (err.response?.data === 'LIST_NAME_ALREADY_EXISTS') {
-          alert('이미 있는 이름입니다. 다시 입력해 주세요.');
-        }
-        if (err.response?.data === 'UNABLE_TO_CREATE_LIST_ANYMORE') {
-          alert('인터뷰를 더 만들 수 없습니다.');
-          setChatName('');
-          setIsOpen(false);
-        }
-        return alert(errMsg.INTERNAL_SERVER_ERROR);
       }
     }
   };
@@ -171,7 +145,6 @@ const InterviewRoom = () => {
       ) {
         axios.put('/chatgpt/lists/', { listIdList: [id] });
         alert('인터뷰가 삭제되었습니다.');
-        getList();
       }
     } catch (err) {
       if (axios.isAxiosError(err)) alert(errMsg.INTERNAL_SERVER_ERROR);
@@ -193,7 +166,6 @@ const InterviewRoom = () => {
         const filtered = interviewData?.List.map((item) => item.id);
         await axios.put('/chatgpt/lists/', { listIdList: filtered });
         alert('모든 인터뷰가 삭제되었습니다.');
-        getList();
       }
     } catch (err) {
       if (axios.isAxiosError(err)) alert(errMsg.INTERNAL_SERVER_ERROR);
@@ -215,7 +187,6 @@ const InterviewRoom = () => {
           )
         ) {
           await axios.put('/chatgpt/lists', { listIdList: checkedArr });
-          getList();
         }
       } catch (err) {
         if (axios.isAxiosError(err)) alert(errMsg.INTERNAL_SERVER_ERROR);
@@ -224,8 +195,15 @@ const InterviewRoom = () => {
   };
 
   useEffect(() => {
-    getList();
-  }, []);
+    getList(currentPage)
+      .then((data) => setInterviewData(data))
+      .catch((err) => {
+        if (axios.isAxiosError(err)) {
+          alert(errMsg.INTERNAL_SERVER_ERROR);
+          setInterviewData(null);
+        }
+      });
+  }, [currentPage]);
 
   return (
     <>
