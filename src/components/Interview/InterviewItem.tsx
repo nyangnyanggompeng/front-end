@@ -1,9 +1,10 @@
 import { Theme, css, useTheme } from '@emotion/react';
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
-import { faEraser } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faEraser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 import { parseDate } from '../../utils/Interview/InterviewFn';
+import { useState } from 'react';
 
 interface InterviewItemProps {
   id: number;
@@ -13,6 +14,7 @@ interface InterviewItemProps {
   deleteChat(id: number): void;
   isSelectMode: boolean;
   onChangeCheck(id: number): void;
+  changeName(newName: string): void;
 }
 
 const StyledInterviewItem = (theme: Theme) =>
@@ -40,6 +42,7 @@ const StyledInterviewItem = (theme: Theme) =>
         padding: `0.5rem 1rem`,
         fontSize: '1.4rem',
         backgroundColor: `${theme.gray2}`,
+        marginBottom: '1rem',
 
         '&.일반': {
           backgroundColor: `${theme.yellow}`,
@@ -55,7 +58,6 @@ const StyledInterviewItem = (theme: Theme) =>
       },
       '.title': {
         fontSize: '2.4rem',
-        margin: '1rem 0',
         width: '100%',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
@@ -63,15 +65,23 @@ const StyledInterviewItem = (theme: Theme) =>
         cursor: 'pointer',
       },
       '.date': {
+        marginTop: '1rem',
         fontSize: '1.4rem',
         color: `${theme.gray1}`,
       },
     },
     '.right': {
       flex: '0 0 5%',
+      fontSize: '1.8rem',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
+
+      '.btn-edit': {
+        '.fa-check': {
+          color: `${theme.green}`,
+        },
+      },
     },
   });
 
@@ -83,9 +93,12 @@ const InterviewItem = ({
   deleteChat,
   isSelectMode,
   onChangeCheck,
+  changeName,
 }: InterviewItemProps) => {
   const navigate = useNavigate();
   const theme = useTheme();
+  const [isEdit, setIsEdit] = useState(false);
+  const [newName, setNewName] = useState(name);
 
   return (
     <li css={StyledInterviewItem(theme)}>
@@ -100,21 +113,37 @@ const InterviewItem = ({
         <span className={!type ? 'type' : `type ${type}`}>
           {!type ? '작성 전' : `${type}면접`}
         </span>
-        <p
-          className='title'
-          onClick={() =>
-            navigate(`/interview-room/${id}`, {
-              state: { id, type, name, createdAt },
-            })
-          }
-        >
-          {name}
-        </p>
+        {isEdit ? (
+          <input
+            type='text'
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+          />
+        ) : (
+          <p
+            className='title'
+            onClick={() =>
+              navigate(`/interview-room/${id}`, {
+                state: { id, type, name, createdAt },
+              })
+            }
+          >
+            {name}
+          </p>
+        )}
         <p className='date'>{parseDate(createdAt)}</p>
       </div>
       <div className='right'>
-        <button type='button' className='btn-edit'>
-          <FontAwesomeIcon icon={faPenToSquare} />
+        <button
+          type='button'
+          className='btn-edit'
+          onClick={() => (isEdit ? changeName(newName) : setIsEdit(true))}
+        >
+          {isEdit ? (
+            <FontAwesomeIcon icon={faCheck} />
+          ) : (
+            <FontAwesomeIcon icon={faPenToSquare} />
+          )}
         </button>
         <button
           type='button'

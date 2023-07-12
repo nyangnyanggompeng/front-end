@@ -96,6 +96,14 @@ const InterviewRoom = () => {
     setCheckedArr([...checkedArr, id]);
   };
 
+  const changeName = async (newName: string) => {
+    try {
+      console.log(newName);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const getList = async () => {
     try {
       const res = await axios.get(`/chatgpt/lists/8/${currentPage}`);
@@ -251,6 +259,7 @@ const InterviewRoom = () => {
                     deleteChat={deleteChat}
                     isSelectMode={isSelectMode}
                     onChangeCheck={onChangeCheck}
+                    changeName={changeName}
                   />
                 );
               })
