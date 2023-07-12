@@ -1,7 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
-import { Community, MyPage, SignIn, SignUp, Writing } from './pages';
-import InterviewRoom from './pages/InterviewRoom';
-import InterviewDetail from './pages/InterviewDetail';
+import {
+  Community,
+  MyPage,
+  SignIn,
+  SignUp,
+  EditArticle,
+  Article,
+  InterviewRoom,
+  InterviewDetail,
+} from './pages';
 
 function Router() {
   return (
@@ -15,8 +22,10 @@ function Router() {
       <Route path='/interview-room' element={<InterviewRoom />} />
       <Route path='/interview-room/:id' element={<InterviewDetail />} />
       <Route path='/community' element={<Community />} />
+      <Route path='/community/:id' element={<Article />} />
+      <Route path='/community/edit/:id' element={<EditArticle mode='EDIT' />} />
       {/* path='/community/writing */}
-      <Route path='/writing' element={<Writing />} />
+      <Route path='/community/writing' element={<EditArticle mode='WRITE' />} />
     </Routes>
   );
 }

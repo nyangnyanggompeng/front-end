@@ -27,15 +27,15 @@ function Pagination({
 
   return (
     <div>
-      <button onClick={() => setCurrentPage(1)}>first</button>
-      <button onClick={() => setCurrentPage(currentPage - 1)}>prev</button>
+      <button onClick={() => setCurrentPage(1)}>⏪ first</button>
+      <button onClick={() => setCurrentPage(currentPage - 1)}>◀️ prev</button>
       {pageArray.map((page: number) => (
         <button key={page} onClick={() => setCurrentPage(page)}>
           {page}
         </button>
       ))}
-      <button onClick={() => setCurrentPage(currentPage + 1)}>next</button>
-      <button onClick={() => setCurrentPage(totalPage)}>last</button>
+      <button onClick={() => setCurrentPage(currentPage + 1)}>next ▶️</button>
+      <button onClick={() => setCurrentPage(totalPage)}>last ⏩</button>
     </div>
   );
 }
