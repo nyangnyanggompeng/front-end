@@ -14,7 +14,7 @@ interface InterviewItemProps {
   deleteChat(id: number): void;
   isSelectMode: boolean;
   onChangeCheck(id: number): void;
-  changeName(newName: string): void;
+  changeName(id: number, newName: string): void;
 }
 
 const StyledInterviewItem = (theme: Theme) =>
@@ -76,6 +76,7 @@ const StyledInterviewItem = (theme: Theme) =>
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
+      gap: '1rem',
 
       '.btn-edit': {
         '.fa-check': {
@@ -99,6 +100,11 @@ const InterviewItem = ({
   const theme = useTheme();
   const [isEdit, setIsEdit] = useState(false);
   const [newName, setNewName] = useState(name);
+
+  const onEdit = (id: number, name: string) => {
+    changeName(id, name);
+    setIsEdit(false);
+  };
 
   return (
     <li css={StyledInterviewItem(theme)}>
@@ -137,7 +143,7 @@ const InterviewItem = ({
         <button
           type='button'
           className='btn-edit'
-          onClick={() => (isEdit ? changeName(newName) : setIsEdit(true))}
+          onClick={() => (isEdit ? onEdit(id, newName) : setIsEdit(true))}
         >
           {isEdit ? (
             <FontAwesomeIcon icon={faCheck} />
