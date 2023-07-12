@@ -166,7 +166,7 @@ const InterviewRoom = () => {
     try {
       if (
         window.confirm(
-          `모든 인터뷰가 삭제되고 이 내용은 복구할 수 없습니다.\n정말 삭제하시겠습니까?`
+          `인터뷰가 삭제되고 이 내용은 복구할 수 없습니다.\n정말 삭제하시겠습니까?`
         )
       ) {
         axios.put('/chatgpt/lists/', { listIdList: [id] });
