@@ -10,10 +10,9 @@ export default function MyArticle() {
     new Set()
   );
   const [isDeleteMode, setIsDeleteMode] = useState(false);
-  const { isLoading, isError, error, myArticleData } =
-    useGetMyArticle(currentPage);
+  const { isLoading, isError, error, data } = useGetMyArticle(currentPage);
   if (isLoading) return <div>로딩중</div>;
-  if (isError) return <div>{error}</div>;
+  if (isError || data === undefined) return <div>에러!</div>;
 
   function handleSelectArticle(checked: boolean, id: number) {
     setSelectedArticle((prev) => {
@@ -39,37 +38,43 @@ export default function MyArticle() {
 
   return (
     <div>
-      <div>{`전체 ${myArticleData.numberOfPost}개`}</div>
-      <div>
-        {isDeleteMode ? (
-          <>
-            <button onClick={() => setIsDeleteMode(false)}>❌ 취소</button>
-            <button onClick={() => deleteHandler()}>🗑삭제하기</button>
-          </>
-        ) : (
-          <button
-            onClick={() => {
-              setIsDeleteMode(true);
-              setSelectedArticle(new Set());
-            }}
-          >
-            🗑 선택 삭제
-          </button>
-        )}
-      </div>
-      {myArticleData.post.map((post: ArticleDataItemType) => (
-        <MyArticleItem
-          key={post.id}
-          isDeleteMode={isDeleteMode}
-          myArticle={post}
-          selectHandler={handleSelectArticle}
-        />
-      ))}
-      <Pagination
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalPage={myArticleData.totalPages}
-      />
+      {data.Post && data.Post.length === 0 ? (
+        <div>작성한 게시글이 없습니다.</div>
+      ) : (
+        <div>
+          <div>{`전체 ${data?.numberOfMyPost}개`}</div>
+          <div>
+            {isDeleteMode ? (
+              <>
+                <button onClick={() => setIsDeleteMode(false)}>❌ 취소</button>
+                <button onClick={() => deleteHandler()}>🗑삭제하기</button>
+              </>
+            ) : (
+              <button
+                onClick={() => {
+                  setIsDeleteMode(true);
+                  setSelectedArticle(new Set());
+                }}
+              >
+                🗑 선택 삭제
+              </button>
+            )}
+          </div>
+          {data.Post.map((post: ArticleDataItemType) => (
+            <MyArticleItem
+              key={post.id}
+              isDeleteMode={isDeleteMode}
+              myArticle={post}
+              selectHandler={handleSelectArticle}
+            />
+          ))}
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPage={data.totalPages}
+          />
+        </div>
+      )}
     </div>
   );
 }
