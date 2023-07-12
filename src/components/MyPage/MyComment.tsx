@@ -3,6 +3,17 @@ import useGetMyComment from '../../hooks/MyPage/useGetMyComment';
 import { MyCommentType } from '../../types/MyPage/MyCommentTypes';
 import Pagination from '../Common/Pagination';
 import MyCommentItem from './MyCommentItem';
+import { deleteMyComments } from '../../utils/MyPage/deleteMyComments';
+import { DeleteMyCommentRequestType } from '../../types/MyPage/MyCommentTypes';
+
+const deleteStatusMessage: Record<
+  'OK' | 'BAD_REQUEST' | 'INTERNAL_SERVER_ERROR',
+  string
+> = {
+  OK: '삭제되었습니다.',
+  BAD_REQUEST: '선택된 댓글이 없습니다.',
+  INTERNAL_SERVER_ERROR: '서버 오류입니다. 잠시 후 다시 시도해주세요.',
+};
 
 export default function MyComment() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,15 +35,22 @@ export default function MyComment() {
 
   function deleteHandler() {
     if (selectedComment.size === 0) {
-      alert('삭제할 댓글을 선택해주세요.');
+      alert(deleteStatusMessage['BAD_REQUEST']);
       return;
     }
     if (window.confirm('정말 삭제하시겠습니까?')) {
-      // 삭제 요청 보내기
-      console.log(selectedComment);
-      // 성공하면 삭제 모드 해제
-      alert('삭제되었습니다.');
-      setIsDeleteMode(false);
+      const deleteMyCommentRequest: DeleteMyCommentRequestType = {
+        commentIdList: Array.from(selectedComment),
+      };
+      deleteMyComments(deleteMyCommentRequest)
+        .then(() => {
+          alert(deleteStatusMessage['OK']);
+          setIsDeleteMode(false);
+        })
+        .catch((e) => {
+          if (e === 'BAD_REQUEST') alert(deleteStatusMessage['BAD_REQUEST']);
+          else alert(deleteStatusMessage['INTERNAL_SERVER_ERROR']);
+        });
     }
   }
 

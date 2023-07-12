@@ -14,3 +14,7 @@ export type MyCommentDataType = {
   numberOfMyComment: number;
   totalPages: number;
 };
+
+export type DeleteMyCommentRequestType = {
+  commentIdList: number[];
+};
