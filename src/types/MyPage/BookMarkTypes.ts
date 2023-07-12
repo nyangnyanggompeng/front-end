@@ -1,12 +1,14 @@
 export type BookMarkType = {
-  contentId: number;
+  id: number;
   content: string;
-  roomId: number;
-  roomName: string;
+  listId: number;
+  ChatGPTList: {
+    name: string;
+  };
 };
 
 export type BookMarkData = {
-  bookmark: BookMarkType[];
-  numberOfBookmark: number;
+  Content: BookMarkType[];
+  numberOfContent: number;
   totalPages: number;
 };
