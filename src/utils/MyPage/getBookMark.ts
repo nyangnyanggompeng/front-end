@@ -8,7 +8,9 @@ export default async function getBookMark(
   currentPage: number
 ): Promise<BookMarkData> {
   try {
-    const res = await axios.get(`/mypage/bookmark/${userId}/${currentPage}`);
+    const res = await axios.get(
+      `/mypage/set/bookmark/${userId}/${currentPage}`
+    );
     if (res.data) return res.data;
     throw new Error('INTERNAL_SERVER_ERROR');
   } catch {
