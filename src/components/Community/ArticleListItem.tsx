@@ -1,8 +1,12 @@
+import { Link } from 'react-router-dom';
+import { getDate } from '../../utils/Common/getDate';
+
 type ArticleListItemProps = {
   title: string;
   writer: string;
   createdAt: string;
   numOfComment: number;
+  id: number;
 };
 
 export function ArticleListItem({
@@ -10,25 +14,14 @@ export function ArticleListItem({
   writer,
   createdAt,
   numOfComment,
+  id,
 }: ArticleListItemProps) {
   return (
     <div>
-      <div>{title}</div>
-      <div>{writer}</div>
-      <div>{getDate(new Date(createdAt))}</div>
-      <div>{numOfComment}</div>
+      <Link to={`/community/${id}`}>제목: {title}</Link>
+      <div>작성자: {writer}</div>
+      <div>작성일: {getDate(new Date(createdAt))}</div>
+      <div>댓글수: {numOfComment}</div>
     </div>
   );
-}
-
-function getDate(date: Date) {
-  const currentDate = new Date();
-  if (
-    date.getFullYear() !== currentDate.getFullYear() ||
-    date.getMonth() !== currentDate.getMonth() ||
-    date.getDate() !== currentDate.getDate()
-  ) {
-    return `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
-  }
-  return `${date.getHours()}:${date.getMinutes()}`;
 }
