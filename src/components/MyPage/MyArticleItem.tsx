@@ -25,7 +25,7 @@ export default function MyArticleItem({
         title={myArticle.title}
         writer={myArticle.writer}
         createdAt={myArticle.createdAt}
-        numOfComment={myArticle.numOfComment}
+        numberOfComment={myArticle.numberOfComment}
         id={myArticle.id}
       />
     </div>

@@ -5,7 +5,7 @@ type ArticleListItemProps = {
   title: string;
   writer: string;
   createdAt: string;
-  numOfComment: number;
+  numberOfComment: number;
   id: number;
 };
 
@@ -13,7 +13,7 @@ export function ArticleListItem({
   title,
   writer,
   createdAt,
-  numOfComment,
+  numberOfComment,
   id,
 }: ArticleListItemProps) {
   return (
@@ -21,7 +21,7 @@ export function ArticleListItem({
       <Link to={`/community/${id}`}>제목: {title}</Link>
       <div>작성자: {writer}</div>
       <div>작성일: {getDate(new Date(createdAt))}</div>
-      <div>댓글수: {numOfComment}</div>
+      <div>댓글수: {numberOfComment}</div>
     </div>
   );
 }
