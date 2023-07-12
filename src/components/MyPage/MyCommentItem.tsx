@@ -25,7 +25,7 @@ export default function MyCommentItem({
       <div>{myComment.content}</div>
       <Link
         to={`/community/${myComment.postId}`}
-      >{`게시글 제목: ${myComment.postTitle}`}</Link>
+      >{`게시글 제목: ${myComment.Post.title}`}</Link>
     </div>
   );
 }

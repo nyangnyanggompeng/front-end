@@ -10,10 +10,9 @@ export default function MyComment() {
     new Set()
   );
   const [isDeleteMode, setIsDeleteMode] = useState(false);
-  const { isLoading, isError, error, myCommentData } =
-    useGetMyComment(currentPage);
+  const { isLoading, isError, error, data } = useGetMyComment(currentPage);
   if (isLoading) return <div>로딩중</div>;
-  if (isError) return <div>{error}</div>;
+  if (isError || data === undefined) return <div>에러!</div>;
 
   function handleSelectComment(checked: boolean, id: number) {
     setSelectedComment((prev) => {
@@ -39,37 +38,43 @@ export default function MyComment() {
 
   return (
     <div>
-      <div>{`전체 ${myCommentData.numberOfMyComment}개`}</div>
-      <div>
-        {isDeleteMode ? (
-          <>
-            <button onClick={() => setIsDeleteMode(false)}>❌ 취소</button>
-            <button onClick={() => deleteHandler()}>🗑삭제하기</button>
-          </>
-        ) : (
-          <button
-            onClick={() => {
-              setIsDeleteMode(true);
-              setSelectedComment(new Set());
-            }}
-          >
-            🗑 선택 삭제
-          </button>
-        )}
-      </div>
-      {myCommentData.Comment.map((comment: MyCommentType) => (
-        <MyCommentItem
-          key={comment.id}
-          isDeleteMode={isDeleteMode}
-          myComment={comment}
-          selectHandler={handleSelectComment}
-        />
-      ))}
-      <Pagination
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalPage={myCommentData.totalPages}
-      />
+      {data.Comment && data.Comment.length === 0 ? (
+        <div>작성한 댓글이 없습니다.</div>
+      ) : (
+        <div>
+          <div>{`전체 ${data.numberOfMyComment}개`}</div>
+          <div>
+            {isDeleteMode ? (
+              <>
+                <button onClick={() => setIsDeleteMode(false)}>❌ 취소</button>
+                <button onClick={() => deleteHandler()}>🗑삭제하기</button>
+              </>
+            ) : (
+              <button
+                onClick={() => {
+                  setIsDeleteMode(true);
+                  setSelectedComment(new Set());
+                }}
+              >
+                🗑 선택 삭제
+              </button>
+            )}
+          </div>
+          {data.Comment.map((comment: MyCommentType) => (
+            <MyCommentItem
+              key={comment.id}
+              isDeleteMode={isDeleteMode}
+              myComment={comment}
+              selectHandler={handleSelectComment}
+            />
+          ))}
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPage={data.totalPages}
+          />
+        </div>
+      )}
     </div>
   );
 }

@@ -4,7 +4,9 @@ export type MyCommentType = {
   content: string;
   createdAt: string;
   postId: number;
-  postTitle: string;
+  Post: {
+    title: string;
+  };
 };
 
 export type MyCommentDataType = {
