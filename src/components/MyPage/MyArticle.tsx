@@ -3,6 +3,17 @@ import useGetMyArticle from '../../hooks/MyPage/useGetMyArticle';
 import { ArticleDataItemType } from '../../types/Community/articleTypes';
 import Pagination from '../Common/Pagination';
 import MyArticleItem from './MyArticleItem';
+import { DeleteMyArticleRequestType } from '../../types/MyPage/MyArticleTypes';
+import { deleteMyArticles } from '../../utils/MyPage/deleteMyArticles';
+
+const deleteStatusMessage: Record<
+  'OK' | 'BAD_REQUEST' | 'INTERNAL_SERVER_ERROR',
+  string
+> = {
+  OK: '삭제되었습니다.',
+  BAD_REQUEST: '선택된 게시글이 없습니다.',
+  INTERNAL_SERVER_ERROR: '서버 오류입니다. 잠시 후 다시 시도해주세요.',
+};
 
 export default function MyArticle() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,8 +39,18 @@ export default function MyArticle() {
       return;
     }
     if (window.confirm('정말 삭제하시겠습니까?')) {
-      // 삭제 요청 보내기
-      console.log(selectedArticle);
+      const deleteMyArticleRequest: DeleteMyArticleRequestType = {
+        postIdList: Array.from(selectedArticle),
+      };
+      deleteMyArticles(deleteMyArticleRequest)
+        .then(() => {
+          alert(deleteStatusMessage['OK']);
+          setIsDeleteMode(false);
+        })
+        .catch((e) => {
+          if (e === 'BAD_REQUEST') alert(deleteStatusMessage['BAD_REQUEST']);
+          else alert(deleteStatusMessage['INTERNAL_SERVER_ERROR']);
+        });
       // 성공하면 삭제 모드 해제
       alert('삭제되었습니다.');
       setIsDeleteMode(false);

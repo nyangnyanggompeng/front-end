@@ -5,3 +5,7 @@ export type myArticlesDataType = {
   numberOfMyPost: number;
   totalPages: number;
 };
+
+export type DeleteMyArticleRequestType = {
+  postIdList: number[];
+};
