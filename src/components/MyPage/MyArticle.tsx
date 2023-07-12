@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useGetMyArticle from '../../hooks/MyPage/useGetMyArticle';
-import { MyArticleType } from '../../types/MyPage/MyArticleTypes';
+import { ArticleDataItemType } from '../../types/Community/articleTypes';
 import Pagination from '../Common/Pagination';
 import MyArticleItem from './MyArticleItem';
 
@@ -57,7 +57,7 @@ export default function MyArticle() {
           </button>
         )}
       </div>
-      {myArticleData.post.map((post: MyArticleType) => (
+      {myArticleData.post.map((post: ArticleDataItemType) => (
         <MyArticleItem
           key={post.id}
           isDeleteMode={isDeleteMode}

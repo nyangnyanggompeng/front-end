@@ -1,9 +1,9 @@
 import { ArticleListItem } from '../Community/ArticleListItem';
-import { MyArticleType } from '../../types/MyPage/MyArticleTypes';
+import { ArticleDataItemType } from '../../types/Community/articleTypes';
 
 type MyArticleItemProps = {
   isDeleteMode: boolean;
-  myArticle: MyArticleType;
+  myArticle: ArticleDataItemType;
   selectHandler: (checked: boolean, id: number) => void;
 };
 
@@ -26,6 +26,7 @@ export default function MyArticleItem({
         writer={myArticle.writer}
         createdAt={myArticle.createdAt}
         numOfComment={myArticle.numOfComment}
+        id={myArticle.id}
       />
     </div>
   );

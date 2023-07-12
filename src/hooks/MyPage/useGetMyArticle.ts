@@ -1,6 +1,6 @@
 // import { useQuery } from 'react-query';
 // import getMyArticles from 'src/api/getMyArticles';
-import { ArticleDataType } from '../../types/MyPage/MyArticleTypes';
+import { ArticleDataType } from '../../types/Community/articleTypes';
 
 export default function useGetMyArticle(currentPage: number) {
   // TODO : 이후에 api 작업시에 실제 데이터로 대체할 것
