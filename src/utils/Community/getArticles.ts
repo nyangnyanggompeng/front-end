@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ArticleDataType } from '../../types/Community/communityTypes';
+import { ArticleDataType } from '../../types/Community/articleTypes';
 
 export async function getArticles(
   currentPage: number
