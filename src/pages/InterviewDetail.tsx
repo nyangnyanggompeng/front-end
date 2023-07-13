@@ -107,6 +107,8 @@ const InterviewDetail = () => {
   });
 
   const [detailData, setDetailData] = useState<InterviewDetailData[]>([]);
+  const questionSet = new Set<number>();
+
   // console.log(id, type, name, createdAt);
 
   const handleOnChange = (className: string, value: string) => {
@@ -126,6 +128,10 @@ const InterviewDetail = () => {
     try {
       const res = await axios.get(`/chatgpt/contents/${id}`);
       setDetailData(res.data);
+      console.log(res.data);
+      res.data.map((el: InterviewDetailData) =>
+        questionSet.add(el.questionNum)
+      );
     } catch (err) {
       console.log(err);
       setDetailData([]);
@@ -223,14 +229,22 @@ const InterviewDetail = () => {
             <FontAwesomeIcon icon={faChevronDown} />
           </Button>
           <ul className='reply-list'>
-            <div className='no-content'>
-              자기소개서를 입력하고 <br />
-              면접 예상 질문을 받아보세요!
-            </div>
             {/* 전체 배열의 개수만큼 출력하는게 아니라 퀘스천 넘버의 가장 큰 숫자만큼? 반복 */}
-            {detailData.map((question) => {
-              return <ReplyItem key={question.id} question={question} />;
-            })}
+            {!detailData || detailData.length === 0 ? (
+              <div className='no-content'>
+                자기소개서를 입력하고 <br />
+                면접 예상 질문을 받아보세요!
+              </div>
+            ) : (
+              Array.from(questionSet).map((item, idx) => {
+                const filtered = detailData.filter(
+                  (el) => el.questionNum === item
+                );
+                return (
+                  <ReplyItem key={idx} questionNum={item} messages={filtered} />
+                );
+              })
+            )}
           </ul>
         </div>
       </div>

@@ -5,14 +5,15 @@ import MessageItem from './MessageItem';
 import { InterviewDetailData } from '../../types/Interview/detailTypes';
 
 interface ReplyItemProps {
-  question: InterviewDetailData;
+  questionNum: number;
+  messages: InterviewDetailData[];
 }
 
-const ReplyItem = ({ question }: ReplyItemProps) => {
+const ReplyItem = ({ questionNum, messages }: ReplyItemProps) => {
   return (
     <li>
       <div className='title'>
-        <p>질문 {question.questionNum}</p>
+        <p>질문 {questionNum}</p>
         <button type='button'>
           <FontAwesomeIcon icon={faChevronDown} />
         </button>
