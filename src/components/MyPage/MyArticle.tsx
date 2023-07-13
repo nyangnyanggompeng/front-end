@@ -52,7 +52,6 @@ export default function MyArticle() {
           else alert(deleteStatusMessage['INTERNAL_SERVER_ERROR']);
         });
       // 성공하면 삭제 모드 해제
-      alert('삭제되었습니다.');
       setIsDeleteMode(false);
     }
   }
