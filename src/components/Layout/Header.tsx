@@ -1,6 +1,6 @@
 import { Theme, css, useTheme } from '@emotion/react';
 import logo from '../../asset/logo.png';
-import Button from './Button';
+import Button from '../Common/Button';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
