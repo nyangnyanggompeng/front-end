@@ -70,6 +70,9 @@ const StyledInterviewDetail = (theme: Theme) =>
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          '.length.over': {
+            color: `${theme.red}`,
+          },
         },
         textarea: {
           height: '10rem',
@@ -98,16 +101,25 @@ const InterviewDetail = () => {
   const { id, type, name, createdAt } = location.state;
   const radio = ['일반', '기술', '인성'];
   const [formData, setFormData] = useState({
-    type: '',
-    count: '0',
+    type: '일반',
+    count: '1',
     prompt: '',
   });
 
   const [detailData, setDetailData] = useState<InterviewDetailData[]>([]);
   // console.log(id, type, name, createdAt);
 
-  const onChangeRadio = (value: string) => {
-    setFormData({ ...formData, type: value });
+  const handleOnChange = (className: string, value: string) => {
+    setFormData({ ...formData, [className]: value });
+  };
+
+  const onSubmit = async () => {
+    try {
+      const res = await axios.post(`/chatgpt/contents/${id}`, formData);
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getChatData = async () => {
@@ -135,7 +147,7 @@ const InterviewDetail = () => {
           <h3>{name}</h3>
           <span className='date'>{parseDate(createdAt)}</span>
         </div>
-        <form>
+        <form onSubmit={onSubmit}>
           <div className='radio-box'>
             <p>면접 유형</p>
             {radio.map((item, idx) => {
@@ -144,9 +156,12 @@ const InterviewDetail = () => {
                   <input
                     type='radio'
                     name='type'
+                    className='type'
                     value={item}
-                    checked={type === item || (!type && item === '일반')}
-                    onChange={(e) => onChangeRadio(e.target.value)}
+                    defaultChecked={type === item || (!type && item === '일반')}
+                    onChange={(e) =>
+                      handleOnChange(e.target.className, e.target.value)
+                    }
                   />
                   {item}면접
                 </label>
@@ -155,27 +170,52 @@ const InterviewDetail = () => {
           </div>
           <div className='count-box'>
             <label htmlFor='count'>예상 질문 개수</label>
-            <select id='count'>
-              <option value={1}>1</option>
-              <option value={2}>2</option>
-              <option value={3}>3</option>
-              <option value={4}>4</option>
-              <option value={5}>5</option>
-              <option value={6}>6</option>
-              <option value={7}>7</option>
-              <option value={8}>8</option>
-              <option value={9}>9</option>
-              <option value={10}>10</option>
+            <select
+              id='count'
+              className='count'
+              defaultValue={'1'}
+              onChange={(e) =>
+                handleOnChange(e.target.className, e.target.value)
+              }
+            >
+              <option value={'1'}>1</option>
+              <option value={'2'}>2</option>
+              <option value={'3'}>3</option>
+              <option value={'4'}>4</option>
+              <option value={'5'}>5</option>
+              <option value={'6'}>6</option>
+              <option value={'7'}>7</option>
+              <option value={'8'}>8</option>
+              <option value={'9'}>9</option>
+              <option value={'10'}>10</option>
             </select>
           </div>
           <div className='prompt-box'>
             <div className='txt-info'>
               <label htmlFor='text'>자기소개서</label>
-              <p>0 / 3000</p>
+              <p>
+                <span
+                  className={
+                    formData.prompt.length === 3000 ? 'length over' : 'length'
+                  }
+                >
+                  {formData.prompt.length}
+                </span>{' '}
+                / 3000
+              </p>
             </div>
-            <textarea id='text' placeholder='자기소개서를 입력해 주세요.' />
+            <textarea
+              id='text'
+              className='prompt'
+              placeholder='자기소개서를 입력해 주세요.'
+              maxLength={3000}
+              value={formData.prompt}
+              onChange={(e) =>
+                handleOnChange(e.target.className, e.target.value)
+              }
+            />
           </div>
-          <Button onClick={() => console.log('질문폼 전송')}>질문하기</Button>
+          <Button onClick={onSubmit}>질문하기</Button>
         </form>
         <div className='reply-wrap'>
           <Button status='sub' onClick={() => console.log('전체 접기/펴기')}>
