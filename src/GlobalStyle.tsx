@@ -83,16 +83,24 @@ const style = (theme: Theme) =>
       fontWeight: 700,
     },
 
-    input: {
+    'input, select, textarea': {
       border: `1px solid ${theme.gray1}`,
       backgroundColor: 'transparent',
       borderRadius: 5,
       padding: '1rem 1.5rem',
-      width: '100%',
 
       '&::placeholder': {
         color: `${theme.gray2}`,
       },
+    },
+
+    input: {
+      width: '100%',
+    },
+
+    textarea: {
+      resize: 'none',
+      width: '100%',
     },
   });
 
