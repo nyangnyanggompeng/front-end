@@ -7,11 +7,11 @@ type ArticleInfoBaseType = {
 };
 
 export type ArticleDataItemType = ArticleInfoBaseType & {
-  numOfComment: number;
+  numberOfComment: number;
 };
 
 export type ArticleDataType = {
-  post: ArticleDataItemType[];
+  Post: ArticleDataItemType[];
   numberOfPost: number;
   totalPages: number;
 };
