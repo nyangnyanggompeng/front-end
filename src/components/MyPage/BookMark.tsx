@@ -11,15 +11,21 @@ export default function BookMark() {
   if (isError || data === undefined) return <div>에러!</div>;
   return (
     <div>
-      <div>{`전체 ${data.numberOfContent}개`}</div>
-      {data.Content.map((bookmark: BookMarkType) => (
-        <BookMarkItem key={bookmark.id} bookmark={bookmark} />
-      ))}
-      <Pagination
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalPage={data.totalPages}
-      />
+      {data.Content.length === 0 ? (
+        <div>북마크가 없습니다.</div>
+      ) : (
+        <div>
+          <div>{`전체 ${data.numberOfContent}개`}</div>
+          {data.Content.map((bookmark: BookMarkType) => (
+            <BookMarkItem key={bookmark.id} bookmark={bookmark} />
+          ))}
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPage={data.totalPages}
+          />
+        </div>
+      )}
     </div>
   );
 }
