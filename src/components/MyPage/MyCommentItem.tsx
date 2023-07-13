@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { MyCommentType } from '../../types/MyPage/MyCommentTypes';
+import { getDate } from '../../utils/Common/getDate';
 
 type MyCommentItemProps = {
   isDeleteMode: boolean;
@@ -28,17 +29,4 @@ export default function MyCommentItem({
       >{`게시글 제목: ${myComment.Post.title}`}</Link>
     </div>
   );
-}
-
-// TODO : 중복된 함수이므로 추후 삭제 (utils에 있음)
-function getDate(date: Date) {
-  const currentDate = new Date();
-  if (
-    date.getFullYear() !== currentDate.getFullYear() ||
-    date.getMonth() !== currentDate.getMonth() ||
-    date.getDate() !== currentDate.getDate()
-  ) {
-    return `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
-  }
-  return `${date.getHours()}:${date.getMinutes()}`;
 }
