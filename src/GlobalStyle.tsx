@@ -99,7 +99,7 @@ const style = (theme: Theme) =>
     },
 
     textarea: {
-      resize: 'none',
+      resize: 'vertical',
       width: '100%',
     },
   });
