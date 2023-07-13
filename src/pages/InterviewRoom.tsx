@@ -9,7 +9,7 @@ import { ModalContainer } from '../components/Modal/ModalContainer';
 import Pagination from '../components/Common/Pagination';
 import { Theme, css, useTheme } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
-import { InterviewData, errMsg } from '../types/Interview/listTypes';
+import { InterviewData, errMsg } from '../types/Interview/ListTypes';
 import { getList } from '../utils/Interview/interviewListFn';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -164,6 +164,7 @@ const InterviewRoom = () => {
     }
   };
 
+  // TODO : 전체삭제 + 선택삭제 + 삭제 취소
   const deleteAllChat = async () => {
     if (data?.List.length === 0) {
       alert('삭제할 수 있는 인터뷰가 없습니다.');
@@ -191,8 +192,12 @@ const InterviewRoom = () => {
       alert('삭제할 수 있는 인터뷰가 없습니다.');
       return;
     }
-
     setIsSelectMode(!isSelectMode);
+    const listIdList = Array.from(checkedArr);
+    if (isSelectMode && listIdList.length === 0) {
+      alert('삭제할 인터뷰를 선택해주세요.');
+      return;
+    }
 
     if (isSelectMode) {
       try {
@@ -202,7 +207,7 @@ const InterviewRoom = () => {
           )
         ) {
           await axios.put('/chatgpt/lists', {
-            listIdList: Array.from(checkedArr),
+            listIdList,
           });
           queryClient.invalidateQueries({ queryKey: ['InterviewList'] });
         }
