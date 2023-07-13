@@ -79,10 +79,18 @@ const InterviewRoom = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [chatName, setChatName] = useState('');
   const [isSelectMode, setIsSelectMode] = useState(false);
-  const [checkedArr, setCheckedArr] = useState<number[] | []>([]);
+  const [checkedArr, setCheckedArr] = useState<Set<number>>(new Set());
 
-  const onChangeCheck = (id: number) => {
-    setCheckedArr([...checkedArr, id]);
+  const onChangeCheck = (e: React.MouseEvent<HTMLInputElement>, id: number) => {
+    const target = e.target as HTMLInputElement;
+    setCheckedArr((prev) => {
+      if (target.checked) {
+        prev.add(id);
+      } else {
+        prev.delete(id);
+      }
+      return prev;
+    });
   };
 
   const changeName = async (id: number, name: string) => {
@@ -119,7 +127,7 @@ const InterviewRoom = () => {
       });
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        switch (err.response.data) {
+        switch (err.response !== undefined && err.response.data) {
           case 'LIST_NAME_NO_ENTERED':
             return alert(errMsg.LIST_NAME_NO_ENTERED);
           case 'LIST_NAME_ALREADY_EXISTS':
@@ -177,6 +185,7 @@ const InterviewRoom = () => {
       alert('삭제할 수 있는 인터뷰가 없습니다.');
       return;
     }
+
     setIsSelectMode(!isSelectMode);
 
     if (isSelectMode) {
@@ -186,7 +195,9 @@ const InterviewRoom = () => {
             `선택한 인터뷰가 삭제되고, 이 내용은 복구할 수 없습니다.\n정말 삭제하시겠습니까?`
           )
         ) {
-          await axios.put('/chatgpt/lists', { listIdList: checkedArr });
+          await axios.put('/chatgpt/lists', {
+            listIdList: Array.from(checkedArr),
+          });
         }
       } catch (err) {
         if (axios.isAxiosError(err)) alert(errMsg.INTERNAL_SERVER_ERROR);
@@ -232,6 +243,7 @@ const InterviewRoom = () => {
               <FontAwesomeIcon icon={faEraser} />
               {isSelectMode ? '삭제하기' : '선택삭제'}
             </Button>
+
             <Button onClick={() => setIsOpen(true)}>
               <FontAwesomeIcon icon={faPlus} />새 인터뷰
             </Button>

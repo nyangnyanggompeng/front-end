@@ -13,7 +13,7 @@ interface InterviewItemProps {
   createdAt: string;
   deleteChat(id: number): void;
   isSelectMode: boolean;
-  onChangeCheck(id: number): void;
+  onChangeCheck(e: React.MouseEvent<HTMLInputElement>, id: number): void;
   changeName(id: number, newName: string): void;
 }
 
@@ -110,8 +110,8 @@ const InterviewItem = ({
     <li css={StyledInterviewItem(theme)}>
       {isSelectMode && (
         <div className='left'>
-          <label className='checkbox' onClick={() => onChangeCheck(id)}>
-            <input type='checkbox' />
+          <label className='checkbox'>
+            <input type='checkbox' onClick={(e) => onChangeCheck(e, id)} />
           </label>
         </div>
       )}
