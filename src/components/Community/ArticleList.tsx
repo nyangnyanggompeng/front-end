@@ -1,14 +1,11 @@
-import { ArticleType } from '../../types/Community/communityTypes';
+import { ArticleDataItemType } from '../../types/Community/articleTypes';
 import { ArticleListItem } from './ArticleListItem';
 
 type ArticleListProps = {
-  articleList: ArticleType[];
+  articleList: ArticleDataItemType[];
 };
 
 export function ArticleList({ articleList }: ArticleListProps) {
-  if (!articleList || articleList.length === 0) {
-    return <div>게시물이 없습니다.</div>;
-  }
   return (
     <div>
       {articleList.map((article) => (
@@ -17,7 +14,7 @@ export function ArticleList({ articleList }: ArticleListProps) {
           title={article.title}
           writer={article.writer}
           createdAt={article.createdAt}
-          numOfComment={article.numOfComment}
+          numberOfComment={article.numberOfComment}
           id={article.id}
         />
       ))}
