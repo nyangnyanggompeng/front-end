@@ -27,15 +27,11 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2
+          aws-region: ${{ secrets.AWS_REGION }}
           
       - name: Deploy to S3
         run: |
-          pwd
-          ls -al
-          echo "----"
-          echo ${{ secrets.AWS_BUCKET_NAME }}
           aws s3 sync \
             build ${{ secrets.AWS_BUCKET_NAME }} \
             --delete
-        working-directory: ../${{ secrets.BUILD_DIRECTORY }}
+        working-directory: ./
