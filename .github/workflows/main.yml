@@ -33,7 +33,7 @@ jobs:
         run: |
           pwd
           ls -al
-          aws s3 sync ./${{ secrets.BUILD_DIRECTORY }} ${{ secrets.AWS_BUCKET_NAME }} --acl --delete
+          aws s3 sync ./${{ secrets.BUILD_DIRECTORY }} ${{ secrets.AWS_BUCKET_NAME }} --delete
 #          aws s3 sync ./${{ secrets.BUILD_DIRECTORY }} ${{ secrets.AWS_BUCKET_NAME }} --acl public-read --delete
         
         
