@@ -5,7 +5,7 @@ on:
       - deploy
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: macos-12
     steps:
       - name: Git Checkout
         uses: actions/checkout@v1
@@ -31,7 +31,9 @@ jobs:
           
       - name: Deploy to S3
         run: |
+          pwd
+          ls -al
           aws s3 sync \
             build ${{ secrets.AWS_BUCKET_NAME }} \
             --delete
-        working-directory: ./
+#         working-directory: ./
