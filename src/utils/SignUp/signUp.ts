@@ -3,7 +3,7 @@ import {
   SignupFormType,
   SignupStatus,
   SignupStatusType,
-} from '../../types/SignUp';
+} from '../../types/Signup/signUp';
 
 function SignupStatusTypeChecker(status: unknown) {
   if (typeof status !== 'string') return false;

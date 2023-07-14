@@ -9,9 +9,9 @@ import { ModalContainer } from '../components/Modal/ModalContainer';
 import Pagination from '../components/Common/Pagination';
 import { Theme, css, useTheme } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
-import { InterviewData, errMsg } from '../types/Interview/listTypes';
 import { getList } from '../utils/Interview/interviewListFn';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { InterviewData, errMsg } from '../types/Interview/ListTypes';
 
 const StyledInterviewRoom = (theme: Theme) =>
   css({

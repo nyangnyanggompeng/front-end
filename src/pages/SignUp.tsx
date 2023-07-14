@@ -1,8 +1,8 @@
 import EmailCheck from '../components/SignUp/EmailCheck';
 import PasswordCheck from '../components/SignUp/PasswordCheck';
 import NicknameCheck from '../components/SignUp/NicknameCheck';
-import { SignupFormType, SignupStatusType } from '../types/SignUp';
 import { signup } from '../utils/SignUp';
+import { SignupFormType, SignupStatusType } from '../types/Signup/signUp';
 
 const signupResultMessage: Record<SignupStatusType, string> = {
   USER_CREATED: '회원가입이 완료되었습니다.',

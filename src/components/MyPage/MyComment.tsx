@@ -21,7 +21,7 @@ export default function MyComment() {
     new Set()
   );
   const [isDeleteMode, setIsDeleteMode] = useState(false);
-  const { isLoading, isError, error, data } = useGetMyComment(currentPage);
+  const { isLoading, isError, data } = useGetMyComment(currentPage);
   if (isLoading) return <div>로딩중</div>;
   if (isError || data === undefined) return <div>에러!</div>;
 

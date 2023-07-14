@@ -4,6 +4,6 @@ import axios from 'axios';
 export const logoutHandler = () => {
   return axios
     .get('/logout')
-    .then((res) => console.log('로그아웃시 상태변경'))
-    .catch((err) => console.log('로그아웃 실패 로직'));
+    .then(() => console.log('로그아웃시 상태변경'))
+    .catch(() => console.log('로그아웃 실패 로직'));
 };

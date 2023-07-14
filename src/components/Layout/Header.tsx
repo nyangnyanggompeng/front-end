@@ -1,10 +1,9 @@
 import { Theme, css, useTheme } from '@emotion/react';
 import logo from '../../asset/logo.png';
 import Button from '../Common/Button';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { logoutHandler } from '../../utils/SignIn/userFunc';
 
 const StyledHeader = (theme: Theme) =>
   css({
@@ -99,7 +98,7 @@ type HeaderProps = {
 
 const Header = ({ isDark, setIsDark, isLogin, setIsLogin }: HeaderProps) => {
   const theme = useTheme();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const onChange = () => {
     setIsDark(!isDark);
   };

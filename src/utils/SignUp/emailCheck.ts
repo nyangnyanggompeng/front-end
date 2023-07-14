@@ -1,9 +1,9 @@
 import axios, { isAxiosError } from 'axios';
 import {
+  EmailRequestType,
   EmailStatus,
   EmailStatusType,
-  EmailRequestType,
-} from '../../types/SignUp';
+} from '../../types/Signup/email';
 
 function EmailStatusTypeChecker(status: unknown) {
   if (typeof status !== 'string') return false;

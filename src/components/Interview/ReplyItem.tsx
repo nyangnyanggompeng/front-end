@@ -2,7 +2,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../Common/Button';
 import MessageItem from './MessageItem';
-import { InterviewDetailData } from '../../pages/InterviewDetail';
+import { InterviewDetailData } from '../../types/Interview/detailTypes';
 
 interface ReplyItemProps {
   question: InterviewDetailData;

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { EmailStatusType, EmailRequestType } from '../../types/SignUp';
+import { EmailRequestType, EmailStatusType } from '../../types/Signup/email';
 import { emailCheck } from '../../utils/SignUp';
 
 const statusMessage: Record<EmailStatusType, string> = {

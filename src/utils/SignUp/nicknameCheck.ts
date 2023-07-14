@@ -1,9 +1,9 @@
 import axios, { isAxiosError } from 'axios';
 import {
+  NicknameRequestType,
   NicknameStatus,
   NicknameStatusType,
-  NicknameRequestType,
-} from '../../types/SignUp';
+} from '../../types/Signup/nickname';
 
 function NicknameStatusTypeChecker(status: unknown) {
   if (typeof status !== 'string') return false;

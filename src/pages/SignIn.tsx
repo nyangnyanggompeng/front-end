@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 interface LoginInfo {
   userId: string;
@@ -8,7 +7,6 @@ interface LoginInfo {
 }
 
 const SignIn = () => {
-  const navigate = useNavigate();
   const [error, setError] = useState(false);
   const [loginInfo, setLoginInfo] = useState<LoginInfo>({
     userId: '',
@@ -38,7 +36,7 @@ const SignIn = () => {
       .post('/login', {
         loginInfo,
       })
-      .then((res) => {
+      .then(() => {
         console.log('로그인로직');
 
         // const { accessToken } = res.data;

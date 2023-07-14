@@ -20,7 +20,10 @@ function Pagination({
       startPage + OFFSET > totalPage ? totalPage : startPage + OFFSET;
     if (startPage !== pageArray.at(0) || endPage !== pageArray.at(-1)) {
       setPageArray(
-        Array.from(new Array(endPage - startPage + 1), (x, i) => i + startPage)
+        Array.from(new Array(endPage - startPage + 1), (x, i) => {
+          x; // FIXME
+          return i + startPage;
+        })
       );
     }
   }, [currentPage, totalPage]);

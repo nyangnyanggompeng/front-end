@@ -6,7 +6,7 @@ import useGetBookMark from '../../hooks/MyPage/useGetBookMark';
 
 export default function BookMark() {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { isLoading, isError, error, data } = useGetBookMark(currentPage);
+  const { isLoading, isError, data } = useGetBookMark(currentPage);
   if (isLoading) return <div>로딩중</div>;
   if (isError || data === undefined) return <div>에러!</div>;
   return (
