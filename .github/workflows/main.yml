@@ -31,6 +31,10 @@ jobs:
           
       - name: Deploy to S3
         run: |
+          pwd
+          ls -al
+          echo "----"
+          echo ${{ secrets.AWS_BUCKET_NAME }}
           aws s3 sync \
             build ${{ secrets.AWS_BUCKET_NAME }} \
             --delete
