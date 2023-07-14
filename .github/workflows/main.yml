@@ -36,4 +36,4 @@ jobs:
           aws s3 sync \
             build ${{ secrets.AWS_BUCKET_NAME }} \
             --delete
-#         working-directory: ./
+        working-directory: ./${{ secrets.BUILD_DIRECTORY }}
