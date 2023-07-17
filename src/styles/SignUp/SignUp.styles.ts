@@ -11,8 +11,7 @@ export const SignUpSubmitButton = (theme: Theme) =>
   });
 
 export const LogoStyle = css({
-  width: '13rem',
   height: '2.5rem',
-  flexShrink: 0,
+  objectFit: 'contain',
   marginBottom: '3.12rem',
 });
