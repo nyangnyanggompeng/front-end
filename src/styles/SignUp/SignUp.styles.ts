@@ -9,3 +9,10 @@ export const SignUpSubmitButton = (theme: Theme) =>
     border: `1px solid ${theme.black}`,
     fontSize: '1.125rem',
   });
+
+export const LogoStyle = css({
+  width: '13rem',
+  height: '2.5rem',
+  flexShrink: 0,
+  marginBottom: '3.12rem',
+});

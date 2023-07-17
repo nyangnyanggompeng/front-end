@@ -4,9 +4,12 @@ import PasswordCheck from '../components/SignUp/PasswordCheck';
 import NicknameCheck from '../components/SignUp/NicknameCheck';
 import { SignupFormType, SignupStatusType } from '../types/SignUp';
 import { signup } from '../utils/SignUp';
-import { PageBox } from '../styles/Common/PageBox';
-import { SignUpSubmitButton } from '../styles/SignUp/SignUp.styles';
-// import Button from '../components/Common/Button';
+import {
+  logoImg,
+  PageBox,
+  SignUpSubmitButton,
+  LogoStyle,
+} from '../styles/SignUp';
 
 const signupResultMessage: Record<SignupStatusType, string> = {
   USER_CREATED: '회원가입이 완료되었습니다.',
@@ -52,7 +55,7 @@ function SignUp() {
   return (
     <div className='inner'>
       <div css={PageBox(theme)}>
-        <h1>회원 가입</h1>
+        <img src={logoImg} alt='logo' css={LogoStyle} />
         <form onSubmit={onSubmit}>
           <EmailCheck />
           <PasswordCheck />
