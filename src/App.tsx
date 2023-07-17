@@ -17,7 +17,7 @@ function App() {
   axios.defaults.headers.post['Content-Type'] = 'application/json';
   axios.defaults.withCredentials = true;
   const [isDark, setIsDark] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   return (
     <>
       <ThemeProvider theme={isDark ? darkMode : lightMode}>

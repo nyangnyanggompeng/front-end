@@ -117,7 +117,7 @@ const Header = ({ isDark, setIsDark, isLogin, setIsLogin }: HeaderProps) => {
             <nav>
               <ul>
                 <li>
-                  <NavLink to='#'>인터뷰 룸</NavLink>
+                  <NavLink to='/interview-room'>인터뷰 룸</NavLink>
                 </li>
                 <li>
                   <NavLink to='/community'>커뮤니티</NavLink>
@@ -134,11 +134,11 @@ const Header = ({ isDark, setIsDark, isLogin, setIsLogin }: HeaderProps) => {
             <FontAwesomeIcon icon={faSun} />
           </label>
           {isLogin ? (
+            <Button onClick={() => setIsLogin(!isLogin)}>로그아웃</Button>
+          ) : (
             // <Button status='sub' onClick={() => navigate('/sign-in')}>
             //   로그인
             // </Button>
-            <Button onClick={() => setIsLogin(!isLogin)}>로그아웃</Button>
-          ) : (
             <Button status='sub' onClick={() => setIsLogin(!isLogin)}>
               로그인
             </Button>
