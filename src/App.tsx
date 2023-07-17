@@ -32,7 +32,7 @@ function App() {
           <section className='container'>
             <Router />
           </section>
-          <Footer />
+          <Footer isDark={isDark} />
         </QueryClientProvider>
       </ThemeProvider>
     </>
