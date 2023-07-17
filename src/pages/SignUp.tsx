@@ -1,8 +1,12 @@
+import { useTheme } from '@emotion/react';
 import EmailCheck from '../components/SignUp/EmailCheck';
 import PasswordCheck from '../components/SignUp/PasswordCheck';
 import NicknameCheck from '../components/SignUp/NicknameCheck';
 import { SignupFormType, SignupStatusType } from '../types/SignUp';
 import { signup } from '../utils/SignUp';
+import { PageBox } from '../styles/Common/PageBox';
+import { SignUpSubmitButton } from '../styles/SignUp/SignUp.styles';
+// import Button from '../components/Common/Button';
 
 const signupResultMessage: Record<SignupStatusType, string> = {
   USER_CREATED: '회원가입이 완료되었습니다.',
@@ -15,6 +19,7 @@ const signupResultMessage: Record<SignupStatusType, string> = {
 };
 
 function SignUp() {
+  const theme = useTheme();
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -45,14 +50,22 @@ function SignUp() {
   };
 
   return (
-    <div>
-      <h1>회원 가입</h1>
-      <form onSubmit={onSubmit}>
-        <EmailCheck />
-        <PasswordCheck />
-        <NicknameCheck />
-        <button type='submit'>회원 가입</button>
-      </form>
+    <div className='inner'>
+      <div css={PageBox(theme)}>
+        <h1>회원 가입</h1>
+        <form onSubmit={onSubmit}>
+          <EmailCheck />
+          <PasswordCheck />
+          <NicknameCheck />
+          {/* TODO : 기존 styled button에 흑백 버튼을 넣는 방식 논의 필요 */}
+          {/* <Button type='submit' status='?'>
+            회원 가입
+          </Button> */}
+          <button type='submit' css={SignUpSubmitButton(theme)}>
+            회원 가입
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
