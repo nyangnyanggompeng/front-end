@@ -22,6 +22,7 @@ const StyledHeader = (theme: Theme) =>
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
+      width: '50%',
     },
 
     nav: {
