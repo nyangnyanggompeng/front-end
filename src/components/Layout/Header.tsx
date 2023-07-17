@@ -4,7 +4,11 @@ import Button from '../Common/Button';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { logoutHandler } from '../../utils/SignIn/userFunc';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { resetUser } from '../../store/slices/profileSlices';
+import axios from 'axios';
 
 const StyledHeader = (theme: Theme) =>
   css({
@@ -93,16 +97,31 @@ const StyledHeader = (theme: Theme) =>
 type HeaderProps = {
   isDark: boolean;
   setIsDark: React.Dispatch<React.SetStateAction<boolean>>;
-  isLogin: boolean;
-  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Header = ({ isDark, setIsDark, isLogin, setIsLogin }: HeaderProps) => {
+const Header = ({ isDark, setIsDark }: HeaderProps) => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const profile = useSelector((state: RootState) => state.profile);
+  const [isLogin, setIsLogin] = useState(false);
+
   const onChange = () => {
     setIsDark(!isDark);
   };
+
+  const logoutHandler = async () => {
+    try {
+      await axios.get('/users/logout'); // TODO : 쿠키 삭제 확인할것
+      dispatch(resetUser());
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    profile.data.username ? setIsLogin(true) : setIsLogin(false);
+  }, [profile]);
 
   return (
     <header css={StyledHeader(theme)}>
@@ -134,14 +153,11 @@ const Header = ({ isDark, setIsDark, isLogin, setIsLogin }: HeaderProps) => {
             <FontAwesomeIcon icon={faSun} />
           </label>
           {isLogin ? (
-            // <Button status='sub' onClick={() => navigate('/sign-in')}>
-            //   로그인
-            // </Button>
-            <Button onClick={() => setIsLogin(!isLogin)}>로그아웃</Button>
-          ) : (
-            <Button status='sub' onClick={() => setIsLogin(!isLogin)}>
-              로그인
+            <Button status='sub' onClick={logoutHandler}>
+              로그아웃
             </Button>
+          ) : (
+            <Button onClick={() => navigate('/sign-in')}>로그인</Button>
           )}
         </div>
       </div>

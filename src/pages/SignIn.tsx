@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { logoutHandler } from '../utils/SignIn/userFunc';
 import { Theme, css, useTheme } from '@emotion/react';
 import logo from '../asset/logo.png';
-import Button from '../components/Common/Button';
+import { useDispatch } from 'react-redux';
+import { getUser } from '../store/slices/profileSlices';
+// import Button from '../components/Common/Button';
 
 interface LoginInfo {
   userId: string;
@@ -70,6 +71,8 @@ const StyledSignIn = (theme: Theme) =>
 
 const SignIn = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const message: Message = {
     LOGIN_SUCCESS: '',
@@ -94,8 +97,8 @@ const SignIn = () => {
     });
   };
 
-  const loginRequestHandler = async () => {
-    // e.preventDefault();
+  const loginRequestHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
     // 입력된 값 유효성 검사
     if (!loginInfo.userId || !loginInfo.password) {
@@ -133,15 +136,15 @@ const SignIn = () => {
       });
 
     // 발급된 토큰으로 유저정보 가져오기
-    axios
+    await axios
       .get('/users/auth')
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
+        dispatch(getUser(res.data));
       })
       .catch((err) => console.log(err));
 
-    // 필요한 페이지로 리다이렉트
-    // navigate(0); // 임시
+    navigate('/my-page');
   };
 
   return (
@@ -169,11 +172,8 @@ const SignIn = () => {
               onChange={handleOnChange}
             />
           </div>
-          <p className='err-msg'>에러메시지에용</p>
           {error && <p className='err-msg'>{error}</p>}
-          <Button type='submit' onClick={loginRequestHandler}>
-            로그인
-          </Button>
+          <button type='submit'>로그인</button>
         </form>
         <p>
           비밀번호를 잊으셨나요?<a href='#'>비밀번호 찾기</a>

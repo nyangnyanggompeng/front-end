@@ -17,18 +17,12 @@ function App() {
   axios.defaults.headers['Content-Type'] = 'application/json';
   axios.defaults.withCredentials = true;
   const [isDark, setIsDark] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
   return (
     <>
       <ThemeProvider theme={isDark ? darkMode : lightMode}>
         <QueryClientProvider client={queryClient}>
           <GlobalStyle />
-          <Header
-            isDark={isDark}
-            setIsDark={setIsDark}
-            isLogin={isLogin}
-            setIsLogin={setIsLogin}
-          />
+          <Header isDark={isDark} setIsDark={setIsDark} />
           <section className='container'>
             <Router />
           </section>
