@@ -9,7 +9,7 @@ COMMIT_MSG_HEAD=$(head -n1 $COMMIT_MSG_FILE)
 COMMIT_MSG_BODY=$(tail -n+2 $COMMIT_MSG_FILE)
 
 # Error 1 : branch이름이 main 혹은 dev가 아닌데, github issue 번호가 없다면 에러를 출력하고 종료합니다.
-if [[ $BRANCH_NAME != "main" && $BRANCH_NAME != "dev" && -z $ISSUE_NUMBER_IN_BRANCH_NAME ]]; then
+if [[ $BRANCH_NAME != "main" && $BRANCH_NAME != "dev" && $BRANCH_NAME != "deploy" && -z $ISSUE_NUMBER_IN_BRANCH_NAME ]]; then
   echo "ERROR: Branch name must be 'main' or 'dev' or 'branch-name-#<issue number>'"
   exit 1
 fi

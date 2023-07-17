@@ -16,7 +16,6 @@ export const lightMode: Theme = {
   fontColor: '#333',
 };
 
-// TODO : 다크모드 적용시 색상 변경 예정
 export const darkMode: Theme = {
   blue1: '#7ac8ec',
   blue2: '#019ac4',
@@ -32,3 +31,12 @@ export const darkMode: Theme = {
   bgColor: '#000',
   fontColor: '#eee',
 };
+
+// pc : 1008px 이상
+// tablet : 1007 이하 641 이상
+// mobile : 640 이하
+// link : https://learn.microsoft.com/ko-kr/windows/apps/design/layout/screen-sizes-and-breakpoints-for-responsive-design
+const breakpoints = [1007, 640];
+export const mq = breakpoints.map(
+  (bp) => `@media all and (max-width: ${bp}px)`
+);
