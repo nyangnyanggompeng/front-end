@@ -55,6 +55,7 @@ function EmailCheck() {
 
   return (
     <div>
+      <h3>이메일</h3>
       <input
         type='text'
         name='username'

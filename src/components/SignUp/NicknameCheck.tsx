@@ -42,6 +42,7 @@ function NicknameCheck() {
 
   return (
     <div>
+      <h3>닉네임</h3>
       <input
         type='text'
         name='nickname'

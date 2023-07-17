@@ -61,12 +61,14 @@ function PasswordCheck() {
 
   return (
     <div>
+      <h3>비밀번호</h3>
       <input
         type='password'
         name='password'
         placeholder='비밀번호'
         onChange={onChange}
       />
+      <h3>비밀번호 확인</h3>
       <input
         type='password'
         name='passwordVerify'

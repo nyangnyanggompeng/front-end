@@ -14,4 +14,7 @@ export const PageBox = (theme: Theme) =>
     '*': {
       width: '100%',
     },
+    h3: {
+      fontSize: '1.5rem',
+    },
   });
