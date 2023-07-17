@@ -44,7 +44,7 @@ const StyledInterviewDetail = (theme: Theme) =>
       padding: '2rem',
       display: 'flex',
       flexDirection: 'column',
-      marginBottom: '5rem',
+      marginBottom: '10rem',
       gap: '1rem',
       '> div': {
         display: 'flex',
@@ -82,7 +82,7 @@ const StyledInterviewDetail = (theme: Theme) =>
     '.reply-wrap': {
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center',
+
       '> button': {
         alignSelf: 'flex-end',
       },
@@ -91,6 +91,13 @@ const StyledInterviewDetail = (theme: Theme) =>
         fontWeight: 700,
         textAlign: 'center',
         margin: '10rem 0',
+      },
+      '.reply-list': {
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        marginTop: '5rem',
+        gap: '10rem',
       },
     },
   });
@@ -107,7 +114,7 @@ const InterviewDetail = () => {
   });
 
   const [detailData, setDetailData] = useState<InterviewDetailData[]>([]);
-  const questionSet = new Set<number>();
+  const [questionSet, setQusetionSet] = useState<Set<number>>(new Set());
 
   // console.log(id, type, name, createdAt);
 
@@ -119,6 +126,7 @@ const InterviewDetail = () => {
     try {
       const res = await axios.post(`/chatgpt/contents/${id}`, formData);
       console.log(res.data);
+      setDetailData(res.data[1]);
     } catch (error) {
       console.log(error);
     }
@@ -127,9 +135,8 @@ const InterviewDetail = () => {
   const getChatData = async () => {
     try {
       const res = await axios.get(`/chatgpt/contents/${id}`);
-      setDetailData(res.data);
-      console.log(res.data);
-      res.data.map((el: InterviewDetailData) =>
+      setDetailData(res.data[1]);
+      res.data[1].map((el: InterviewDetailData) =>
         questionSet.add(el.questionNum)
       );
     } catch (err) {
@@ -139,6 +146,8 @@ const InterviewDetail = () => {
   };
 
   useEffect(() => {
+    // 새로 채팅방이 생성된 경우
+    // 기존에 있던 채팅방으로 들어온 경우
     getChatData();
   }, []);
 
@@ -228,24 +237,23 @@ const InterviewDetail = () => {
             전체 펴기
             <FontAwesomeIcon icon={faChevronDown} />
           </Button>
-          <ul className='reply-list'>
-            {/* 전체 배열의 개수만큼 출력하는게 아니라 퀘스천 넘버의 가장 큰 숫자만큼? 반복 */}
-            {!detailData || detailData.length === 0 ? (
-              <div className='no-content'>
-                자기소개서를 입력하고 <br />
-                면접 예상 질문을 받아보세요!
-              </div>
-            ) : (
-              Array.from(questionSet).map((item, idx) => {
+          {!detailData || detailData.length === 0 ? (
+            <div className='no-content'>
+              자기소개서를 입력하고 <br />
+              면접 예상 질문을 받아보세요!
+            </div>
+          ) : (
+            <ul className='reply-list'>
+              {Array.from(questionSet).map((item, idx) => {
                 const filtered = detailData.filter(
                   (el) => el.questionNum === item
                 );
                 return (
                   <ReplyItem key={idx} questionNum={item} messages={filtered} />
                 );
-              })
-            )}
-          </ul>
+              })}
+            </ul>
+          )}
         </div>
       </div>
     </main>
