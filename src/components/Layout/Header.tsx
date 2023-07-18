@@ -4,11 +4,11 @@ import Button from '../Common/Button';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { resetUser } from '../../store/slices/profileSlices';
 import axios from 'axios';
+import { modeChange } from '../../store/slices/modeSlices';
 
 const StyledHeader = (theme: Theme) =>
   css({
@@ -94,36 +94,30 @@ const StyledHeader = (theme: Theme) =>
     },
   });
 
-type HeaderProps = {
-  isDark: boolean;
-  setIsDark: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const Header = ({ isDark, setIsDark }: HeaderProps) => {
+const Header = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const profile = useSelector((state: RootState) => state.profile);
-  const [isLogin, setIsLogin] = useState(false);
+  const isDark = useSelector((state: RootState) => state.mode.isDark);
+  const isLogin = profile.data.username !== '';
 
-  const onChange = () => {
-    setIsDark(!isDark);
+  const onModeChange = () => {
+    dispatch(modeChange());
   };
 
   const logoutHandler = async () => {
     try {
       await axios.get('/users/logout'); // TODO : 로그아웃시 쿠키 삭제 확인할것
+      alert('로그아웃 되었습니다.');
       dispatch(resetUser());
+      navigate('/sign-in');
     } catch (err) {
       if (axios.isAxiosError(err)) {
         alert('로그아웃에 실패했습니다.');
       }
     }
   };
-
-  useEffect(() => {
-    profile.data.username ? setIsLogin(true) : setIsLogin(false);
-  }, [profile]);
 
   return (
     <header css={StyledHeader(theme)}>
@@ -150,7 +144,7 @@ const Header = ({ isDark, setIsDark }: HeaderProps) => {
             </nav>
           )}
           <label className={isDark ? 'btn-mode dark' : 'btn-mode light'}>
-            <input type='checkbox' checked={isDark} onChange={onChange} />
+            <input type='checkbox' checked={isDark} onChange={onModeChange} />
             <FontAwesomeIcon icon={faMoon} />
             <FontAwesomeIcon icon={faSun} />
           </label>
