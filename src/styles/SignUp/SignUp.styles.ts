@@ -15,3 +15,16 @@ export const LogoStyle = css({
   objectFit: 'contain',
   marginBottom: '3.12rem',
 });
+
+export const SignUpItemContainer = css({
+  margin: '0.7rem 0',
+});
+
+export const SignUpStatusMessage = (
+  theme: Theme,
+  status: 'SUCCESS' | 'ERROR'
+) =>
+  css({
+    fontSize: '1rem',
+    color: status === 'SUCCESS' ? theme.green : theme.red,
+  });

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useTheme } from '@emotion/react';
 import { EmailStatusType, EmailRequestType } from '../../types/SignUp';
 import { emailCheck } from '../../utils/SignUp';
+import { SignUpItemContainer, SignUpStatusMessage } from '../../styles/SignUp';
 
 const statusMessage: Record<EmailStatusType, string> = {
   AVAILABLE_EMAIL: '사용 가능한 이메일입니다.',
@@ -11,9 +13,11 @@ const statusMessage: Record<EmailStatusType, string> = {
 
 // TODO : 비즈니스 로직 분리 필요
 function EmailCheck() {
+  const theme = useTheme();
   const [domainDisabled, setDomainDisabled] = useState<boolean>(true);
   const [username, setUsername] = useState<string>('');
   const [domain, setDomain] = useState<string>('naver.com');
+  const [status, setStatus] = useState<EmailStatusType | null>(null);
   const [message, setMessage] = useState<string>('');
   const [isEmailChecked, setIsEmailChecked] = useState<'TRUE' | 'FALSE'>(
     'FALSE'
@@ -22,6 +26,7 @@ function EmailCheck() {
   useEffect(() => {
     setIsEmailChecked('FALSE');
     setMessage('');
+    setStatus(null);
   }, [username, domain]);
 
   function handleSelect(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -46,15 +51,17 @@ function EmailCheck() {
           ? setIsEmailChecked('TRUE')
           : setIsEmailChecked('FALSE');
         setMessage(statusMessage[res]);
+        setStatus(res);
       })
       .catch(() => {
         setIsEmailChecked('FALSE');
         setMessage(statusMessage['INTERNAL_SERVER_ERROR']);
+        setStatus('INTERNAL_SERVER_ERROR');
       });
   }
 
   return (
-    <div>
+    <div css={SignUpItemContainer}>
       <h3>이메일</h3>
       <input
         type='text'
@@ -77,7 +84,14 @@ function EmailCheck() {
         <option value='type'>직접 입력</option>
       </select>
       {/* TODO : 메시지가 없는 경우 컴포넌트 자체는 유지시키고 hidden 속성을 추가하기 */}
-      <p>{message}</p>
+      <p
+        css={SignUpStatusMessage(
+          theme,
+          `${status === 'AVAILABLE_EMAIL' ? 'SUCCESS' : 'ERROR'}`
+        )}
+      >
+        {message ? message : '이메일을 입력해주세요.'}
+      </p>
       <button onClick={handleClick}>중복 확인</button>
       <input type='hidden' name='isEmailChecked' value={isEmailChecked} />
     </div>

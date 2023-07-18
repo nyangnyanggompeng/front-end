@@ -16,6 +16,6 @@ export const PageBox = (theme: Theme) =>
     },
     h3: {
       fontSize: '1.5rem',
-      marginBottom: '0.7rem',
+      margin: '0.7rem 0',
     },
   });
