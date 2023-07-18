@@ -1,5 +1,6 @@
 import { Theme, css, useTheme } from '@emotion/react';
 import logo from '../../asset/logo.png';
+import logoWhite from '../../asset/logo-white.png';
 import Button from '../Common/Button';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
@@ -124,7 +125,11 @@ const Header = () => {
       <div className='inner'>
         <h1>
           <Link to='/'>
-            <img src={logo} alt='인터뷰 연구소' />
+            {isDark ? (
+              <img src={logoWhite} alt='인터뷰 연구소' />
+            ) : (
+              <img src={logo} alt='인터뷰 연구소' />
+            )}
           </Link>
         </h1>
         <div className='right-box'>

@@ -1,6 +1,9 @@
 import { Theme, css, useTheme } from '@emotion/react';
 import logo from '../../asset/logo.png';
 import { Link } from 'react-router-dom';
+import logoWhite from '../../asset/logo-white.png';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 const StyledFooter = (theme: Theme) =>
   css({
@@ -15,12 +18,17 @@ const StyledFooter = (theme: Theme) =>
 
 const Footer = () => {
   const theme = useTheme();
+  const isDark = useSelector((state: RootState) => state.mode);
 
   return (
     <footer css={StyledFooter(theme)}>
       <div className='inner'>
         <Link to='/'>
-          <img src={logo} alt='인터뷰 연구소' />
+          {isDark ? (
+            <img src={logoWhite} alt='인터뷰 연구소' />
+          ) : (
+            <img src={logo} alt='인터뷰 연구소' />
+          )}
         </Link>
         <a href='https://github.com/nyangnyanggompeng' target='_blank'>
           프로젝트 깃허브 바로가기

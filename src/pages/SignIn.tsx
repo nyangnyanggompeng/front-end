@@ -3,9 +3,11 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Theme, css, useTheme } from '@emotion/react';
 import logo from '../asset/logo.png';
-import { useDispatch } from 'react-redux';
+import logoWhite from '../asset/logo-white.png';
+import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../store/slices/profileSlices';
 import Button from '../components/Common/Button';
+import { RootState } from '../store';
 
 interface LoginInfo {
   userId: string;
@@ -78,6 +80,7 @@ const SignIn = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isDark = useSelector((state: RootState) => state.mode);
   const message: Record<Message, string> = {
     LOGIN_FAILURE: '서버 에러입니다. 잠시 후 다시 로그인 해 주세요.',
     EMAIL_OR_PASSWORD_NOT_ENTERED:
@@ -139,7 +142,11 @@ const SignIn = () => {
   return (
     <main css={StyledSignIn(theme)} className='inner'>
       <div className='signin-wrap'>
-        <img src={logo} alt='인터뷰 연구소' />
+        {isDark ? (
+          <img src={logoWhite} alt='인터뷰 연구소' />
+        ) : (
+          <img src={logo} alt='인터뷰 연구소' />
+        )}
         <form onSubmit={loginRequestHandler}>
           <div>
             <label htmlFor='userId'>이메일</label>
