@@ -18,7 +18,8 @@ type Message =
   | 'EMAIL_DOESNT_EXIST'
   | 'TOKEN_EXPIRED'
   | 'INVALID_TOKEN'
-  | 'DELETED_USER';
+  | 'DELETED_USER'
+  | 'NO_TOKEN';
 
 const StyledSignIn = (theme: Theme) =>
   css({
@@ -85,6 +86,7 @@ const SignIn = () => {
     TOKEN_EXPIRED: '세션이 만료되었습니다. 다시 로그인 해주세요.',
     INVALID_TOKEN: '인증되지 않은 사용자입니다. 다시 로그인 해주세요.',
     DELETED_USER: '탈퇴한 사용자입니다.',
+    NO_TOKEN: '인증되지 않은 사용자입니다. 다시 로그인 해주세요.',
   };
   const [error, setError] = useState('');
   const [loginInfo, setLoginInfo] = useState<LoginInfo>({
@@ -118,44 +120,22 @@ const SignIn = () => {
       password: loginInfo.password,
     };
 
-    // 액세스 토큰 발급
-    await axios
-      .post('/users/login', {
+    try {
+      // 액세스 토큰 발급
+      await axios.post('/users/login', {
         ...data,
-      })
-      .catch((err) => {
-        // TODO : 에러처리
-        if (axios.isAxiosError(err)) {
-          switch (err.status) {
-            case 400:
-              return alert('수정할 내용을 입력해주세요.');
-            case 500:
-              return alert('lala');
-          }
-        }
-        // // 400대 에러
-        // if (err.response.status === 400) {
-        //   setError(message[err.response.data]);
-        // }
-
-        // // 500대 에러
-        // if (err.response.status / 500 === 1) {
-        //   setError(message.SERVER_ERROR);
-        // }
       });
-
-    // 발급된 토큰으로 유저정보 가져오기
-    await axios
-      .get('/users/auth')
-      .then((res) => {
+      // 발급된 토큰으로 유저정보 가져오기
+      await axios.get('/users/auth').then((res) => {
         dispatch(getUser(res.data));
-      })
-      .catch((err) => {
-        // TODO: 에러처리
-        console.log(err);
+        navigate('/interview-room');
       });
-
-    navigate('/my-page');
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const data: Message = err.response?.data;
+        setError(message[data]);
+      }
+    }
   };
 
   return (
