@@ -7,9 +7,9 @@ import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { resetUser } from '../../store/slices/profileSlices';
 import axios from 'axios';
 import { modeChange } from '../../store/slices/modeSlices';
+import { setIsLogin } from '../../store/slices/loginSlices';
 
 const StyledHeader = (theme: Theme) =>
   css({
@@ -99,9 +99,8 @@ const Header = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const profile = useSelector((state: RootState) => state.profile);
   const isDark = useSelector((state: RootState) => state.mode);
-  const isLogin = profile.data.username !== '';
+  const isLogin = useSelector((state: RootState) => state.login);
 
   const onModeChange = () => {
     dispatch(modeChange(!isDark));
@@ -111,7 +110,7 @@ const Header = () => {
     try {
       await axios.get('/users/logout'); // TODO : 로그아웃시 쿠키 삭제 확인할것
       alert('로그아웃 되었습니다.');
-      dispatch(resetUser());
+      dispatch(setIsLogin(false));
       navigate('/sign-in');
     } catch (err) {
       if (axios.isAxiosError(err)) {

@@ -5,9 +5,9 @@ import { Theme, css, useTheme } from '@emotion/react';
 import logo from '../asset/logo.png';
 import logoWhite from '../asset/logo-white.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from '../store/slices/profileSlices';
 import Button from '../components/Common/Button';
 import { RootState } from '../store';
+import { setIsLogin } from '../store/slices/loginSlices';
 
 interface LoginInfo {
   userId: string;
@@ -81,6 +81,7 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isDark = useSelector((state: RootState) => state.mode);
+
   const message: Record<Message, string> = {
     LOGIN_FAILURE: '서버 에러입니다. 잠시 후 다시 로그인 해 주세요.',
     EMAIL_OR_PASSWORD_NOT_ENTERED:
@@ -91,6 +92,7 @@ const SignIn = () => {
     DELETED_USER: '탈퇴한 사용자입니다.',
     NO_TOKEN: '인증되지 않은 사용자입니다. 다시 로그인 해주세요.',
   };
+
   const [error, setError] = useState('');
   const [loginInfo, setLoginInfo] = useState<LoginInfo>({
     userId: '',
@@ -122,15 +124,14 @@ const SignIn = () => {
     };
 
     try {
-      // 액세스 토큰 발급
-      await axios.post('/users/login', {
-        ...data,
-      });
-      // 발급된 토큰으로 유저정보 가져오기
-      await axios.get('/users/auth').then((res) => {
-        dispatch(getUser(res.data));
-        navigate('/interview-room');
-      });
+      await axios
+        .post('/users/login', {
+          ...data,
+        })
+        .then(() => {
+          dispatch(setIsLogin(true));
+          navigate('/interview-room');
+        });
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const data: Message = err.response?.data;

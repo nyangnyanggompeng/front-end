@@ -1,18 +1,18 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import profileSlice from './slices/profileSlices';
 import { persistReducer, persistStore } from 'redux-persist';
 import sessionStorage from 'redux-persist/es/storage/session';
 import modeSlices from './slices/modeSlices';
+import loginSlices from './slices/loginSlices';
 
 const reducers = combineReducers({
-  profile: profileSlice,
+  login: loginSlices,
   mode: modeSlices,
 });
 
 const persistConfig = {
   key: 'root',
   storage: sessionStorage,
-  whiteList: ['profile'],
+  whiteList: ['login', 'mode'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
