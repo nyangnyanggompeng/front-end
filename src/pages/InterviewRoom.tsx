@@ -9,7 +9,7 @@ import { ModalContainer } from '../components/Modal/ModalContainer';
 import Pagination from '../components/Common/Pagination';
 import { Theme, css, useTheme } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
-import { InterviewData, errMsg } from '../types/Interview/listTypes';
+import { InterviewData, errMsg } from '../types/Interview/ListTypes';
 import { getList } from '../utils/Interview/interviewListFn';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
