@@ -112,10 +112,12 @@ const Header = ({ isDark, setIsDark }: HeaderProps) => {
 
   const logoutHandler = async () => {
     try {
-      await axios.get('/users/logout'); // TODO : 쿠키 삭제 확인할것
+      await axios.get('/users/logout'); // TODO : 로그아웃시 쿠키 삭제 확인할것
       dispatch(resetUser());
     } catch (err) {
-      console.log(err);
+      if (axios.isAxiosError(err)) {
+        alert('로그아웃에 실패했습니다.');
+      }
     }
   };
 
