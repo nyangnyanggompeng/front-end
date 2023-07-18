@@ -12,9 +12,13 @@ interface LoginInfo {
   password: string;
 }
 
-interface Message {
-  [key: string]: string;
-}
+type Message =
+  | 'LOGIN_FAILURE'
+  | 'EMAIL_OR_PASSWORD_NOT_ENTERED'
+  | 'EMAIL_DOESNT_EXIST'
+  | 'TOKEN_EXPIRED'
+  | 'INVALID_TOKEN'
+  | 'DELETED_USER';
 
 const StyledSignIn = (theme: Theme) =>
   css({
@@ -73,14 +77,14 @@ const SignIn = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // TODO : 메시지 타입 정리
-  const message: Message = {
-    LOGIN_SUCCESS: '',
-    LOGIN_FAILURE: '이메일 또는 비밀번호가 잘못 입력되었습니다.',
-    EMAIL_DOESNT_EXISTS: '존재하지 않는 사용자입니다.',
+  const message: Record<Message, string> = {
+    LOGIN_FAILURE: '서버 에러입니다. 잠시 후 다시 로그인 해 주세요.',
     EMAIL_OR_PASSWORD_NOT_ENTERED:
       '이메일 또는 비밀번호가 잘못 입력되었습니다.',
-    SERVER_ERROR: '서버 오류입니다. 잠시 후 다시 시도해 주세요.',
+    EMAIL_DOESNT_EXIST: '존재하지 않는 사용자입니다.',
+    TOKEN_EXPIRED: '세션이 만료되었습니다. 다시 로그인 해주세요.',
+    INVALID_TOKEN: '인증되지 않은 사용자입니다. 다시 로그인 해주세요.',
+    DELETED_USER: '탈퇴한 사용자입니다.',
   };
   const [error, setError] = useState('');
   const [loginInfo, setLoginInfo] = useState<LoginInfo>({
@@ -121,15 +125,23 @@ const SignIn = () => {
       })
       .catch((err) => {
         // TODO : 에러처리
-        // 400대 에러
-        if (err.response.status === 400) {
-          setError(message[err.response.data]);
+        if (axios.isAxiosError(err)) {
+          switch (err.status) {
+            case 400:
+              return alert('수정할 내용을 입력해주세요.');
+            case 500:
+              return alert('lala');
+          }
         }
+        // // 400대 에러
+        // if (err.response.status === 400) {
+        //   setError(message[err.response.data]);
+        // }
 
-        // 500대 에러
-        if (err.response.status / 500 === 1) {
-          setError(message.SERVER_ERROR);
-        }
+        // // 500대 에러
+        // if (err.response.status / 500 === 1) {
+        //   setError(message.SERVER_ERROR);
+        // }
       });
 
     // 발급된 토큰으로 유저정보 가져오기
