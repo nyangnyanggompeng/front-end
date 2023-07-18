@@ -5,7 +5,7 @@ import { Theme, css, useTheme } from '@emotion/react';
 import logo from '../asset/logo.png';
 import { useDispatch } from 'react-redux';
 import { getUser } from '../store/slices/profileSlices';
-// import Button from '../components/Common/Button';
+import Button from '../components/Common/Button';
 
 interface LoginInfo {
   userId: string;
@@ -103,9 +103,7 @@ const SignIn = () => {
     });
   };
 
-  const loginRequestHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const loginRequestHandler = async () => {
     // 입력된 값 유효성 검사
     if (!loginInfo.userId || !loginInfo.password) {
       setError(message.EMAIL_OR_PASSWORD_NOT_ENTERED);
@@ -164,7 +162,7 @@ const SignIn = () => {
             />
           </div>
           {error && <p className='err-msg'>{error}</p>}
-          <button type='submit'>로그인</button>
+          <Button onClick={loginRequestHandler}>로그인</Button>
         </form>
         <p>
           비밀번호를 잊으셨나요?<a href='#'>비밀번호 찾기</a>
