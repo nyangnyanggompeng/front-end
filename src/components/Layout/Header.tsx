@@ -99,11 +99,11 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const profile = useSelector((state: RootState) => state.profile);
-  const isDark = useSelector((state: RootState) => state.mode.isDark);
+  const isDark = useSelector((state: RootState) => state.mode);
   const isLogin = profile.data.username !== '';
 
   const onModeChange = () => {
-    dispatch(modeChange());
+    dispatch(modeChange(!isDark));
   };
 
   const logoutHandler = async () => {
