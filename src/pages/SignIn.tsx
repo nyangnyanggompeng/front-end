@@ -72,8 +72,8 @@ const StyledSignIn = (theme: Theme) =>
 const SignIn = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
+  // TODO : 메시지 타입 정리
   const message: Message = {
     LOGIN_SUCCESS: '',
     LOGIN_FAILURE: '이메일 또는 비밀번호가 잘못 입력되었습니다.',
@@ -119,11 +119,8 @@ const SignIn = () => {
       .post('/users/login', {
         ...data,
       })
-      .then((res) => {
-        // console.log(res.data);
-        console.log('토큰발급');
-      })
       .catch((err) => {
+        // TODO : 에러처리
         // 400대 에러
         if (err.response.status === 400) {
           setError(message[err.response.data]);
@@ -139,10 +136,12 @@ const SignIn = () => {
     await axios
       .get('/users/auth')
       .then((res) => {
-        console.log(res.data);
         dispatch(getUser(res.data));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        // TODO: 에러처리
+        console.log(err);
+      });
 
     navigate('/my-page');
   };

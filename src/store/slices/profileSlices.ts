@@ -34,7 +34,6 @@ const profileSlice = createSlice({
     },
     resetUser(state) {
       Object.assign(state, initialState);
-      console.log(state.data);
     },
   },
 });
