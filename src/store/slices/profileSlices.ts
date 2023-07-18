@@ -10,7 +10,11 @@ interface ProfileType {
   exp: number;
 }
 
-const initialState = {
+interface ProfileState {
+  data: ProfileType;
+}
+
+const initialState: ProfileState = {
   data: {
     id: 0,
     isAdmin: false,

@@ -2,9 +2,11 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import profileSlice from './slices/profileSlices';
 import { persistReducer, persistStore } from 'redux-persist';
 import sessionStorage from 'redux-persist/es/storage/session';
+import modeSlices from './slices/modeSlices';
 
 const reducers = combineReducers({
   profile: profileSlice,
+  mode: modeSlices,
 });
 
 const persistConfig = {
