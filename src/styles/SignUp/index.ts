@@ -6,5 +6,6 @@ export {
   SignUpSubmitButton,
   LogoStyle,
   SignUpItemContainer,
+  SignUpFormContainer,
   SignUpStatusMessage,
 } from '../SignUp/SignUp.styles';

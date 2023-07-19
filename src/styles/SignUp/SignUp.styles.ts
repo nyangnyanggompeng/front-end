@@ -20,6 +20,15 @@ export const SignUpItemContainer = css({
   margin: '0.7rem 0',
 });
 
+export const SignUpFormContainer = css({
+  display: 'flex',
+  alignItems: 'center',
+  input: {
+    width: 'unset',
+    flex: 1,
+  },
+});
+
 export const SignUpStatusMessage = (
   theme: Theme,
   status: 'SUCCESS' | 'ERROR'

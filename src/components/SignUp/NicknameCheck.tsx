@@ -2,7 +2,12 @@ import { useState, useEffect } from 'react';
 import { useTheme } from '@emotion/react';
 import { NicknameStatusType, NicknameRequestType } from '../../types/SignUp';
 import { nicknameCheck } from '../../utils/SignUp';
-import { SignUpStatusMessage } from '../../styles/SignUp';
+import Button from '../Common/Button';
+import {
+  SignUpItemContainer,
+  SignUpFormContainer,
+  SignUpStatusMessage,
+} from '../../styles/SignUp';
 
 const statusMessage: Record<NicknameStatusType, string> = {
   AVAILABLE_NICKNAME: '사용 가능한 닉네임입니다.',
@@ -47,16 +52,18 @@ function NicknameCheck() {
   }
 
   return (
-    <div>
+    <div css={SignUpItemContainer}>
       <h3>닉네임</h3>
-      <input
-        type='text'
-        name='nickname'
-        placeholder='닉네임'
-        onBlur={(e) => setNickname(e.target.value)}
-      />
-      {/* TODO : 메시지가 없는 경우 컴포넌트 자체는 유지시키고 hidden 속성을 추가하기 */}
-      <button onClick={handleClick}>중복 확인</button>
+      <div css={SignUpFormContainer}>
+        <input
+          type='text'
+          name='nickname'
+          placeholder='닉네임'
+          onBlur={(e) => setNickname(e.target.value)}
+        />
+        {/* TODO : 메시지가 없는 경우 컴포넌트 자체는 유지시키고 hidden 속성을 추가하기 */}
+        <Button onClick={handleClick}>중복 확인</Button>
+      </div>
       <p
         css={SignUpStatusMessage(
           theme,
