@@ -1,4 +1,5 @@
 import { Theme, css, useTheme } from '@emotion/react';
+import { MouseEventHandler } from 'react';
 
 const StyledBtn = (theme: Theme) =>
   css({
@@ -27,7 +28,7 @@ const StyledBtn = (theme: Theme) =>
 interface BtnProps {
   children: React.ReactNode;
   type?: 'button' | 'submit' | 'reset';
-  onClick(): void;
+  onClick?: (() => void) | MouseEventHandler<HTMLButtonElement>;
   status?: 'main' | 'sub' | 'disable';
 }
 
