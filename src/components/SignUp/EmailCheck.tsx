@@ -2,7 +2,12 @@ import { useState, useEffect } from 'react';
 import { useTheme } from '@emotion/react';
 import { EmailStatusType, EmailRequestType } from '../../types/SignUp';
 import { emailCheck } from '../../utils/SignUp';
-import { SignUpItemContainer, SignUpStatusMessage } from '../../styles/SignUp';
+import {
+  ItemContainer,
+  FormContainer,
+  StatusMessage,
+} from '../../styles/SignUp';
+import Button from '../Common/Button';
 
 const statusMessage: Record<EmailStatusType, string> = {
   AVAILABLE_EMAIL: '사용 가능한 이메일입니다.',
@@ -61,39 +66,45 @@ function EmailCheck() {
   }
 
   return (
-    <div css={SignUpItemContainer}>
+    <div css={ItemContainer}>
       <h3>이메일</h3>
-      <input
-        type='text'
-        name='username'
-        placeholder='이메일'
-        onBlur={(e) => setUsername(e.target.value)}
-      />
-      <span>@</span>
-      <input
-        type='text'
-        name='domain-type'
-        disabled={domainDisabled}
-        value={domain}
-        onChange={(e) => setDomain(e.target.value)}
-      />
-      <select name='domain' onChange={handleSelect} defaultValue={'naver.com'}>
-        <option value='naver.com'>naver.com</option>
-        <option value='gmail.com'>gmail.com</option>
-        <option value='daum.net'>daum.net</option>
-        <option value='type'>직접 입력</option>
-      </select>
+      <div css={FormContainer}>
+        <input
+          type='text'
+          name='username'
+          placeholder='이메일'
+          onBlur={(e) => setUsername(e.target.value)}
+        />
+        <span>@</span>
+        <input
+          type='text'
+          name='domain-type'
+          disabled={domainDisabled}
+          value={domain}
+          onChange={(e) => setDomain(e.target.value)}
+        />
+        <select
+          name='domain'
+          onChange={handleSelect}
+          defaultValue={'naver.com'}
+        >
+          <option value='naver.com'>naver.com</option>
+          <option value='gmail.com'>gmail.com</option>
+          <option value='daum.net'>daum.net</option>
+          <option value='type'>직접 입력</option>
+        </select>
+        <Button onClick={handleClick}>중복 확인</Button>
+        <input type='hidden' name='isEmailChecked' value={isEmailChecked} />
+      </div>
       {/* TODO : 메시지가 없는 경우 컴포넌트 자체는 유지시키고 hidden 속성을 추가하기 */}
       <p
-        css={SignUpStatusMessage(
+        css={StatusMessage(
           theme,
           `${status === 'AVAILABLE_EMAIL' ? 'SUCCESS' : 'ERROR'}`
         )}
       >
         {message ? message : '이메일을 입력해주세요.'}
       </p>
-      <button onClick={handleClick}>중복 확인</button>
-      <input type='hidden' name='isEmailChecked' value={isEmailChecked} />
     </div>
   );
 }

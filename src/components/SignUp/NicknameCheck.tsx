@@ -4,9 +4,9 @@ import { NicknameStatusType, NicknameRequestType } from '../../types/SignUp';
 import { nicknameCheck } from '../../utils/SignUp';
 import Button from '../Common/Button';
 import {
-  SignUpItemContainer,
-  SignUpFormContainer,
-  SignUpStatusMessage,
+  ItemContainer,
+  FormContainer,
+  StatusMessage,
 } from '../../styles/SignUp';
 
 const statusMessage: Record<NicknameStatusType, string> = {
@@ -52,9 +52,9 @@ function NicknameCheck() {
   }
 
   return (
-    <div css={SignUpItemContainer}>
+    <div css={ItemContainer}>
       <h3>닉네임</h3>
-      <div css={SignUpFormContainer}>
+      <div css={FormContainer}>
         <input
           type='text'
           name='nickname'
@@ -65,7 +65,7 @@ function NicknameCheck() {
         <Button onClick={handleClick}>중복 확인</Button>
       </div>
       <p
-        css={SignUpStatusMessage(
+        css={StatusMessage(
           theme,
           `${status === 'AVAILABLE_NICKNAME' ? 'SUCCESS' : 'ERROR'}`
         )}

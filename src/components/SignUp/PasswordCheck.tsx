@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTheme } from '@emotion/react';
 import { PasswordStatusType } from '../../types/SignUp';
-import { SignUpItemContainer, SignUpStatusMessage } from '../../styles/SignUp';
+import { ItemContainer, StatusMessage } from '../../styles/SignUp';
 
 // TODO : 비밀번호 규칙 확정 필요
 const statusMessage: Record<PasswordStatusType, string> = {
@@ -69,7 +69,7 @@ function PasswordCheck() {
   };
 
   return (
-    <div css={SignUpItemContainer}>
+    <div css={ItemContainer}>
       <h3>비밀번호</h3>
       <input
         type='password'
@@ -86,7 +86,7 @@ function PasswordCheck() {
       />
       {/* TODO : 메시지가 없는 경우 컴포넌트 자체는 유지시키고 hidden 속성을 추가하기 */}
       <p
-        css={SignUpStatusMessage(
+        css={StatusMessage(
           theme,
           `${status === 'OK' || status === 'MATCHED' ? 'SUCCESS' : 'ERROR'}`
         )}

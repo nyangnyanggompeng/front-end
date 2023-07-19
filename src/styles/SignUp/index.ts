@@ -5,7 +5,7 @@ export { PageBox } from '../Common/PageBox';
 export {
   SignUpSubmitButton,
   LogoStyle,
-  SignUpItemContainer,
-  SignUpFormContainer,
-  SignUpStatusMessage,
+  ItemContainer,
+  FormContainer,
+  StatusMessage,
 } from '../SignUp/SignUp.styles';

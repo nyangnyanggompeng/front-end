@@ -16,23 +16,23 @@ export const LogoStyle = css({
   marginBottom: '3.12rem',
 });
 
-export const SignUpItemContainer = css({
+export const ItemContainer = css({
   margin: '0.7rem 0',
 });
 
-export const SignUpFormContainer = css({
+export const FormContainer = css({
   display: 'flex',
   alignItems: 'center',
   input: {
     width: 'unset',
     flex: 1,
   },
+  button: {
+    marginLeft: '0.7rem',
+  },
 });
 
-export const SignUpStatusMessage = (
-  theme: Theme,
-  status: 'SUCCESS' | 'ERROR'
-) =>
+export const StatusMessage = (theme: Theme, status: 'SUCCESS' | 'ERROR') =>
   css({
     fontSize: '1rem',
     color: status === 'SUCCESS' ? theme.green : theme.red,
