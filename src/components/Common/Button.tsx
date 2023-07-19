@@ -11,11 +11,19 @@ const StyledBtn = (theme: Theme) =>
     backgroundColor: `${theme.orange1}`,
     padding: '1rem 2rem',
     border: `1px solid transparent`,
+    transition: '0.3s',
+    '&:hover': {
+      backgroundColor: `${theme.orange2}`,
+    },
 
     '&.sub': {
       color: `${theme.orange1}`,
       backgroundColor: 'transparent',
       borderColor: `${theme.orange1}`,
+      '&:hover': {
+        backgroundColor: `${theme.orange1}`,
+        color: `${theme.white}`,
+      },
     },
 
     '&.disable': {
