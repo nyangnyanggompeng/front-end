@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useTheme } from '@emotion/react';
 import { PasswordStatusType } from '../../types/SignUp';
+import { SignUpItemContainer, SignUpStatusMessage } from '../../styles/SignUp';
 
 // TODO : 비밀번호 규칙 확정 필요
 const statusMessage: Record<PasswordStatusType, string> = {
@@ -12,14 +14,17 @@ const statusMessage: Record<PasswordStatusType, string> = {
 };
 
 function PasswordCheck() {
+  const theme = useTheme();
   const [password, setPassword] = useState<string>('');
   const [passwordCheck, setPasswordCheck] = useState<string>('');
   const [message, setMessage] = useState<string>('');
+  const [status, setStatus] = useState<PasswordStatusType | null>(null);
 
   // TODO - useEffect 순서 고민
   useEffect(() => {
     if (password.length < 8 || password.length > 12) {
       setMessage(statusMessage['INVALID_LENGTH']);
+      setStatus('INVALID_LENGTH');
       return;
     }
     const specialCharRegex = /[!@#$%^&*]/g;
@@ -35,18 +40,22 @@ function PasswordCheck() {
       spaceRegex.test(password)
     ) {
       setMessage(statusMessage['INVALID_CHARACTER']);
+      setStatus('INVALID_CHARACTER');
       return;
     }
     setMessage(statusMessage['OK']);
+    setStatus('OK');
   }, [password]);
 
   useEffect(() => {
     if (passwordCheck.length === 0) return;
     if (password !== passwordCheck) {
       setMessage(statusMessage['NOT_MATCHED']);
+      setStatus('NOT_MATCHED');
       return;
     }
     setMessage(statusMessage['MATCHED']);
+    setStatus('MATCHED');
   }, [password, passwordCheck]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +69,7 @@ function PasswordCheck() {
   };
 
   return (
-    <div>
+    <div css={SignUpItemContainer}>
       <h3>비밀번호</h3>
       <input
         type='password'
@@ -76,7 +85,14 @@ function PasswordCheck() {
         onChange={onChangeCheck}
       />
       {/* TODO : 메시지가 없는 경우 컴포넌트 자체는 유지시키고 hidden 속성을 추가하기 */}
-      <p>{message}</p>
+      <p
+        css={SignUpStatusMessage(
+          theme,
+          `${status === 'OK' || status === 'MATCHED' ? 'SUCCESS' : 'ERROR'}`
+        )}
+      >
+        {message}
+      </p>
     </div>
   );
 }

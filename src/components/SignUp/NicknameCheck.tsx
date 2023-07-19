@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useTheme } from '@emotion/react';
 import { NicknameStatusType, NicknameRequestType } from '../../types/SignUp';
-
 import { nicknameCheck } from '../../utils/SignUp';
+import { SignUpStatusMessage } from '../../styles/SignUp';
 
 const statusMessage: Record<NicknameStatusType, string> = {
   AVAILABLE_NICKNAME: '사용 가능한 닉네임입니다.',
@@ -11,8 +12,10 @@ const statusMessage: Record<NicknameStatusType, string> = {
 };
 
 function NicknameCheck() {
+  const theme = useTheme();
   const [nickname, setNickname] = useState<string>('');
   const [message, setMessage] = useState<string>('');
+  const [status, setStatus] = useState<NicknameStatusType | null>(null);
   const [isNicknameChecked, setIsNicknameChecked] = useState<'TRUE' | 'FALSE'>(
     'FALSE'
   );
@@ -20,6 +23,7 @@ function NicknameCheck() {
   useEffect(() => {
     setIsNicknameChecked('FALSE');
     setMessage('');
+    setStatus(null);
   }, [nickname]);
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
@@ -33,10 +37,12 @@ function NicknameCheck() {
           ? setIsNicknameChecked('TRUE')
           : setIsNicknameChecked('FALSE');
         setMessage(statusMessage[res]);
+        setStatus(res);
       })
       .catch(() => {
         setIsNicknameChecked('FALSE');
         setMessage(statusMessage['INTERNAL_SERVER_ERROR']);
+        setStatus('INTERNAL_SERVER_ERROR');
       });
   }
 
@@ -50,8 +56,15 @@ function NicknameCheck() {
         onBlur={(e) => setNickname(e.target.value)}
       />
       {/* TODO : 메시지가 없는 경우 컴포넌트 자체는 유지시키고 hidden 속성을 추가하기 */}
-      <div>{message}</div>
       <button onClick={handleClick}>중복 확인</button>
+      <p
+        css={SignUpStatusMessage(
+          theme,
+          `${status === 'AVAILABLE_NICKNAME' ? 'SUCCESS' : 'ERROR'}`
+        )}
+      >
+        {message ? message : '닉네임을 입력해주세요.'}
+      </p>
       <input type='hidden' name='isNicknameChecked' value={isNicknameChecked} />
     </div>
   );
