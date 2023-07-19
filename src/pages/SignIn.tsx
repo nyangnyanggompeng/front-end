@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../components/Common/Button';
 import { RootState } from '../store';
 import { setIsLogin } from '../store/slices/loginSlices';
+import { mq } from '../theme';
 
 interface LoginInfo {
   userId: string;
@@ -56,7 +57,7 @@ const StyledSignIn = (theme: Theme) =>
           display: 'block',
         },
         '.err-msg': {
-          color: `${theme.orange1}`, // FIXME
+          color: `${theme.red}`,
           fontSize: '1.4rem',
           marginTop: '0.5rem',
         },
@@ -71,6 +72,20 @@ const StyledSignIn = (theme: Theme) =>
           color: `${theme.orange1}`,
           fontWeight: 700,
           marginLeft: '1.5rem',
+        },
+      },
+    },
+    [mq[1]]: {
+      '.signin-wrap': {
+        width: '80%',
+        padding: '3rem',
+        img: {
+          width: '50%',
+        },
+        form: {
+          label: {
+            fontSize: '1.8rem',
+          },
         },
       },
     },
