@@ -10,6 +10,7 @@ import {
 import { InterviewDetailData } from '../../types/Interview/detailTypes';
 import { parseDate } from '../../utils/Interview/interviewListFn';
 import { Theme, css, useTheme } from '@emotion/react';
+import axios from 'axios';
 
 interface MessageProps {
   message: InterviewDetailData;
@@ -70,6 +71,15 @@ const StyledMessageItem = (theme: Theme) =>
 
 const MessageItem = ({ message }: MessageProps) => {
   const theme = useTheme();
+  const bookmarkToggle = async (contentId: number, isBookmarked: boolean) => {
+    try {
+      await axios.patch(
+        `/mypage/bookmark/${contentId}?isBookmarked=${isBookmarked}`
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div css={StyledMessageItem(theme)} className={message.sender}>
       <div className='icon'>
@@ -83,7 +93,10 @@ const MessageItem = ({ message }: MessageProps) => {
         <div>
           <p className='content'>{message.content}</p>
           {message.sender === 'assistant' && (
-            <button type='button'>
+            <button
+              type='button'
+              onClick={() => bookmarkToggle(message.id, !message.bookmark)}
+            >
               {message.bookmark ? (
                 <FontAwesomeIcon icon={bookmarkOn} />
               ) : (
