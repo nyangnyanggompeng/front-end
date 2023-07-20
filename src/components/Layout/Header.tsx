@@ -5,7 +5,11 @@ import Button from '../Common/Button';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { logoutHandler } from '../../utils/SignIn/userFunc';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import axios from 'axios';
+import { modeChange } from '../../store/slices/modeSlices';
+import { setIsLogin } from '../../store/slices/loginSlices';
 
 const StyledHeader = (theme: Theme) =>
   css({
@@ -92,18 +96,28 @@ const StyledHeader = (theme: Theme) =>
     },
   });
 
-type HeaderProps = {
-  isDark: boolean;
-  setIsDark: React.Dispatch<React.SetStateAction<boolean>>;
-  isLogin: boolean;
-  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const Header = ({ isDark, setIsDark, isLogin, setIsLogin }: HeaderProps) => {
+const Header = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const onChange = () => {
-    setIsDark(!isDark);
+  const dispatch = useDispatch();
+  const isDark = useSelector((state: RootState) => state.mode);
+  const isLogin = useSelector((state: RootState) => state.login);
+
+  const onModeChange = () => {
+    dispatch(modeChange(!isDark));
+  };
+
+  const logoutHandler = async () => {
+    try {
+      await axios.get('/users/logout'); // TODO : 로그아웃시 쿠키 삭제 확인할것
+      alert('로그아웃 되었습니다.');
+      dispatch(setIsLogin(false));
+      navigate('/sign-in');
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        alert('로그아웃에 실패했습니다.');
+      }
+    }
   };
 
   return (
@@ -135,19 +149,16 @@ const Header = ({ isDark, setIsDark, isLogin, setIsLogin }: HeaderProps) => {
             </nav>
           )}
           <label className={isDark ? 'btn-mode dark' : 'btn-mode light'}>
-            <input type='checkbox' checked={isDark} onChange={onChange} />
+            <input type='checkbox' checked={isDark} onChange={onModeChange} />
             <FontAwesomeIcon icon={faMoon} />
             <FontAwesomeIcon icon={faSun} />
           </label>
           {isLogin ? (
-            <Button onClick={() => setIsLogin(!isLogin)}>로그아웃</Button>
-          ) : (
-            // <Button status='sub' onClick={() => navigate('/sign-in')}>
-            //   로그인
-            // </Button>
-            <Button status='sub' onClick={() => setIsLogin(!isLogin)}>
-              로그인
+            <Button status='sub' onClick={logoutHandler}>
+              로그아웃
             </Button>
+          ) : (
+            <Button onClick={() => navigate('/sign-in')}>로그인</Button>
           )}
         </div>
       </div>

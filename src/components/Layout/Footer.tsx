@@ -2,6 +2,9 @@ import { Theme, css, useTheme } from '@emotion/react';
 import logo from '../../asset/logo.png';
 import logoWhite from '../../asset/logo-white.png';
 import { Link } from 'react-router-dom';
+import logoWhite from '../../asset/logo-white.png';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 const StyledFooter = (theme: Theme) =>
   css({
@@ -20,6 +23,7 @@ interface FooterProps {
 
 const Footer = ({ isDark }: FooterProps) => {
   const theme = useTheme();
+  const isDark = useSelector((state: RootState) => state.mode);
 
   return (
     <footer css={StyledFooter(theme)}>
