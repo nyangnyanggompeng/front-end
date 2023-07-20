@@ -8,4 +8,5 @@ export {
 export {
   ContentContainer,
   ContentButton,
+  Content,
 } from './MyPageContentContainer.styles';

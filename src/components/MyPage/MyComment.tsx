@@ -60,7 +60,7 @@ export default function MyComment() {
         <div>작성한 댓글이 없습니다.</div>
       ) : (
         <div>
-          <div>{`전체 ${data.numberOfMyComment}개`}</div>
+          <h3>{`전체 ${data.numberOfMyComment}개`}</h3>
           <div>
             {isDeleteMode ? (
               <>

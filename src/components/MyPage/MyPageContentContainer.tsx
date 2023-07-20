@@ -3,7 +3,7 @@ import { useTheme } from '@emotion/react';
 import BookMark from './BookMark';
 import MyArticle from './MyArticle';
 import MyComment from './MyComment';
-import { ContentContainer, ContentButton } from '../../styles/MyPage';
+import { ContentContainer, ContentButton, Content } from '../../styles/MyPage';
 
 export default function MyPageContentContainer() {
   const [content, setContent] = useState<
@@ -30,7 +30,7 @@ export default function MyPageContentContainer() {
       >
         작성한 댓글
       </button>
-      <div>
+      <div css={Content}>
         {content === 'BOOKMARK' && <BookMark />}
         {content === 'MYARTICLE' && <MyArticle />}
         {content === 'MYCOMMENT' && <MyComment />}

@@ -13,3 +13,7 @@ export const ContentButton = (theme: Theme, current: boolean) =>
     fontWeight: '700',
     color: current ? theme.black : '#BBBBBB',
   });
+
+export const Content = css({
+  marginTop: '1.9rem',
+});

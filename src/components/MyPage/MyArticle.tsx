@@ -62,7 +62,7 @@ export default function MyArticle() {
         <div>작성한 게시글이 없습니다.</div>
       ) : (
         <div>
-          <div>{`전체 ${data?.numberOfMyPost}개`}</div>
+          <h3>{`전체 ${data?.numberOfMyPost}개`}</h3>
           <div>
             {isDeleteMode ? (
               <>

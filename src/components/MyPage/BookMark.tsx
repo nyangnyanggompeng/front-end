@@ -15,7 +15,7 @@ export default function BookMark() {
         <div>북마크가 없습니다.</div>
       ) : (
         <div>
-          <div>{`전체 ${data.numberOfContent}개`}</div>
+          <h3>{`전체 ${data.numberOfContent}개`}</h3>
           {data.Content.map((bookmark: BookMarkType) => (
             <BookMarkItem key={bookmark.id} bookmark={bookmark} />
           ))}
