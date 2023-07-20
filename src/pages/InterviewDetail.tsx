@@ -76,6 +76,9 @@ const StyledInterviewDetail = (theme: Theme) =>
         },
         textarea: {
           height: '10rem',
+          '&.disabled': {
+            backgroundColor: `${theme.gray2}`,
+          },
         },
       },
     },
@@ -135,6 +138,9 @@ const InterviewDetail = () => {
   const getChatData = async () => {
     try {
       const res = await axios.get(`/chatgpt/contents/${id}`);
+      console.log(res.data);
+      setFormData(res.data[0]);
+
       setDetailData(res.data[1]);
       res.data[1].map((el: InterviewDetailData) =>
         questionSet.add(el.questionNum)
@@ -174,6 +180,7 @@ const InterviewDetail = () => {
                     className='type'
                     value={item}
                     defaultChecked={type === item || (!type && item === '일반')}
+                    disabled={detailData.length !== 0}
                     onChange={(e) =>
                       handleOnChange(e.target.className, e.target.value)
                     }
@@ -189,6 +196,8 @@ const InterviewDetail = () => {
               id='count'
               className='count'
               defaultValue={'1'}
+              value={formData.count}
+              disabled={detailData.length !== 0}
               onChange={(e) =>
                 handleOnChange(e.target.className, e.target.value)
               }
@@ -221,16 +230,22 @@ const InterviewDetail = () => {
             </div>
             <textarea
               id='text'
-              className='prompt'
+              className={detailData.length !== 0 ? 'prompt disabled' : 'prompt'}
               placeholder='자기소개서를 입력해 주세요.'
               maxLength={3000}
               value={formData.prompt}
+              disabled={detailData.length !== 0}
               onChange={(e) =>
                 handleOnChange(e.target.className, e.target.value)
               }
             />
           </div>
-          <Button onClick={onSubmit}>질문하기</Button>
+          <Button
+            onClick={onSubmit}
+            status={detailData.length !== 0 ? 'disable' : 'main'}
+          >
+            질문하기
+          </Button>
         </form>
         <div className='reply-wrap'>
           <Button status='sub' onClick={() => console.log('전체 접기/펴기')}>
