@@ -17,3 +17,12 @@ export const ContentButton = (theme: Theme, current: boolean) =>
 export const Content = css({
   marginTop: '1.9rem',
 });
+
+export const ContentTitleContainer = css({
+  display: 'flex',
+  justifyContent: 'space-between',
+  marginBottom: '1.45rem',
+  h3: {
+    flex: 1,
+  },
+});

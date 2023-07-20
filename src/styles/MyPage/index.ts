@@ -9,6 +9,7 @@ export {
   ContentContainer,
   ContentButton,
   Content,
+  ContentTitleContainer,
 } from './MyPageContentContainer.styles';
 
 export {
