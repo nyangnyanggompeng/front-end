@@ -5,6 +5,7 @@ import MessageItem from './MessageItem';
 import { InterviewDetailData } from '../../types/Interview/detailTypes';
 import { Theme, css, useTheme } from '@emotion/react';
 import { useState } from 'react';
+import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 interface ReplyItemProps {
   questionNum: number;
@@ -14,6 +15,7 @@ interface ReplyItemProps {
     questionNum: number,
     answer: string
   ): Promise<void>;
+  deleteQuestion(listId: number, contentIdList: number[]): Promise<void>;
 }
 
 const StyledReplyItem = (theme: Theme) =>
@@ -30,6 +32,10 @@ const StyledReplyItem = (theme: Theme) =>
       justifyContent: 'space-between',
       alignItems: 'center',
       fontWeight: 700,
+      '>div': {
+        display: 'flex',
+        gap: '2rem',
+      },
     },
     '.message-wrap': {
       display: 'flex',
@@ -49,7 +55,12 @@ const StyledReplyItem = (theme: Theme) =>
     },
   });
 
-const ReplyItem = ({ questionNum, messages, sendAnswer }: ReplyItemProps) => {
+const ReplyItem = ({
+  questionNum,
+  messages,
+  sendAnswer,
+  deleteQuestion,
+}: ReplyItemProps) => {
   const theme = useTheme();
   const [value, setValue] = useState('');
 
@@ -57,9 +68,22 @@ const ReplyItem = ({ questionNum, messages, sendAnswer }: ReplyItemProps) => {
     <li css={StyledReplyItem(theme)}>
       <div className='message-title'>
         <p>질문 {questionNum}</p>
-        <button type='button'>
-          <FontAwesomeIcon icon={faChevronDown} />
-        </button>
+        <div>
+          <button
+            type='button'
+            onClick={() =>
+              deleteQuestion(
+                messages[0].listId,
+                messages.map((el) => el.id)
+              )
+            }
+          >
+            <FontAwesomeIcon icon={faTrashCan} />
+          </button>
+          <button type='button'>
+            <FontAwesomeIcon icon={faChevronDown} />
+          </button>
+        </div>
       </div>
       <div className='message-wrap'>
         {messages.map((item) => {

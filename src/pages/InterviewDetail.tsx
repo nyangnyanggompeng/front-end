@@ -168,6 +168,14 @@ const InterviewDetail = () => {
     }
   };
 
+  const deleteQuestion = async (listId: number, contentIdList: number[]) => {
+    try {
+      await axios.put(`/chatgpt/lists/${listId}/contents`, { contentIdList });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     // 새로 채팅방이 생성된 경우
     // 기존에 있던 채팅방으로 들어온 경우
@@ -285,6 +293,7 @@ const InterviewDetail = () => {
                     questionNum={item}
                     messages={filtered}
                     sendAnswer={sendAnswer}
+                    deleteQuestion={deleteQuestion}
                   />
                 );
               })}
