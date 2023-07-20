@@ -6,6 +6,6 @@ export const parseDate = (date: string) => {
 };
 
 export const getList = async (currentPage: number) => {
-  const res = await axios.get(`/chatgpt/lists/8/${currentPage}`);
+  const res = await axios.get(`/chatgpt/lists/${currentPage}`);
   return res.data;
 };
