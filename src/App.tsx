@@ -8,6 +8,8 @@ import Router from './Router';
 import { darkMode, lightMode } from './theme';
 import { useSelector } from 'react-redux';
 import { RootState } from './store';
+import { useEffect } from 'react';
+import { silentRefresh } from './utils/SignIn/signInFn';
 
 const queryClient = new QueryClient();
 
@@ -18,6 +20,10 @@ function App() {
   axios.defaults.baseURL = VITE_SERVER_URL;
   axios.defaults.headers['Content-Type'] = 'application/json';
   axios.defaults.withCredentials = true;
+
+  // useEffect(() => {
+  //   silentRefresh();
+  // }, []);
   return (
     <>
       <ThemeProvider theme={isDark ? darkMode : lightMode}>
