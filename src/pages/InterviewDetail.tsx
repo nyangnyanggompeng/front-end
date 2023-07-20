@@ -138,9 +138,7 @@ const InterviewDetail = () => {
   const getChatData = async () => {
     try {
       const res = await axios.get(`/chatgpt/contents/${id}`);
-      console.log(res.data);
       setFormData(res.data[0]);
-
       setDetailData(res.data[1]);
       res.data[1].map((el: InterviewDetailData) =>
         questionSet.add(el.questionNum)
@@ -148,6 +146,25 @@ const InterviewDetail = () => {
     } catch (err) {
       console.log(err);
       setDetailData([]);
+    }
+  };
+
+  const sendAnswer = async (
+    listId: number,
+    questionNum: number,
+    answer: string
+  ) => {
+    try {
+      if (answer === '') {
+        alert('답변을 입력해주세요.');
+        return;
+      }
+
+      await axios
+        .post(`/chatgpt/contents/${listId}/${questionNum}`, { answer })
+        .then((res) => console.log(res.data));
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -195,7 +212,6 @@ const InterviewDetail = () => {
             <select
               id='count'
               className='count'
-              defaultValue={'1'}
               value={formData.count}
               disabled={detailData.length !== 0}
               onChange={(e) =>
@@ -264,7 +280,12 @@ const InterviewDetail = () => {
                   (el) => el.questionNum === item
                 );
                 return (
-                  <ReplyItem key={idx} questionNum={item} messages={filtered} />
+                  <ReplyItem
+                    key={idx}
+                    questionNum={item}
+                    messages={filtered}
+                    sendAnswer={sendAnswer}
+                  />
                 );
               })}
             </ul>

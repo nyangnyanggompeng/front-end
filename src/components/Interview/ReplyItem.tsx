@@ -4,10 +4,16 @@ import Button from '../Common/Button';
 import MessageItem from './MessageItem';
 import { InterviewDetailData } from '../../types/Interview/detailTypes';
 import { Theme, css, useTheme } from '@emotion/react';
+import { useState } from 'react';
 
 interface ReplyItemProps {
   questionNum: number;
   messages: InterviewDetailData[];
+  sendAnswer(
+    listId: number,
+    questionNum: number,
+    answer: string
+  ): Promise<void>;
 }
 
 const StyledReplyItem = (theme: Theme) =>
@@ -23,6 +29,7 @@ const StyledReplyItem = (theme: Theme) =>
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
+      fontWeight: 700,
     },
     '.message-wrap': {
       display: 'flex',
@@ -35,12 +42,17 @@ const StyledReplyItem = (theme: Theme) =>
       gap: '1rem',
       textarea: {
         flex: '0 1 95%',
+        '&.disabled': {
+          backgroundColor: `${theme.gray2}`,
+        },
       },
     },
   });
 
-const ReplyItem = ({ questionNum, messages }: ReplyItemProps) => {
+const ReplyItem = ({ questionNum, messages, sendAnswer }: ReplyItemProps) => {
   const theme = useTheme();
+  const [value, setValue] = useState('');
+
   return (
     <li css={StyledReplyItem(theme)}>
       <div className='message-title'>
@@ -55,8 +67,20 @@ const ReplyItem = ({ questionNum, messages }: ReplyItemProps) => {
         })}
       </div>
       <div className='text'>
-        <textarea />
-        <Button onClick={() => console.log('개별답변 등록')}>등록</Button>
+        <textarea
+          value={value}
+          className={messages.length > 1 ? 'disabled' : ''}
+          onChange={(e) => setValue(e.target.value)}
+          disabled={messages.length > 1}
+        />
+        <Button
+          status={messages.length > 1 ? 'disable' : 'main'}
+          onClick={() =>
+            sendAnswer(messages[0].listId, messages[0].questionNum, value)
+          }
+        >
+          등록
+        </Button>
       </div>
     </li>
   );
