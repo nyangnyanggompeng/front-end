@@ -10,3 +10,10 @@ export {
   ContentButton,
   Content,
 } from './MyPageContentContainer.styles';
+
+export {
+  BookMarkItemContainer,
+  BookMarkItemContent,
+  BookMarkItemTop,
+  BookMarkItemBottom,
+} from './BookMark.styles';
