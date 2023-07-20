@@ -5,4 +5,7 @@ export {
   MenuButton,
 } from './UserInfo.styles';
 
-export { ContentContainer } from './MyPageContentContainer.styles';
+export {
+  ContentContainer,
+  ContentButton,
+} from './MyPageContentContainer.styles';
