@@ -3,6 +3,7 @@ import { Theme, css } from '@emotion/react';
 export const UserInfoContainer = (theme: Theme) =>
   css({
     display: 'flex',
+    marginBottom: '1.25rem',
     padding: '2.2rem 1.56rem',
     border: `1px solid ${theme.black}`,
   });
