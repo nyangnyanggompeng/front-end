@@ -3,7 +3,10 @@ import useGetMyArticle from '../../hooks/MyPage/useGetMyArticle';
 import { ArticleDataItemType } from '../../types/Community/articleTypes';
 import Pagination from '../Common/Pagination';
 import MyArticleItem from './MyArticleItem';
-import { DeleteMyArticleRequestType } from '../../types/MyPage/MyArticleTypes';
+import {
+  DeleteMyArticleRequestType,
+  myArticlesDataType,
+} from '../../types/MyPage/MyArticleTypes';
 import { deleteMyArticles } from '../../utils/MyPage/deleteMyArticles';
 
 const deleteStatusMessage: Record<
