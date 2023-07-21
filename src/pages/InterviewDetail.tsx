@@ -5,9 +5,11 @@ import ReplyItem from '../components/Interview/ReplyItem';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { InterviewDetailData } from '../types/Interview/detailTypes';
+import { FormData, InterviewDetailData } from '../types/Interview/detailTypes';
 import { parseDate } from '../utils/Interview/interviewListFn';
 import { Theme, css, useTheme } from '@emotion/react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { getChatData } from '../utils/Interview/interviewDetailFn';
 
 const StyledInterviewDetail = (theme: Theme) =>
   css({
@@ -116,10 +118,16 @@ const InterviewDetail = () => {
     prompt: '',
   });
 
-  const [detailData, setDetailData] = useState<InterviewDetailData[]>([]);
   const [questionSet, setQusetionSet] = useState<Set<number>>(new Set());
 
-  // console.log(id, type, name, createdAt);
+  const { isError, isLoading, data } = useQuery<
+    [FormData, InterviewDetailData[]]
+  >({
+    queryKey: ['InterviewDetailData', id],
+    queryFn: () => getChatData(id),
+  });
+
+  const queryClient = useQueryClient();
 
   const handleOnChange = (className: string, value: string) => {
     setFormData({ ...formData, [className]: value });
@@ -127,25 +135,10 @@ const InterviewDetail = () => {
 
   const onSubmit = async () => {
     try {
-      const res = await axios.post(`/chatgpt/contents/${id}`, formData);
-      console.log(res.data);
-      setDetailData(res.data[1]);
+      await axios.post(`/chatgpt/contents/${id}`, formData);
+      queryClient.invalidateQueries({ queryKey: ['InterviewDetailData'] });
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  const getChatData = async () => {
-    try {
-      const res = await axios.get(`/chatgpt/contents/${id}`);
-      setFormData(res.data[0]);
-      setDetailData(res.data[1]);
-      res.data[1].map((el: InterviewDetailData) =>
-        questionSet.add(el.questionNum)
-      );
-    } catch (err) {
-      console.log(err);
-      setDetailData([]);
     }
   };
 
@@ -163,6 +156,7 @@ const InterviewDetail = () => {
       await axios
         .post(`/chatgpt/contents/${listId}/${questionNum}`, { answer })
         .then((res) => console.log(res.data));
+      queryClient.invalidateQueries({ queryKey: ['InterviewDetailData'] });
     } catch (err) {
       console.log(err);
     }
@@ -171,24 +165,36 @@ const InterviewDetail = () => {
   const deleteQuestion = async (listId: number, contentIdList: number[]) => {
     try {
       await axios.put(`/chatgpt/lists/${listId}/contents`, { contentIdList });
+      queryClient.invalidateQueries({ queryKey: ['InterviewDetailData'] });
     } catch (err) {
       console.log(err);
     }
   };
 
-  useEffect(() => {
-    // 새로 채팅방이 생성된 경우
-    // 기존에 있던 채팅방으로 들어온 경우
-    getChatData();
-  }, []);
+  const bookmarkToggle = async (contentId: number, isBookmarked: boolean) => {
+    try {
+      await axios.patch(
+        `/chatgpt/bookmark/${contentId}?isBookmarked=${isBookmarked}`
+      );
+      queryClient.invalidateQueries({ queryKey: ['InterviewDetailData'] });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  if (isLoading) return <div>로딩중...</div>;
 
   return (
     <main css={StyledInterviewDetail(theme)}>
       <div className='inner'>
         <h2>인터뷰 룸</h2>
         <div className='title'>
-          <span className={!type ? 'type' : `type ${type}`}>
-            {!type ? '작성 중' : `${type}면접`}
+          <span
+            className={
+              data && data[1].length !== 0 ? `type ${data[0].type}` : 'type'
+            }
+          >
+            {data && data[1].length !== 0 ? `${data[0].type}면접` : '작성 중'}
           </span>
           <h3>{name}</h3>
           <span className='date'>{parseDate(createdAt)}</span>
@@ -204,8 +210,11 @@ const InterviewDetail = () => {
                     name='type'
                     className='type'
                     value={item}
-                    defaultChecked={type === item || (!type && item === '일반')}
-                    disabled={detailData.length !== 0}
+                    defaultChecked={
+                      (data && data[0].type === item) ||
+                      (data === undefined && item === '일반')
+                    }
+                    disabled={data && data[1].length !== 0}
                     onChange={(e) =>
                       handleOnChange(e.target.className, e.target.value)
                     }
@@ -220,8 +229,9 @@ const InterviewDetail = () => {
             <select
               id='count'
               className='count'
-              value={formData.count}
-              disabled={detailData.length !== 0}
+              value={data && data[0].count}
+              // value={formData.count}
+              disabled={data && data[1].length !== 0}
               onChange={(e) =>
                 handleOnChange(e.target.className, e.target.value)
               }
@@ -244,21 +254,28 @@ const InterviewDetail = () => {
               <p>
                 <span
                   className={
-                    formData.prompt.length === 3000 ? 'length over' : 'length'
+                    (data && data[0].prompt.length === 3000) ||
+                    formData.prompt.length === 3000
+                      ? 'length over'
+                      : 'length'
                   }
                 >
-                  {formData.prompt.length}
+                  {(data && data[0].prompt.length) || formData.prompt.length}
+                  {/* {formData.prompt.length} */}
                 </span>{' '}
                 / 3000
               </p>
             </div>
             <textarea
               id='text'
-              className={detailData.length !== 0 ? 'prompt disabled' : 'prompt'}
+              className={
+                data && data[1].length !== 0 ? 'prompt disabled' : 'prompt'
+              }
               placeholder='자기소개서를 입력해 주세요.'
               maxLength={3000}
-              value={formData.prompt}
-              disabled={detailData.length !== 0}
+              value={data && data[0].prompt}
+              // value={formData.prompt}
+              disabled={data && data[1].length !== 0}
               onChange={(e) =>
                 handleOnChange(e.target.className, e.target.value)
               }
@@ -266,7 +283,7 @@ const InterviewDetail = () => {
           </div>
           <Button
             onClick={onSubmit}
-            status={detailData.length !== 0 ? 'disable' : 'main'}
+            status={data && data[1].length !== 0 ? 'disable' : 'main'}
           >
             질문하기
           </Button>
@@ -276,27 +293,32 @@ const InterviewDetail = () => {
             전체 펴기
             <FontAwesomeIcon icon={faChevronDown} />
           </Button>
-          {!detailData || detailData.length === 0 ? (
+          {!data || data[1].length === 0 ? (
             <div className='no-content'>
               자기소개서를 입력하고 <br />
               면접 예상 질문을 받아보세요!
             </div>
           ) : (
             <ul className='reply-list'>
-              {Array.from(questionSet).map((item, idx) => {
-                const filtered = detailData.filter(
-                  (el) => el.questionNum === item
-                );
-                return (
-                  <ReplyItem
-                    key={idx}
-                    questionNum={item}
-                    messages={filtered}
-                    sendAnswer={sendAnswer}
-                    deleteQuestion={deleteQuestion}
-                  />
-                );
-              })}
+              {data &&
+                data[1].map((el: InterviewDetailData) =>
+                  questionSet.add(el.questionNum)
+                ) &&
+                Array.from(questionSet).map((item, idx) => {
+                  const filtered = data[1].filter(
+                    (el) => el.questionNum === item
+                  );
+                  return (
+                    <ReplyItem
+                      key={idx}
+                      questionNum={item}
+                      messages={filtered}
+                      sendAnswer={sendAnswer}
+                      deleteQuestion={deleteQuestion}
+                      bookmarkToggle={bookmarkToggle}
+                    />
+                  );
+                })}
             </ul>
           )}
         </div>

@@ -123,7 +123,7 @@ const InterviewRoom = () => {
         return;
       }
 
-      const res = await axios.post(`/chatgpt/lists/8`, { name: chatName });
+      const res = await axios.post(`/chatgpt/lists`, { name: chatName });
       setChatName('');
       setIsOpen(false);
       navigate(`/interview-room/${res.data.id}`, {

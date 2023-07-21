@@ -16,6 +16,7 @@ interface ReplyItemProps {
     answer: string
   ): Promise<void>;
   deleteQuestion(listId: number, contentIdList: number[]): Promise<void>;
+  bookmarkToggle(contentId: number, isBookmarked: boolean): void;
 }
 
 const StyledReplyItem = (theme: Theme) =>
@@ -60,6 +61,7 @@ const ReplyItem = ({
   messages,
   sendAnswer,
   deleteQuestion,
+  bookmarkToggle,
 }: ReplyItemProps) => {
   const theme = useTheme();
   const [value, setValue] = useState('');
@@ -87,7 +89,13 @@ const ReplyItem = ({
       </div>
       <div className='message-wrap'>
         {messages.map((item) => {
-          return <MessageItem key={item.id} message={item} />;
+          return (
+            <MessageItem
+              key={item.id}
+              message={item}
+              bookmarkToggle={bookmarkToggle}
+            />
+          );
         })}
       </div>
       <div className='text'>
