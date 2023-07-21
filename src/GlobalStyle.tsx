@@ -21,7 +21,7 @@ const style = (theme: Theme) =>
       cursor: 'default',
       lineHeight: 1.5,
       overflowWrap: 'break-word',
-      wordBreak: 'break-word',
+      wordBreak: 'keep-all',
       tabSize: 4,
     },
 
