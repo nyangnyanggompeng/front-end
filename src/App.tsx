@@ -21,9 +21,9 @@ function App() {
   axios.defaults.headers['Content-Type'] = 'application/json';
   axios.defaults.withCredentials = true;
 
-  // useEffect(() => {
-  //   silentRefresh();
-  // }, []);
+  useEffect(() => {
+    // silentRefresh();
+  }, []);
   return (
     <>
       <ThemeProvider theme={isDark ? darkMode : lightMode}>
