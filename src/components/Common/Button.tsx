@@ -27,6 +27,7 @@ const StyledBtn = (theme: Theme) =>
 
 interface BtnProps {
   children: React.ReactNode;
+  form?: string; // form id
   type?: 'button' | 'submit' | 'reset';
   onClick?: (() => void) | MouseEventHandler<HTMLButtonElement>;
   status?: 'main' | 'sub' | 'disable';

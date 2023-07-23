@@ -1,6 +1,9 @@
 import { ModalPropsType } from '../Modal/ModalTypes';
 import { ModalContainer } from '../Modal/ModalContainer';
 import NicknameCheck from '../SignUp/NicknameCheck';
+import Button from '../Common/Button';
+import { TwoButtonsContainer, ProfileImageEdit } from '../../styles/MyPage';
+import blankProfileImage from '../../asset/blank-profile-picture.png';
 
 export function UserInfoEditModal({ resetModal }: ModalPropsType) {
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -14,12 +17,33 @@ export function UserInfoEditModal({ resetModal }: ModalPropsType) {
 
   return (
     <ModalContainer resetModal={resetModal}>
-      <h1>정보 수정</h1>
-      <div>프로필 사진</div>
-      <form onSubmit={onSubmit}>
-        <input name='profile-image' type='file' />
+      <h3>정보 수정</h3>
+      <form id='edit-profile' onSubmit={onSubmit}>
+        <div css={ProfileImageEdit}>
+          {/* TODO: 이미지 미리보기 구현 */}
+          <img src={blankProfileImage} alt='profileImage' width='100px' />
+          <Button>
+            <label htmlFor='profile-image'>
+              파일 업로드
+              <input
+                style={{ display: 'none' }}
+                name='profile-image'
+                id='profile-image'
+                type='file'
+                accept='image/*'
+              />
+            </label>
+          </Button>
+        </div>
         <NicknameCheck />
-        <button type='submit'>정보 수정</button>
+        <div css={TwoButtonsContainer}>
+          <Button status='sub' onClick={resetModal}>
+            취소
+          </Button>
+          <Button form='edit-profile' type='submit'>
+            정보 수정
+          </Button>
+        </div>
       </form>
     </ModalContainer>
   );
