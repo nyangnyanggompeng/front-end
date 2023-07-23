@@ -23,6 +23,10 @@ export const loginSuccess = (accessToken: string) => {
   setTimeout(silentRefresh, JWT_EXPIRY_TIME - 60000);
 };
 
+export const logoutFn = async () => {
+  await axios.get('/users/logout');
+};
+
 export const getUserInfo = async () => {
   const res = await axios.get('/users/auth');
   return {
