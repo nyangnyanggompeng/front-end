@@ -2,7 +2,7 @@ import { ModalPropsType } from '../Modal/ModalTypes';
 import { ModalContainer } from '../Modal/ModalContainer';
 import NicknameCheck from '../SignUp/NicknameCheck';
 import Button from '../Common/Button';
-import { TwoButtonsContainer, ProfileImageEdit } from '../../styles/MyPage';
+import { BottomButtonsContainer, ProfileImageEdit } from '../../styles/MyPage';
 import blankProfileImage from '../../asset/blank-profile-picture.png';
 
 export function UserInfoEditModal({ resetModal }: ModalPropsType) {
@@ -36,15 +36,15 @@ export function UserInfoEditModal({ resetModal }: ModalPropsType) {
           </Button>
         </div>
         <NicknameCheck />
-        <div css={TwoButtonsContainer}>
-          <Button status='sub' onClick={resetModal}>
-            취소
-          </Button>
-          <Button form='edit-profile' type='submit'>
-            정보 수정
-          </Button>
-        </div>
       </form>
+      <div css={BottomButtonsContainer}>
+        <Button status='sub' onClick={resetModal}>
+          취소
+        </Button>
+        <Button form='edit-profile' type='submit'>
+          정보 수정
+        </Button>
+      </div>
     </ModalContainer>
   );
 }

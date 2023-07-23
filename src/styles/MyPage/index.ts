@@ -25,8 +25,10 @@ export {
   MyCommentItemStyle,
 } from './MyCommentItem.styles';
 
-export { TwoButtonsContainer } from '../Common/TwoButtonsContainer';
+export { BottomButtonsContainer } from './Common';
 
 export { InstructionStyles } from './DeleteAccountModal.styles';
 
 export { ProfileImageEdit } from './UserInfoEditModal.styles';
+
+export { FormContainer } from './ChangePasswordModal.styles';

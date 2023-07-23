@@ -2,7 +2,7 @@ import { ModalPropsType } from '../Modal/ModalTypes';
 import { ModalContainer } from '../Modal/ModalContainer';
 import Button from '../Common/Button';
 import { InstructionStyles } from '../../styles/MyPage';
-import { TwoButtonsContainer } from '../../styles/Common/TwoButtonsContainer';
+import { BottomButtonsContainer } from '../../styles/MyPage';
 
 export function DeleteAccountModal({ resetModal }: ModalPropsType) {
   function onClick(e: React.MouseEvent<Element, MouseEvent>) {
@@ -22,7 +22,7 @@ export function DeleteAccountModal({ resetModal }: ModalPropsType) {
         <br />
         이는 복구할 수 없습니다. 그래도 탈퇴하시겠습니까?
       </div>
-      <div css={TwoButtonsContainer}>
+      <div css={BottomButtonsContainer}>
         <Button status='sub' onClick={onClick}>
           탈퇴하기
         </Button>
