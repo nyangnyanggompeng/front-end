@@ -1,4 +1,16 @@
 import { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import { useTheme } from '@emotion/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faAngleLeft,
+  faAngleRight,
+  faAnglesLeft,
+  faAnglesRight,
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  PaginationContainer,
+  CurrentPageButton,
+} from '../../styles/Common/Pagination.styles';
 
 const OFFSET = 4;
 
@@ -13,6 +25,7 @@ function Pagination({
   setCurrentPage,
   totalPage,
 }: PaginationProps) {
+  const theme = useTheme();
   const [pageArray, setPageArray] = useState<number[]>([1]);
   useEffect(() => {
     const startPage = Math.ceil(currentPage / (OFFSET + 1) - 1) * 5 + 1;
@@ -26,16 +39,28 @@ function Pagination({
   }, [currentPage, totalPage]);
 
   return (
-    <div>
-      <button onClick={() => setCurrentPage(1)}>⏪ first</button>
-      <button onClick={() => setCurrentPage(currentPage - 1)}>◀️ prev</button>
+    <div css={PaginationContainer}>
+      <button onClick={() => setCurrentPage(1)}>
+        <FontAwesomeIcon icon={faAnglesLeft} />
+      </button>
+      <button onClick={() => setCurrentPage(currentPage - 1)}>
+        <FontAwesomeIcon icon={faAngleLeft} />
+      </button>
       {pageArray.map((page: number) => (
-        <button key={page} onClick={() => setCurrentPage(page)}>
+        <button
+          key={page}
+          css={currentPage === page && CurrentPageButton(theme)}
+          onClick={() => setCurrentPage(page)}
+        >
           {page}
         </button>
       ))}
-      <button onClick={() => setCurrentPage(currentPage + 1)}>next ▶️</button>
-      <button onClick={() => setCurrentPage(totalPage)}>last ⏩</button>
+      <button onClick={() => setCurrentPage(currentPage + 1)}>
+        <FontAwesomeIcon icon={faAngleRight} />
+      </button>
+      <button onClick={() => setCurrentPage(totalPage)}>
+        <FontAwesomeIcon icon={faAnglesRight} />
+      </button>
     </div>
   );
 }

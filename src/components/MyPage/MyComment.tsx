@@ -61,7 +61,7 @@ export default function MyComment() {
       },
     ],
     numberOfMyComment: 2,
-    totalPages: 1,
+    totalPages: 5,
   };
 
   function handleSelectComment(checked: boolean, id: number) {
