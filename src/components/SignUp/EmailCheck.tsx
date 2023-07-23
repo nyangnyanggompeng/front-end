@@ -67,7 +67,7 @@ function EmailCheck() {
 
   return (
     <div css={ItemContainer}>
-      <h3>이메일</h3>
+      <h4>이메일</h4>
       <div css={EmailContainer(theme)}>
         <input
           type='text'

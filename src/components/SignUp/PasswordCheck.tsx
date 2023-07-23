@@ -70,14 +70,14 @@ function PasswordCheck() {
 
   return (
     <div css={ItemContainer}>
-      <h3>비밀번호</h3>
+      <h4>비밀번호</h4>
       <input
         type='password'
         name='password'
         placeholder='비밀번호'
         onChange={onChange}
       />
-      <h3>비밀번호 확인</h3>
+      <h4>비밀번호 확인</h4>
       <input
         type='password'
         name='passwordVerify'

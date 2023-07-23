@@ -53,7 +53,7 @@ function NicknameCheck() {
 
   return (
     <div css={ItemContainer}>
-      <h3>닉네임</h3>
+      <h4>닉네임</h4>
       <div css={NicknameContainer}>
         <input
           type='text'
