@@ -1,4 +1,5 @@
 import { css, Theme } from '@emotion/react';
+import { OverflowEllipsis } from '../utils';
 
 export const BookMarkItemContainer = (theme: Theme) =>
   css({
@@ -18,20 +19,14 @@ export const BookMarkItemTop = css({
   },
 });
 
-export const BookMarkItemContent = css({
+export const BookMarkItemContent = css(OverflowEllipsis, {
   flex: 1,
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
   fontSize: '1.6rem',
 });
 
 export const BookMarkItemBottom = (theme: Theme) =>
-  css({
+  css(OverflowEllipsis, {
     display: 'block',
     color: theme.gray1,
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
     fontSize: '1.6rem',
   });
