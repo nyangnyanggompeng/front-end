@@ -9,6 +9,7 @@ export {
   ItemContainer,
   FormContainer,
   StatusMessage,
+  AcceptTerms,
 } from '../SignUp/SignUp.styles';
 
 export { EmailContainer } from '../SignUp/EmailCheck.styles';

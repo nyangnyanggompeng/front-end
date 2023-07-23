@@ -52,3 +52,22 @@ export const StatusMessage = (theme: Theme, status: 'SUCCESS' | 'ERROR') =>
     fontSize: '1.6rem',
     color: status === 'SUCCESS' ? theme.green : theme.red,
   });
+
+export const AcceptTerms = (theme: Theme) =>
+  css({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: '2rem 0',
+    input: {
+      width: '2.8rem',
+      height: '2.8rem',
+    },
+    span: {
+      fontSize: '1.6rem',
+      marginLeft: '0.5rem',
+    },
+    '.required': {
+      color: theme.red,
+    },
+  });

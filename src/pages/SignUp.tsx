@@ -10,6 +10,7 @@ import {
   SignUpSubmitButton,
   SignUpForm,
   LogoStyle,
+  AcceptTerms,
 } from '../styles/SignUp';
 
 const signupResultMessage: Record<SignupStatusType, string> = {
@@ -70,15 +71,17 @@ function SignUp() {
           {/* <Button type='submit' status='?'>
             회원 가입
           </Button> */}
-          <label>
+          <label css={AcceptTerms(theme)}>
             <input
               type='checkbox'
               name='acceptTermsCheckbox'
               id='acceptTermsCheckbox'
             />
-            <span>(필수)</span>
-            인터뷰 룸 이용시 사용자가 대화한 기록이 모두 보관되는 것에
-            동의합니다.
+            <span className='required'>(필수) </span>
+            <span>
+              인터뷰 룸 이용시 사용자가 대화한 기록이 모두 보관되는 것에
+              동의합니다.
+            </span>
           </label>
           <button type='submit' css={SignUpSubmitButton(theme)}>
             회원 가입
