@@ -35,6 +35,10 @@ function SignUp() {
       alert('닉네임 중복확인을 해 주세요.');
       return;
     }
+    if (formData.get('acceptTermsCheckbox') !== 'on') {
+      alert('이용약관 동의는 필수입니다.');
+      return;
+    }
     if (formData.get('domain') === 'type')
       formData.set('domain', formData.get('domain-type') as string);
     const requestForm: SignupFormType = {
@@ -66,6 +70,16 @@ function SignUp() {
           {/* <Button type='submit' status='?'>
             회원 가입
           </Button> */}
+          <label>
+            <input
+              type='checkbox'
+              name='acceptTermsCheckbox'
+              id='acceptTermsCheckbox'
+            />
+            <span>(필수)</span>
+            인터뷰 룸 이용시 사용자가 대화한 기록이 모두 보관되는 것에
+            동의합니다.
+          </label>
           <button type='submit' css={SignUpSubmitButton(theme)}>
             회원 가입
           </button>
