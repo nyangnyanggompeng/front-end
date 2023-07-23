@@ -15,8 +15,6 @@ export const loginFn = async (
 };
 
 export const silentRefresh = async () => {
-  console.log('토큰 재발급');
-
   await axios.post('/users/refresh').then((res) => loginSuccess(res.data));
 };
 
