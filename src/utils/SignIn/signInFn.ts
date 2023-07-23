@@ -7,8 +7,6 @@ export const loginFn = async (
   domain: string,
   password: string
 ) => {
-  // 로그인 함수 실행
-  // 성공하면 로그인 성공 함수 실행
   await axios
     .post('/users/login', { username, domain, password })
     .then((res) => {
@@ -17,22 +15,11 @@ export const loginFn = async (
 };
 
 export const silentRefresh = async () => {
-  // 리프레시 토큰 발급 받고
-  // 발급받은 액세스 토큰을 다시 헤더에 저장해줌
-  console.log('리프레시');
-
   await axios.post('/users/refresh').then((res) => loginSuccess(res.data));
 };
 
-const loginSuccess = (accessToken: string) => {
-  console.log('로그인 성공');
-
-  // 헤더에 액세스 토큰을 설정해준다
-  // accessToken 설정
+export const loginSuccess = (accessToken: string) => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-
-  // 액세스 토큰이 만료되기 1분 전에 로그인 을 연장하게 한다
-  // accessToken 만료하기 1분 전에 로그인 연장
   setTimeout(silentRefresh, JWT_EXPIRY_TIME - 60000);
 };
 
