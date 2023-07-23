@@ -9,8 +9,11 @@ import {
 } from '../../types/MyPage/MyArticleTypes';
 import { deleteMyArticles } from '../../utils/MyPage/deleteMyArticles';
 import Button from '../Common/Button';
-import { ContentTitleContainer, ContentTotal } from '../../styles/MyPage';
-import { DeleteButtonsContainer } from '../../styles/MyPage/DeleteButtons.styles';
+import {
+  ContentTitleContainer,
+  ContentTotal,
+  DeleteButtonsContainer,
+} from '../../styles/MyPage';
 const deleteStatusMessage: Record<
   'OK' | 'BAD_REQUEST' | 'INTERNAL_SERVER_ERROR',
   string

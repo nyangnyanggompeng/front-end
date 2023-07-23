@@ -27,6 +27,7 @@ export const Content = css({
 export const ContentTitleContainer = css({
   display: 'flex',
   justifyContent: 'space-between',
+  alignItems: 'start',
   marginBottom: '1.45rem',
   h3: {
     flex: 1,
