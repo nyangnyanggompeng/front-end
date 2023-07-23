@@ -4,11 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment } from '@fortawesome/free-regular-svg-icons';
 import {
   ArticleItemContainer,
-  ArticleItemTitle,
-  ArticleItemWriter,
-  ArticleItemDate,
   ArticleItemComments,
 } from '../../styles/Community';
+import { OverflowEllipsis } from '../../styles/utils';
 import { getDate } from '../../utils/Common/getDate';
 
 type ArticleListItemProps = {
@@ -29,11 +27,11 @@ export function ArticleListItem({
   const theme = useTheme();
   return (
     <div css={ArticleItemContainer(theme)}>
-      <Link to={`/community/${id}`} css={ArticleItemTitle}>
+      <Link to={`/community/${id}`} css={OverflowEllipsis}>
         {title}
       </Link>
-      <div css={ArticleItemWriter}>{writer}</div>
-      <div css={ArticleItemDate}>{getDate(new Date(createdAt))}</div>
+      <div css={OverflowEllipsis}>{writer}</div>
+      <div css={OverflowEllipsis}>{getDate(new Date(createdAt))}</div>
       <div css={ArticleItemComments}>
         <FontAwesomeIcon icon={faComment} />
         {numberOfComment}

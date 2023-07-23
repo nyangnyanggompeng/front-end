@@ -1,35 +1,17 @@
 import { css, Theme } from '@emotion/react';
+import { OverflowEllipsis } from '../utils';
 
 export const ArticleItemContainer = (theme: Theme) =>
   css({
-    // NOTE: Grid?
-    display: 'flex',
+    display: 'grid',
+    gridTemplateColumns: '10fr 2fr 1fr 1fr',
+    gridGap: '6.5rem',
     border: `1px solid ${theme.black}`,
-    borderRadius: '0.32rem', // NOTE: small radius
+    borderRadius: '0.5rem', // NOTE: small radius
     padding: '1.25rem',
-    marginBottom: '1.25rem',
   });
 
-export const ArticleItemTitle = css({
-  flex: 1,
-  marginRight: '4rem',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-});
-
-export const ArticleItemWriter = css({
-  marginRight: '4rem',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-});
-
-export const ArticleItemDate = css({
-  marginRight: '4rem',
-});
-
-export const ArticleItemComments = css({
+export const ArticleItemComments = css(OverflowEllipsis, {
   svg: {
     marginRight: '0.5rem',
   },

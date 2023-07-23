@@ -8,14 +8,20 @@ export const ContentContainer = (theme: Theme) =>
 
 export const ContentButton = (theme: Theme, current: boolean) =>
   css({
-    marginRight: '1.8rem',
-    fontSize: '1.875rem',
+    marginRight: '2.9rem',
+    fontSize: '3rem',
     fontWeight: '700',
     color: current ? theme.black : '#BBBBBB',
   });
 
+export const ContentTotal = css({
+  fontSize: '2.4rem',
+  fontWeight: '700',
+  marginBottom: '3rem',
+});
+
 export const Content = css({
-  marginTop: '1.9rem',
+  marginTop: '3rem',
 });
 
 export const ContentTitleContainer = css({

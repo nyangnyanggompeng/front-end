@@ -1,7 +1,1 @@
-export {
-  ArticleItemContainer,
-  ArticleItemTitle,
-  ArticleItemWriter,
-  ArticleItemDate,
-  ArticleItemComments,
-} from './Article.styles';
+export { ArticleItemContainer, ArticleItemComments } from './Article.styles';
