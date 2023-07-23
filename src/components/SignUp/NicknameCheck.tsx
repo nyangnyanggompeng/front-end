@@ -5,7 +5,7 @@ import { nicknameCheck } from '../../utils/SignUp';
 import Button from '../Common/Button';
 import {
   ItemContainer,
-  FormContainer,
+  NicknameContainer,
   StatusMessage,
 } from '../../styles/SignUp';
 
@@ -54,7 +54,7 @@ function NicknameCheck() {
   return (
     <div css={ItemContainer}>
       <h3>닉네임</h3>
-      <div css={FormContainer}>
+      <div css={NicknameContainer}>
         <input
           type='text'
           name='nickname'

@@ -4,8 +4,13 @@ export const logoImg = logo;
 export { PageBox } from '../Common/PageBox';
 export {
   SignUpSubmitButton,
+  SignUpForm,
   LogoStyle,
   ItemContainer,
   FormContainer,
   StatusMessage,
 } from '../SignUp/SignUp.styles';
+
+export { EmailContainer } from '../SignUp/EmailCheck.styles';
+
+export { NicknameContainer } from '../SignUp/NicknameCheck.styles';

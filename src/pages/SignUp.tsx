@@ -8,6 +8,7 @@ import {
   logoImg,
   PageBox,
   SignUpSubmitButton,
+  SignUpForm,
   LogoStyle,
 } from '../styles/SignUp';
 
@@ -57,7 +58,7 @@ function SignUp() {
       <div css={PageBox(theme)}>
         <h2 style={{ display: 'none' }}>회원가입</h2>
         <img src={logoImg} alt='logo' css={LogoStyle} />
-        <form onSubmit={onSubmit}>
+        <form css={SignUpForm} onSubmit={onSubmit}>
           <EmailCheck />
           <PasswordCheck />
           <NicknameCheck />

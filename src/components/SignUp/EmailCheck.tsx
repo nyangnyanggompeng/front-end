@@ -4,7 +4,7 @@ import { EmailStatusType, EmailRequestType } from '../../types/SignUp';
 import { emailCheck } from '../../utils/SignUp';
 import {
   ItemContainer,
-  FormContainer,
+  EmailContainer,
   StatusMessage,
 } from '../../styles/SignUp';
 import Button from '../Common/Button';
@@ -68,7 +68,7 @@ function EmailCheck() {
   return (
     <div css={ItemContainer}>
       <h3>이메일</h3>
-      <div css={FormContainer}>
+      <div css={EmailContainer(theme)}>
         <input
           type='text'
           name='username'
