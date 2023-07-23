@@ -3,39 +3,39 @@ import { Theme, css } from '@emotion/react';
 export const UserInfoContainer = (theme: Theme) =>
   css({
     display: 'flex',
-    marginBottom: '1.25rem',
-    padding: '2.2rem 1.56rem',
+    marginBottom: '2rem',
+    padding: '2.5rem 3.5rem',
     border: `1px solid ${theme.black}`,
   });
 
 export const UserProfilePhoto = css({
+  width: '13.1rem',
+  height: '13.1rem',
   borderRadius: '50%',
 });
 
 export const UserInfoContent = css({
   display: 'flex',
   flexDirection: 'column',
-  justifyItems: 'start',
-  alignItems: 'center',
+  justifyContent: 'center',
   flex: '1',
-  margin: '0 2rem',
+  margin: '0 3.2rem',
   '.nickname': {
-    fontSize: '1.875rem',
+    fontSize: '3rem',
     fontWeight: '700',
   },
   '.email': {
-    fontSize: '1rem',
+    fontSize: '1.6rem',
   },
 });
 
 export const MenuButton = css({
   display: 'flex',
   flexDirection: 'column',
-  justifyItems: 'end',
-  alignContent: 'space-between',
-  height: '100%',
+  justifyContent: 'space-between',
+  alignItems: 'end',
   button: {
-    marginLeft: '0.7rem',
+    marginLeft: '1.1rem',
   },
   '.edit-container': {
     display: 'flex',
@@ -43,7 +43,7 @@ export const MenuButton = css({
   },
   '.delete-account': {
     color: '#bbb',
-    fontSize: '1rem',
+    fontSize: '1.6rem',
     textDecoration: 'underline',
   },
 });
