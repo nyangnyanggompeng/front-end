@@ -25,4 +25,6 @@ export {
   MyCommentItemStyle,
 } from './MyCommentItem.styles';
 
-export { DeleteButtonsContainer } from './Common';
+export { TwoButtonsContainer } from '../Common/TwoButtonsContainer';
+
+export { InstructionStyles } from './DeleteAccountModal.styles';

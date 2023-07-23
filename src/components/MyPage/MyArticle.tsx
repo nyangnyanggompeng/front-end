@@ -12,7 +12,7 @@ import Button from '../Common/Button';
 import {
   ContentTitleContainer,
   ContentTotal,
-  DeleteButtonsContainer,
+  TwoButtonsContainer,
 } from '../../styles/MyPage';
 const deleteStatusMessage: Record<
   'OK' | 'BAD_REQUEST' | 'INTERNAL_SERVER_ERROR',
@@ -97,7 +97,7 @@ export default function MyArticle() {
           <div css={ContentTitleContainer}>
             <div css={ContentTotal}>{`전체 ${data?.numberOfMyPost}개`}</div>
             {isDeleteMode ? (
-              <div css={DeleteButtonsContainer}>
+              <div css={TwoButtonsContainer}>
                 <Button onClick={() => setIsDeleteMode(false)}>취소</Button>
                 <Button onClick={() => deleteHandler()}>삭제하기</Button>
               </div>
