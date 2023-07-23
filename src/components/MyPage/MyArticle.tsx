@@ -9,9 +9,8 @@ import {
 } from '../../types/MyPage/MyArticleTypes';
 import { deleteMyArticles } from '../../utils/MyPage/deleteMyArticles';
 import Button from '../Common/Button';
-import { ContentTitleContainer } from '../../styles/MyPage';
+import { ContentTitleContainer, ContentTotal } from '../../styles/MyPage';
 import { DeleteButtonsContainer } from '../../styles/MyPage/DeleteButtons.styles';
-
 const deleteStatusMessage: Record<
   'OK' | 'BAD_REQUEST' | 'INTERNAL_SERVER_ERROR',
   string
@@ -93,7 +92,7 @@ export default function MyArticle() {
       ) : (
         <div>
           <div css={ContentTitleContainer}>
-            <h3>{`전체 ${data?.numberOfMyPost}개`}</h3>
+            <div css={ContentTotal}>{`전체 ${data?.numberOfMyPost}개`}</div>
             {isDeleteMode ? (
               <div css={DeleteButtonsContainer}>
                 <Button onClick={() => setIsDeleteMode(false)}>취소</Button>
