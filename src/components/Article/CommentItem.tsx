@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   CommentStatusType,
@@ -6,8 +7,8 @@ import {
 } from '../../types/Community/commentTypes';
 import { getDate } from '../../utils/Common/getDate';
 import { deleteComments } from '../../utils/Community/deleteComments';
-import { useState } from 'react';
 import { updateComments } from '../../utils/Community/updateComments';
+import { useUser } from '../../hooks/Common';
 
 type CommentItemProps = {
   comment: CommentType;
@@ -22,8 +23,7 @@ const statusMessage: Record<CommentStatusType, string> = {
 
 export default function CommentItem({ comment, postId }: CommentItemProps) {
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  // ANCHOR : 테스트 유저 id, [8, 9, 10]
-  const currentUserId = 17;
+  const currentUserId = useUser().id;
   const queryClient = useQueryClient();
   function onDeleteHander(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
@@ -63,7 +63,7 @@ export default function CommentItem({ comment, postId }: CommentItemProps) {
     <li>
       <div>{comment.writer}</div>
       <div>{getDate(new Date(comment.createdAt))}</div>
-      {currentUserId === comment.userId && (
+      {currentUserId && currentUserId === comment.userId && (
         <div>
           <button onClick={() => setIsEdit(true)}>✏️ 수정</button>
           <button onClick={onDeleteHander}>🗑 삭제</button>

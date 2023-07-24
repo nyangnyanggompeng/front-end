@@ -13,6 +13,7 @@ import { getArticleDetail } from '../utils/Community/getArticleDetail';
 import useHandleUnloadEvent from '../hooks/Article/useHandleUnloadEvent';
 import { ArticleDetailType } from '../types/Community/articleTypes';
 import { updateArticle } from '../utils/Community/updateArticle';
+import { useUser } from '../hooks/Common';
 
 const statusMessage: Record<
   ArticleWriteStateType | 'UNAUTHORIZED' | 'BAD_ACCESS',
@@ -37,8 +38,7 @@ function EditArticle({ mode }: WritingProps) {
   const titleRef = useRef<HTMLInputElement>(null);
   useHandleUnloadEvent();
 
-  // ANCHOR : 테스트 유저 id, [8, 9, 10]
-  const currentUserID = 17;
+  const currentUserID = useUser().id;
 
   useEffect(() => {
     if (mode === 'EDIT') {
@@ -51,7 +51,7 @@ function EditArticle({ mode }: WritingProps) {
       getArticleDetail(parseInt(id)).then((data: ArticleDetailType) => {
         const { title, content, userId } = data;
         // error case 2: EDIT mode, but userId is not matched
-        if (userId !== currentUserID) {
+        if (!currentUserID || userId !== currentUserID) {
           alert(statusMessage['UNAUTHORIZED']);
           navigate('/community');
           return;
