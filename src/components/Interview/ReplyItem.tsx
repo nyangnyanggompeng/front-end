@@ -4,7 +4,7 @@ import Button from '../Common/Button';
 import MessageItem from './MessageItem';
 import { InterviewDetailData } from '../../types/Interview/detailTypes';
 import { Theme, css, useTheme } from '@emotion/react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 interface ReplyItemProps {

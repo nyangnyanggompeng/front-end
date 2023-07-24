@@ -4,7 +4,7 @@ import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import ReplyItem from '../components/Interview/ReplyItem';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FormData, InterviewDetailData } from '../types/Interview/detailTypes';
 import { parseDate } from '../utils/Interview/interviewListFn';
 import { Theme, css, useTheme } from '@emotion/react';
@@ -119,9 +119,7 @@ const InterviewDetail = () => {
   });
   const [questionSet, setQusetionSet] = useState<Set<number>>(new Set());
 
-  const { isError, isLoading, data } = useQuery<
-    [FormData, InterviewDetailData[]]
-  >({
+  const { isLoading, data } = useQuery<[FormData, InterviewDetailData[]]>({
     queryKey: ['InterviewDetailData', id],
     queryFn: () => getChatData(id),
   });
@@ -137,12 +135,29 @@ const InterviewDetail = () => {
   };
 
   const onSubmit = async () => {
-    // FIXME 유효성검사
+    if (formData.prompt === '') {
+      alert('자기소개서를 입력해 주세요.');
+      return;
+    }
     try {
       await axios.post(`/chatgpt/contents/${id}`, formData);
       queryClient.invalidateQueries({ queryKey: ['InterviewDetailData'] });
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        switch (err.response?.data) {
+          case 'WRONG_CHATGPT_LIST':
+            alert('대화 목록이 없습니다.');
+            break;
+          case 'PROMPT_OR_TYPE_OR_COUNT_NO_ENTERED':
+            alert('입력되지 않은 값이 있습니다. 질문을 다시 확인해 주세요.');
+            break;
+          case 'TOO_MANY_QUESTIONS':
+            alert('예상 질문은 최대 10개까지 받아볼 수 있습니다.');
+            break;
+          default:
+            alert('서버 오류입니다. 잠시 후 다시 시도해 주세요.');
+        }
+      }
     }
   };
 
@@ -162,7 +177,15 @@ const InterviewDetail = () => {
         .then((res) => console.log(res.data));
       queryClient.invalidateQueries({ queryKey: ['InterviewDetailData'] });
     } catch (err) {
-      console.log(err);
+      if (axios.isAxiosError(err)) {
+        switch (err.response?.status) {
+          case 400:
+            alert('답변을 입력해 주세요.');
+            break;
+          default:
+            alert('서버 오류입니다. 잠시 후 다시 시도해 주세요.');
+        }
+      }
     }
   };
 
@@ -171,7 +194,21 @@ const InterviewDetail = () => {
       await axios.put(`/chatgpt/lists/${listId}/contents`, { contentIdList });
       queryClient.invalidateQueries({ queryKey: ['InterviewDetailData'] });
     } catch (err) {
-      console.log(err);
+      if (axios.isAxiosError(err)) {
+        switch (err.response?.data) {
+          case 'POST_DOESNT_EXIT':
+            alert('삭제된 대화 목록입니다.');
+            break;
+          case 'NO_PERMISSIONS':
+            alert('권한이 없는 사용자입니다.');
+            break;
+          case 'UNABLE_TO_DELETE_CONTENT':
+            alert('삭제할 수 없는 대화입니다.');
+            break;
+          default:
+            alert('서버 오류입니다. 잠시 후 다시 시도해 주세요.');
+        }
+      }
     }
   };
 
@@ -182,7 +219,15 @@ const InterviewDetail = () => {
       );
       queryClient.invalidateQueries({ queryKey: ['InterviewDetailData'] });
     } catch (err) {
-      console.log(err);
+      if (axios.isAxiosError(err)) {
+        switch (err.response?.status) {
+          case 500:
+            alert('북마크 상태가 변경되지 않았습니다.');
+            break;
+          default:
+            alert('서버 오류입니다. 잠시 후 다시 시도해 주세요.');
+        }
+      }
     }
   };
 
@@ -248,7 +293,6 @@ const InterviewDetail = () => {
               id='count'
               className='count'
               value={data && data[0].count}
-              // value={formData.count}
               disabled={data && data[1].length !== 0}
               onChange={(e) =>
                 handleOnChange(e.target.className, e.target.value)
