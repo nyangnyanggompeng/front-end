@@ -137,6 +137,7 @@ const InterviewDetail = () => {
   };
 
   const onSubmit = async () => {
+    // FIXME 유효성검사
     try {
       await axios.post(`/chatgpt/contents/${id}`, formData);
       queryClient.invalidateQueries({ queryKey: ['InterviewDetailData'] });
@@ -183,6 +184,11 @@ const InterviewDetail = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const questionsCloseToggle = () => {
+    // 전체 펴기 - 1개 이상 닫혀있음
+    // 전체 접기 - 모든게 다 열려있음
   };
 
   if (isLoading) return <div>로딩중...</div>;
@@ -290,10 +296,18 @@ const InterviewDetail = () => {
           </Button>
         </form>
         <div className='reply-wrap'>
-          <Button status='sub' onClick={() => console.log('전체 접기/펴기')}>
-            전체 접기
-            <FontAwesomeIcon icon={faChevronUp} />
-            {/* <FontAwesomeIcon icon={faChevronDown} /> */}
+          <Button status='sub' onClick={questionsCloseToggle}>
+            {Object.values(isCloseList).filter((el) => el === true).length >=
+            1 ? (
+              <>
+                전체 펴기
+                <FontAwesomeIcon icon={faChevronUp} />
+              </>
+            ) : (
+              <>
+                전체 접기 <FontAwesomeIcon icon={faChevronDown} />
+              </>
+            )}
           </Button>
           {!data || data[1].length === 0 ? (
             <div className='no-content'>
