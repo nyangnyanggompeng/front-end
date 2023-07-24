@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../components/Common/Button';
 import { RootState } from '../store';
 import { setIsLogin } from '../store/slices/loginSlices';
-import { loginFn } from '../utils/SignIn/signInFn';
+import { getUserInfo, loginFn } from '../utils/SignIn/signInFn';
+import { setUserInfo } from '../store/slices/userSlices';
 
 interface LoginInfo {
   userId: string;
@@ -121,6 +122,8 @@ const SignIn = () => {
     try {
       await loginFn(username, domain, loginInfo.password);
       dispatch(setIsLogin(true));
+      const userData = await getUserInfo();
+      dispatch(setUserInfo(userData));
       navigate('/interview-room');
     } catch (err) {
       if (axios.isAxiosError(err)) {
