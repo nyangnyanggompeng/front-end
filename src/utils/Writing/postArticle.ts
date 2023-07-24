@@ -7,10 +7,8 @@ import {
 export async function postArticle(
   newArticle: ArticleWriteType
 ): Promise<ArticleWriteStateType> {
-  // ANCHOR : 테스트 유저 id, [8, 9, 10]
-  const user_id = 17;
   try {
-    await axios.post(`/board/${user_id}`, newArticle);
+    await axios.post(`/board`, newArticle);
     return 'OK';
   } catch (error: unknown) {
     if (isAxiosError(error)) {
