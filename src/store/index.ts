@@ -3,16 +3,18 @@ import { persistReducer, persistStore } from 'redux-persist';
 import sessionStorage from 'redux-persist/es/storage/session';
 import modeSlices from './slices/modeSlices';
 import loginSlices from './slices/loginSlices';
+import userSlices from './slices/userSlices';
 
 const reducers = combineReducers({
   login: loginSlices,
   mode: modeSlices,
+  user: userSlices,
 });
 
 const persistConfig = {
   key: 'root',
   storage: sessionStorage,
-  whiteList: ['login', 'mode'],
+  blacklist: ['user'], // user만 세션 스토리지 저장에서 제외
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

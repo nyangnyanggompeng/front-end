@@ -10,6 +10,7 @@ import { RootState } from '../../store';
 import axios from 'axios';
 import { modeChange } from '../../store/slices/modeSlices';
 import { setIsLogin } from '../../store/slices/loginSlices';
+import { logoutFn } from '../../utils/SignIn/signInFn';
 
 const StyledHeader = (theme: Theme) =>
   css({
@@ -109,7 +110,7 @@ const Header = () => {
 
   const logoutHandler = async () => {
     try {
-      await axios.get('/users/logout'); // TODO : 로그아웃시 쿠키 삭제 확인할것
+      logoutFn();
       alert('로그아웃 되었습니다.');
       dispatch(setIsLogin(false));
       navigate('/sign-in');

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const JWT_EXPIRY_TIME = 24 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
+const JWT_EXPIRY_TIME = 60 * 60 * 1000; // 만료 시간 1h (24시간 밀리 초로 표현)
 
 export const loginFn = async (
   username: string,
@@ -15,14 +15,24 @@ export const loginFn = async (
 };
 
 export const silentRefresh = async () => {
-  console.log('토큰 재발급');
-
   await axios.post('/users/refresh').then((res) => loginSuccess(res.data));
 };
 
-const loginSuccess = (accessToken: string) => {
-  // accessToken 설정
+export const loginSuccess = (accessToken: string) => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-  // accessToken 만료하기 1분 전에 로그인 연장
   setTimeout(silentRefresh, JWT_EXPIRY_TIME - 60000);
+};
+
+export const logoutFn = async () => {
+  await axios.get('/users/logout');
+};
+
+export const getUserInfo = async () => {
+  const res = await axios.get('/users/auth');
+  return {
+    id: res.data.id,
+    username: res.data.username,
+    domain: res.data.domain,
+    nickname: res.data.nickname,
+  };
 };
