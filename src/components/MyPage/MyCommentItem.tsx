@@ -29,8 +29,12 @@ export default function MyCommentItem({
         />
       )}
       <div css={MyCommentItemStyle(theme)}>
-        <div className='writer'>{myComment.writer}</div>
-        <div className='date'>{getDate(new Date(myComment.createdAt))}</div>
+        <div className='writer' css={OverflowEllipsis}>
+          {myComment.writer}
+        </div>
+        <div className='date' css={OverflowEllipsis}>
+          {getDate(new Date(myComment.createdAt))}
+        </div>
         <div className='content'>{myComment.content}</div>
         <Link
           className='postLink'
