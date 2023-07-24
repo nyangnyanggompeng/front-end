@@ -100,8 +100,7 @@ function EditArticle({ mode }: WritingProps) {
   }
 
   return (
-    <>
-      <div>글쓰기</div>
+    <div>
       <input
         type='text'
         placeholder='제목'
@@ -115,7 +114,7 @@ function EditArticle({ mode }: WritingProps) {
       <button onClick={handleClick}>
         {mode === 'WRITE' ? '등록하기' : '수정하기'}
       </button>
-    </>
+    </div>
   );
 }
 

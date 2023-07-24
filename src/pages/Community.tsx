@@ -27,7 +27,6 @@ function Community() {
 
   return (
     <div>
-      <div>커뮤니티</div>
       <div>{`전체 ${ArticleData.numberOfPost}개`}</div>
       <button onClick={() => navigate('/community/writing')}>✏️ 글쓰기</button>
       <ArticleList articleList={ArticleData.Post} />
