@@ -2,12 +2,13 @@ import { Dispatch, SetStateAction } from 'react';
 import { useTheme } from '@emotion/react';
 import {
   UserInfoContainer,
-  UserProfilePhoto,
   UserInfoContent,
   MenuButton,
 } from '../../styles/MyPage';
 import { ModalType } from '../../types/MyPage/UserInfoTypes';
 import Button from '../Common/Button';
+import { useUser } from '../../hooks/Common';
+import { ProfilePhoto } from './ProfilePhoto';
 
 type UserInfoProps = {
   modalSetter: Dispatch<SetStateAction<ModalType>>;
@@ -15,24 +16,14 @@ type UserInfoProps = {
 
 export const UserInfo = ({ modalSetter }: UserInfoProps) => {
   const theme = useTheme();
-  // TODO : store에 저장되어 있는 유저 정보를 불러와서 렌더링
-  // const userInfo = useSelector((state) => state.user);
-  const userInfo = {
-    profileImage: 'https://avatars.githubusercontent.com/u/76847245?v=4',
-    email: 'pengpeng@gmail.com',
-    nickName: 'pengpeng',
-  };
+  const userInfo = useUser();
   return (
     <div css={UserInfoContainer(theme)}>
-      <img
-        css={UserProfilePhoto}
-        src={userInfo.profileImage}
-        alt='profileImage'
-        width='100px'
-      />
+      {/* TODO : user에 profileImage 타입 추가하기 */}
+      <ProfilePhoto src={userInfo.profilePhoto} />
       <div css={UserInfoContent}>
-        <span className='nickname'>{userInfo.nickName}</span>
-        <span className='email'>{userInfo.email}</span>
+        <span className='nickname'>{userInfo.nickname}</span>
+        <span className='email'>{`${userInfo.username}@${userInfo.domain}`}</span>
       </div>
       <div css={MenuButton}>
         <div className='edit-container'>

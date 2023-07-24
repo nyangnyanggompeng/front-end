@@ -14,6 +14,14 @@ export const UserProfilePhoto = css({
   borderRadius: '50%',
 });
 
+export const EmptyProfilePhoto = (theme: Theme) =>
+  css({
+    width: '13.1rem',
+    height: '13.1rem',
+    borderRadius: '50%',
+    backgroundColor: theme.gray1,
+  });
+
 export const UserInfoContent = css({
   display: 'flex',
   flexDirection: 'column',

@@ -1,6 +1,7 @@
 export {
   UserInfoContainer,
   UserProfilePhoto,
+  EmptyProfilePhoto,
   UserInfoContent,
   MenuButton,
 } from './UserInfo.styles';

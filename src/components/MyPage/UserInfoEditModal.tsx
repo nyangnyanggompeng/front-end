@@ -3,7 +3,7 @@ import { ModalContainer } from '../Modal/ModalContainer';
 import NicknameCheck from '../SignUp/NicknameCheck';
 import Button from '../Common/Button';
 import { BottomButtonsContainer, ProfileImageEdit } from '../../styles/MyPage';
-import blankProfileImage from '../../asset/blank-profile-picture.png';
+import { ProfilePhoto } from './ProfilePhoto';
 
 export function UserInfoEditModal({ resetModal }: ModalPropsType) {
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -21,7 +21,7 @@ export function UserInfoEditModal({ resetModal }: ModalPropsType) {
       <form id='edit-profile' onSubmit={onSubmit}>
         <div css={ProfileImageEdit}>
           {/* TODO: 이미지 미리보기 구현 */}
-          <img src={blankProfileImage} alt='profileImage' width='100px' />
+          <ProfilePhoto src='' />
           <Button>
             <label htmlFor='profile-image'>
               파일 업로드
