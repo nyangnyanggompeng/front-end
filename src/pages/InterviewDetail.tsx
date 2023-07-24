@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../components/Common/Button';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import ReplyItem from '../components/Interview/ReplyItem';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -110,14 +110,13 @@ const StyledInterviewDetail = (theme: Theme) =>
 const InterviewDetail = () => {
   const theme = useTheme();
   const location = useLocation();
-  const { id, type, name, createdAt } = location.state;
+  const { id, name, createdAt } = location.state;
   const radio = ['일반', '기술', '인성'];
   const [formData, setFormData] = useState({
     type: '일반',
     count: '1',
     prompt: '',
   });
-
   const [questionSet, setQusetionSet] = useState<Set<number>>(new Set());
 
   const { isError, isLoading, data } = useQuery<
@@ -126,6 +125,10 @@ const InterviewDetail = () => {
     queryKey: ['InterviewDetailData', id],
     queryFn: () => getChatData(id),
   });
+
+  const [isCloseList, setIsCloseList] = useState<{ [key: number]: boolean }>(
+    {}
+  );
 
   const queryClient = useQueryClient();
 
@@ -261,7 +264,6 @@ const InterviewDetail = () => {
                   }
                 >
                   {(data && data[0].prompt.length) || formData.prompt.length}
-                  {/* {formData.prompt.length} */}
                 </span>{' '}
                 / 3000
               </p>
@@ -274,7 +276,6 @@ const InterviewDetail = () => {
               placeholder='자기소개서를 입력해 주세요.'
               maxLength={3000}
               value={data && data[0].prompt}
-              // value={formData.prompt}
               disabled={data && data[1].length !== 0}
               onChange={(e) =>
                 handleOnChange(e.target.className, e.target.value)
@@ -290,8 +291,9 @@ const InterviewDetail = () => {
         </form>
         <div className='reply-wrap'>
           <Button status='sub' onClick={() => console.log('전체 접기/펴기')}>
-            전체 펴기
-            <FontAwesomeIcon icon={faChevronDown} />
+            전체 접기
+            <FontAwesomeIcon icon={faChevronUp} />
+            {/* <FontAwesomeIcon icon={faChevronDown} /> */}
           </Button>
           {!data || data[1].length === 0 ? (
             <div className='no-content'>
@@ -316,6 +318,8 @@ const InterviewDetail = () => {
                       sendAnswer={sendAnswer}
                       deleteQuestion={deleteQuestion}
                       bookmarkToggle={bookmarkToggle}
+                      isCloseList={isCloseList}
+                      setIsCloseList={setIsCloseList}
                     />
                   );
                 })}

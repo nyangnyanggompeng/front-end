@@ -1,10 +1,10 @@
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../Common/Button';
 import MessageItem from './MessageItem';
 import { InterviewDetailData } from '../../types/Interview/detailTypes';
 import { Theme, css, useTheme } from '@emotion/react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 interface ReplyItemProps {
@@ -17,6 +17,12 @@ interface ReplyItemProps {
   ): Promise<void>;
   deleteQuestion(listId: number, contentIdList: number[]): Promise<void>;
   bookmarkToggle(contentId: number, isBookmarked: boolean): void;
+  isCloseList: { [key: number]: boolean };
+  setIsCloseList: React.Dispatch<
+    React.SetStateAction<{
+      [key: number]: boolean;
+    }>
+  >;
 }
 
 const StyledReplyItem = (theme: Theme) =>
@@ -24,6 +30,8 @@ const StyledReplyItem = (theme: Theme) =>
     border: `1px solid ${theme.gray2}`,
     borderRadius: 5,
     width: '100%',
+    overflow: 'hidden',
+    transition: '.5s',
     '> div': {
       padding: '2rem',
     },
@@ -44,6 +52,7 @@ const StyledReplyItem = (theme: Theme) =>
       gap: '2rem',
     },
     '.text': {
+      overflow: 'hidden',
       borderTop: `1px solid ${theme.gray2}`,
       display: 'flex',
       gap: '1rem',
@@ -62,13 +71,28 @@ const ReplyItem = ({
   sendAnswer,
   deleteQuestion,
   bookmarkToggle,
+  isCloseList,
+  setIsCloseList,
 }: ReplyItemProps) => {
   const theme = useTheme();
   const [value, setValue] = useState('');
+  const titleArea = useRef<HTMLDivElement>(null);
+  const messageArea = useRef<HTMLDivElement>(null);
+  const txtArea = useRef<HTMLDivElement>(null);
 
   return (
-    <li css={StyledReplyItem(theme)}>
-      <div className='message-title'>
+    <li
+      css={StyledReplyItem(theme)}
+      className={isCloseList[messages[0].questionNum] ? 'close' : 'open'}
+      style={{
+        height: isCloseList[messages[0].questionNum]
+          ? titleArea.current?.offsetHeight
+          : (titleArea?.current?.offsetHeight || 0) +
+            (messageArea?.current?.offsetHeight || 0) +
+            (txtArea?.current?.offsetHeight || 0),
+      }}
+    >
+      <div className='message-title' ref={titleArea}>
         <p>질문 {questionNum}</p>
         <div>
           <button
@@ -82,12 +106,25 @@ const ReplyItem = ({
           >
             <FontAwesomeIcon icon={faTrashCan} />
           </button>
-          <button type='button'>
-            <FontAwesomeIcon icon={faChevronDown} />
+          <button
+            type='button'
+            onClick={() =>
+              setIsCloseList({
+                ...isCloseList,
+                [messages[0].questionNum]:
+                  !isCloseList[messages[0].questionNum],
+              })
+            }
+          >
+            {isCloseList[messages[0].questionNum] ? (
+              <FontAwesomeIcon icon={faChevronDown} />
+            ) : (
+              <FontAwesomeIcon icon={faChevronUp} />
+            )}
           </button>
         </div>
       </div>
-      <div className='message-wrap'>
+      <div className='message-wrap' ref={messageArea}>
         {messages.map((item) => {
           return (
             <MessageItem
@@ -98,7 +135,7 @@ const ReplyItem = ({
           );
         })}
       </div>
-      <div className='text'>
+      <div className='text' ref={txtArea}>
         <textarea
           value={value}
           className={messages.length > 1 ? 'disabled' : ''}
