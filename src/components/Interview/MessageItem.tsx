@@ -66,6 +66,9 @@ const StyledMessageItem = (theme: Theme) =>
     '&.user': {
       flexDirection: 'row-reverse',
       alignSelf: 'flex-end',
+      '.icon': {
+        backgroundColor: `${theme.orange2}`,
+      },
     },
   });
 
