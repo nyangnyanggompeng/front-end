@@ -187,8 +187,17 @@ const InterviewDetail = () => {
   };
 
   const questionsCloseToggle = () => {
-    // 전체 펴기 - 1개 이상 닫혀있음
-    // 전체 접기 - 모든게 다 열려있음
+    const value =
+      Object.values(isCloseList).filter((el) => el === true).length >= 1
+        ? false // 전체 펴기
+        : true; // 전체 닫기
+    const obj: { [key: number]: boolean } = {};
+
+    for (let i = 0; i < Array.from(questionSet).length; i++) {
+      obj[Array.from(questionSet)[i]] = value;
+    }
+
+    setIsCloseList(obj);
   };
 
   if (isLoading) return <div>로딩중...</div>;
@@ -301,11 +310,12 @@ const InterviewDetail = () => {
             1 ? (
               <>
                 전체 펴기
-                <FontAwesomeIcon icon={faChevronUp} />
+                <FontAwesomeIcon icon={faChevronDown} />
               </>
             ) : (
               <>
-                전체 접기 <FontAwesomeIcon icon={faChevronDown} />
+                전체 접기
+                <FontAwesomeIcon icon={faChevronUp} />
               </>
             )}
           </Button>
