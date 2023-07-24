@@ -8,6 +8,7 @@ import { ModalType } from '../types/MyPage/UserInfoTypes';
 
 export default function MyPage() {
   const [modalType, setModalType] = useState<ModalType>(null);
+
   return (
     <>
       {modalType === 'DELETE' && (
