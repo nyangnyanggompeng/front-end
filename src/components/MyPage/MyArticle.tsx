@@ -29,33 +29,9 @@ export default function MyArticle() {
     new Set()
   );
   const [isDeleteMode, setIsDeleteMode] = useState(false);
-  // const { isLoading, isError, error, data } = useGetMyArticle(currentPage);
-  // if (isLoading) return <div>로딩중</div>;
-  // if (isError || data === undefined) return <div>에러!</div>;
-
-  const data: myArticlesDataType = {
-    Post: [
-      {
-        id: 1,
-        title:
-          '제목이 엄청 길때에는 말줄임표를 사용해야하는데 제목의 전체 영역은 어떻게 할까요? aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-        writer: '작성자 닉네임 왁왁왁',
-        createdAt: '2021-09-01',
-        userId: 1,
-        numberOfComment: 1,
-      },
-      {
-        id: 1,
-        title: '제목이 엄청 길때에는 말줄임표를 사용해야',
-        writer: '작성자',
-        createdAt: '2021-09-01',
-        userId: 1,
-        numberOfComment: 100,
-      },
-    ],
-    numberOfMyPost: 1,
-    totalPages: 1,
-  };
+  const { isLoading, isError, error, data } = useGetMyArticle(currentPage);
+  if (isLoading) return <div>로딩중</div>;
+  if (isError || data === undefined) return <div>에러!</div>;
 
   function handleSelectArticle(checked: boolean, id: number) {
     setSelectedArticle((prev) => {
