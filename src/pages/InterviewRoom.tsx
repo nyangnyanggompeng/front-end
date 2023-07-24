@@ -155,7 +155,7 @@ const InterviewRoom = () => {
           `인터뷰가 삭제되고 이 내용은 복구할 수 없습니다.\n정말 삭제하시겠습니까?`
         )
       ) {
-        axios.put('/chatgpt/lists/', { listIdList: [id] });
+        axios.put('/chatgpt/lists', { listIdList: [id] });
         alert('인터뷰가 삭제되었습니다.');
         queryClient.invalidateQueries({ queryKey: ['InterviewList'] });
       }
@@ -164,7 +164,6 @@ const InterviewRoom = () => {
     }
   };
 
-  // TODO : 전체삭제 + 선택삭제 + 삭제 취소
   const deleteAllChat = async () => {
     if (data?.List.length === 0) {
       alert('삭제할 수 있는 인터뷰가 없습니다.');
@@ -178,7 +177,7 @@ const InterviewRoom = () => {
         )
       ) {
         const filtered = data?.List.map((item) => item.id);
-        await axios.put('/chatgpt/lists/', { listIdList: filtered });
+        await axios.put('/chatgpt/lists', { listIdList: filtered });
         alert('모든 인터뷰가 삭제되었습니다.');
         queryClient.invalidateQueries({ queryKey: ['InterviewList'] });
       }

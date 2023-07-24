@@ -146,16 +146,15 @@ const InterviewDetail = () => {
       if (axios.isAxiosError(err)) {
         switch (err.response?.data) {
           case 'WRONG_CHATGPT_LIST':
-            alert('대화 목록이 없습니다.');
-            break;
+            return alert('대화 목록이 없습니다.');
           case 'PROMPT_OR_TYPE_OR_COUNT_NO_ENTERED':
-            alert('입력되지 않은 값이 있습니다. 질문을 다시 확인해 주세요.');
-            break;
+            return alert(
+              '입력되지 않은 값이 있습니다. 질문을 다시 확인해 주세요.'
+            );
           case 'TOO_MANY_QUESTIONS':
-            alert('예상 질문은 최대 10개까지 받아볼 수 있습니다.');
-            break;
+            return alert('예상 질문은 최대 10개까지 받아볼 수 있습니다.');
           default:
-            alert('서버 오류입니다. 잠시 후 다시 시도해 주세요.');
+            return alert('서버 오류입니다. 잠시 후 다시 시도해 주세요.');
         }
       }
     }
@@ -180,10 +179,9 @@ const InterviewDetail = () => {
       if (axios.isAxiosError(err)) {
         switch (err.response?.status) {
           case 400:
-            alert('답변을 입력해 주세요.');
-            break;
+            return alert('답변을 입력해 주세요.');
           default:
-            alert('서버 오류입니다. 잠시 후 다시 시도해 주세요.');
+            return alert('서버 오류입니다. 잠시 후 다시 시도해 주세요.');
         }
       }
     }
@@ -197,16 +195,13 @@ const InterviewDetail = () => {
       if (axios.isAxiosError(err)) {
         switch (err.response?.data) {
           case 'POST_DOESNT_EXIT':
-            alert('삭제된 대화 목록입니다.');
-            break;
+            return alert('삭제된 대화 목록입니다.');
           case 'NO_PERMISSIONS':
-            alert('권한이 없는 사용자입니다.');
-            break;
+            return alert('권한이 없는 사용자입니다.');
           case 'UNABLE_TO_DELETE_CONTENT':
-            alert('삭제할 수 없는 대화입니다.');
-            break;
+            return alert('삭제할 수 없는 대화입니다.');
           default:
-            alert('서버 오류입니다. 잠시 후 다시 시도해 주세요.');
+            return alert('서버 오류입니다. 잠시 후 다시 시도해 주세요.');
         }
       }
     }
@@ -222,10 +217,9 @@ const InterviewDetail = () => {
       if (axios.isAxiosError(err)) {
         switch (err.response?.status) {
           case 500:
-            alert('북마크 상태가 변경되지 않았습니다.');
-            break;
+            return alert('북마크 상태가 변경되지 않았습니다.');
           default:
-            alert('서버 오류입니다. 잠시 후 다시 시도해 주세요.');
+            return alert('서버 오류입니다. 잠시 후 다시 시도해 주세요.');
         }
       }
     }
