@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { deleteArticle } from '../../utils/Community/deleteArticle';
+import { useUser } from '../../hooks/Common';
 
 type ButtonsProps = {
   writerId: number;
@@ -10,10 +11,9 @@ type ButtonsProps = {
 export function Buttons({ writerId, postId }: ButtonsProps) {
   const navigate = useNavigate();
   const [isWriter, setIsWriter] = useState(false);
-  // ANCHOR : 테스트 유저 id, 기본적인 테스트는 17로 진행함
-  const userId = 17;
+  const userId = useUser().id;
   useEffect(() => {
-    if (userId === writerId) setIsWriter(true);
+    if (userId && userId === writerId) setIsWriter(true);
     else setIsWriter(false);
   }, [userId, writerId]);
 
