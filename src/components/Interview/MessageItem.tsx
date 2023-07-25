@@ -10,10 +10,11 @@ import {
 import { InterviewDetailData } from '../../types/Interview/detailTypes';
 import { parseDate } from '../../utils/Interview/interviewListFn';
 import { Theme, css, useTheme } from '@emotion/react';
+import { bookmarkToggle } from '../../utils/Interview/interviewDetailFn';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface MessageProps {
   message: InterviewDetailData;
-  bookmarkToggle(contentId: number, isBookmarked: boolean): void;
 }
 
 const StyledMessageItem = (theme: Theme) =>
@@ -72,11 +73,16 @@ const StyledMessageItem = (theme: Theme) =>
     },
   });
 
-const MessageItem = ({ message, bookmarkToggle }: MessageProps) => {
+const MessageItem = ({ message }: MessageProps) => {
   const theme = useTheme();
-
+  const queryClient = useQueryClient();
+  const onBookmarkChange = () => {
+    bookmarkToggle(message.id, !message.bookmark).then(() =>
+      queryClient.invalidateQueries({ queryKey: ['InterviewDetailData'] })
+    );
+  };
   return (
-    <div css={StyledMessageItem(theme)} className={message.sender}>
+    <li css={StyledMessageItem(theme)} className={message.sender}>
       <div className='icon'>
         {message.sender === 'assistant' ? (
           <FontAwesomeIcon icon={faDesktop} />
@@ -88,10 +94,7 @@ const MessageItem = ({ message, bookmarkToggle }: MessageProps) => {
         <div>
           <p className='content'>{message.content}</p>
           {message.sender === 'assistant' && (
-            <button
-              type='button'
-              onClick={() => bookmarkToggle(message.id, !message.bookmark)}
-            >
+            <button type='button' onClick={onBookmarkChange}>
               {message.bookmark ? (
                 <FontAwesomeIcon icon={bookmarkOn} />
               ) : (
@@ -102,7 +105,7 @@ const MessageItem = ({ message, bookmarkToggle }: MessageProps) => {
         </div>
         <span className='date'>{parseDate(message.updatedAt)}</span>
       </div>
-    </div>
+    </li>
   );
 };
 

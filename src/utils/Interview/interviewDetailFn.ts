@@ -17,3 +17,23 @@ export const getChatData = async (id: number) => {
     }
   }
 };
+
+export const bookmarkToggle = async (
+  contentId: number,
+  isBookmarked: boolean
+) => {
+  try {
+    await axios.patch(
+      `/mypage/bookmark/${contentId}?isBookmarked=${isBookmarked}`
+    );
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      switch (err.response?.status) {
+        case 500:
+          return alert('북마크 상태가 변경되지 않았습니다.');
+        default:
+          return alert('서버 오류입니다. 잠시 후 다시 시도해 주세요.');
+      }
+    }
+  }
+};

@@ -78,6 +78,10 @@ const InterviewRoom = () => {
   const [chatName, setChatName] = useState('');
   const [isSelectMode, setIsSelectMode] = useState(false);
   const [checkedArr, setCheckedArr] = useState<Set<number>>(new Set());
+  const [searchValues, setSearchValues] = useState({
+    type: 'lists',
+    keyword: '',
+  });
   const { data } = useQuery<InterviewData | null>({
     queryKey: ['InterviewList', currentPage],
     queryFn: () => getList(currentPage),
@@ -216,6 +220,18 @@ const InterviewRoom = () => {
     }
   };
 
+  const onSearch = async () => {
+    const payload =
+      searchValues.type === 'lists'
+        ? { name: searchValues.keyword }
+        : { content: searchValues.keyword };
+    const res = await axios.post(
+      `/chatgpt/search/${searchValues.type}/${currentPage}`,
+      payload
+    );
+    navigate('/interview-room/search', { state: res.data });
+  };
+
   return (
     <>
       <main css={StyledInterviewRoom(theme)}>
@@ -227,8 +243,24 @@ const InterviewRoom = () => {
               <h4>채팅방은 최대 30개까지 생성할 수 있습니다.</h4>
             </div>
             <div className='search-box'>
-              <input type='text' placeholder='인터뷰 이름을 입력해주세요' />
-              <Button onClick={() => console.log('검색')}>
+              <select
+                value={searchValues.type}
+                onChange={(e) =>
+                  setSearchValues({ ...searchValues, type: e.target.value })
+                }
+              >
+                <option value='lists'>인터뷰</option>
+                <option value='contents'>메시지</option>
+              </select>
+              <input
+                type='text'
+                placeholder='인터뷰 이름을 입력해주세요'
+                value={searchValues.keyword}
+                onChange={(e) =>
+                  setSearchValues({ ...searchValues, keyword: e.target.value })
+                }
+              />
+              <Button onClick={onSearch}>
                 <FontAwesomeIcon icon={faSearch} />
                 검색
               </Button>

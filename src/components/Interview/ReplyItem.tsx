@@ -16,7 +16,6 @@ interface ReplyItemProps {
     answer: string
   ): Promise<void>;
   deleteQuestion(listId: number, contentIdList: number[]): Promise<void>;
-  bookmarkToggle(contentId: number, isBookmarked: boolean): void;
   isCloseList: { [key: number]: boolean };
   setIsCloseList: React.Dispatch<
     React.SetStateAction<{
@@ -32,7 +31,7 @@ const StyledReplyItem = (theme: Theme) =>
     width: '100%',
     overflow: 'hidden',
     transition: '.5s',
-    '> div': {
+    '> div, > ul': {
       padding: '2rem',
     },
     '.message-title': {
@@ -76,14 +75,13 @@ const ReplyItem = ({
   messages,
   sendAnswer,
   deleteQuestion,
-  bookmarkToggle,
   isCloseList,
   setIsCloseList,
 }: ReplyItemProps) => {
   const theme = useTheme();
   const [value, setValue] = useState('');
   const titleArea = useRef<HTMLDivElement>(null);
-  const messageArea = useRef<HTMLDivElement>(null);
+  const messageArea = useRef<HTMLUListElement>(null);
   const txtArea = useRef<HTMLDivElement>(null);
 
   return (
@@ -123,17 +121,11 @@ const ReplyItem = ({
           </button>
         </div>
       </div>
-      <div className='message-wrap' ref={messageArea}>
+      <ul className='message-wrap' ref={messageArea}>
         {messages.map((item) => {
-          return (
-            <MessageItem
-              key={item.id}
-              message={item}
-              bookmarkToggle={bookmarkToggle}
-            />
-          );
+          return <MessageItem key={item.id} message={item} />;
         })}
-      </div>
+      </ul>
       <div className='text' ref={txtArea}>
         <textarea
           value={value}
