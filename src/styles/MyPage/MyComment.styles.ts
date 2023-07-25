@@ -1,5 +1,12 @@
 import { Theme, css } from '@emotion/react';
 
+export const MyCommentListContainer = (theme: Theme) =>
+  css({
+    '> div:first-of-type': {
+      borderTop: `1px solid ${theme.gray2}`,
+    },
+  });
+
 export const MyCommentItemContainer = (mode: 'VIEW' | 'DELETE') =>
   css({
     display: 'grid',
@@ -18,7 +25,6 @@ export const MyCommentItemStyle = (theme: Theme) =>
     gridTemplateColumns: '2fr 2fr 2fr 8fr',
     gridGap: '1.1rem 3.2rem',
     padding: '2rem 2.9rem',
-    borderTop: `1px solid ${theme.gray2}`,
     borderBottom: `1px solid ${theme.gray2}`,
     '.writer': {
       gridColumn: '1 / 2',

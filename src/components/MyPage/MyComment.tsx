@@ -1,9 +1,7 @@
 import { useState } from 'react';
+import { useTheme } from '@emotion/react';
 import useGetMyComment from '../../hooks/MyPage/useGetMyComment';
-import {
-  MyCommentType,
-  MyCommentDataType,
-} from '../../types/MyPage/MyCommentTypes';
+import { MyCommentType } from '../../types/MyPage/MyCommentTypes';
 import Pagination from '../Common/Pagination';
 import MyCommentItem from './MyCommentItem';
 import { deleteMyComments } from '../../utils/MyPage/deleteMyComments';
@@ -12,6 +10,7 @@ import {
   ContentTotal,
   ContentTitleContainer,
   TwoButtonsContainer,
+  MyCommentListContainer,
 } from '../../styles/MyPage';
 import Button from '../Common/Button';
 
@@ -25,6 +24,7 @@ const deleteStatusMessage: Record<
 };
 
 export default function MyComment() {
+  const theme = useTheme();
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedComment, setSelectedComment] = useState<Set<number>>(
     new Set()
@@ -87,14 +87,16 @@ export default function MyComment() {
               </Button>
             )}
           </div>
-          {data.Comment.map((comment: MyCommentType) => (
-            <MyCommentItem
-              key={comment.id}
-              isDeleteMode={isDeleteMode}
-              myComment={comment}
-              selectHandler={handleSelectComment}
-            />
-          ))}
+          <div css={MyCommentListContainer(theme)}>
+            {data.Comment.map((comment: MyCommentType) => (
+              <MyCommentItem
+                key={comment.id}
+                isDeleteMode={isDeleteMode}
+                myComment={comment}
+                selectHandler={handleSelectComment}
+              />
+            ))}
+          </div>
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}

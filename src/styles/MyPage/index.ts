@@ -22,9 +22,10 @@ export {
 } from './BookMark.styles';
 
 export {
+  MyCommentListContainer,
   MyCommentItemContainer,
   MyCommentItemStyle,
-} from './MyCommentItem.styles';
+} from './MyComment.styles';
 
 export { BottomButtonsContainer } from './Common';
 
