@@ -1,5 +1,6 @@
 import { ArticleDataItemType } from '../../types/Community/articleTypes';
 import { ArticleListItem } from './ArticleListItem';
+import { ArticleListContainer } from '../../styles/Community';
 
 type ArticleListProps = {
   articleList: ArticleDataItemType[];
@@ -7,7 +8,7 @@ type ArticleListProps = {
 
 export function ArticleList({ articleList }: ArticleListProps) {
   return (
-    <div>
+    <div css={ArticleListContainer}>
       {articleList.map((article) => (
         <ArticleListItem
           key={article.id}
