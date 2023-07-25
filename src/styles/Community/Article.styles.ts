@@ -11,7 +11,7 @@ export const ArticleItemContainer = (theme: Theme) =>
     borderRadius: '0.5rem', // NOTE: small radius
     padding: '1.25rem',
     [mq[0]]: {
-      gridTemplateColumns: '5fr 3fr 2fr',
+      gridTemplateColumns: '5fr 3fr 11rem',
       gridGap: '1rem',
     },
   });
