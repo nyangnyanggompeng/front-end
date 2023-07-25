@@ -3,9 +3,17 @@ import useGetMyArticle from '../../hooks/MyPage/useGetMyArticle';
 import { ArticleDataItemType } from '../../types/Community/articleTypes';
 import Pagination from '../Common/Pagination';
 import MyArticleItem from './MyArticleItem';
-import { DeleteMyArticleRequestType } from '../../types/MyPage/MyArticleTypes';
+import {
+  DeleteMyArticleRequestType,
+  myArticlesDataType,
+} from '../../types/MyPage/MyArticleTypes';
 import { deleteMyArticles } from '../../utils/MyPage/deleteMyArticles';
-
+import Button from '../Common/Button';
+import {
+  ContentTitleContainer,
+  ContentTotal,
+  TwoButtonsContainer,
+} from '../../styles/MyPage';
 const deleteStatusMessage: Record<
   'OK' | 'BAD_REQUEST' | 'INTERNAL_SERVER_ERROR',
   string
@@ -62,22 +70,22 @@ export default function MyArticle() {
         <div>작성한 게시글이 없습니다.</div>
       ) : (
         <div>
-          <div>{`전체 ${data?.numberOfMyPost}개`}</div>
-          <div>
+          <div css={ContentTitleContainer}>
+            <div css={ContentTotal}>{`전체 ${data?.numberOfMyPost}개`}</div>
             {isDeleteMode ? (
-              <>
-                <button onClick={() => setIsDeleteMode(false)}>❌ 취소</button>
-                <button onClick={() => deleteHandler()}>🗑삭제하기</button>
-              </>
+              <div css={TwoButtonsContainer}>
+                <Button onClick={() => setIsDeleteMode(false)}>취소</Button>
+                <Button onClick={() => deleteHandler()}>삭제하기</Button>
+              </div>
             ) : (
-              <button
+              <Button
                 onClick={() => {
                   setIsDeleteMode(true);
                   setSelectedArticle(new Set());
                 }}
               >
-                🗑 선택 삭제
-              </button>
+                선택 삭제
+              </Button>
             )}
           </div>
           {data.Post.map((post: ArticleDataItemType) => (

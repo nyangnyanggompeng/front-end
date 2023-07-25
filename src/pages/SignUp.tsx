@@ -1,8 +1,17 @@
+import { useTheme } from '@emotion/react';
 import EmailCheck from '../components/SignUp/EmailCheck';
 import PasswordCheck from '../components/SignUp/PasswordCheck';
 import NicknameCheck from '../components/SignUp/NicknameCheck';
 import { SignupFormType, SignupStatusType } from '../types/SignUp';
 import { signup } from '../utils/SignUp';
+import {
+  logoImg,
+  PageBox,
+  SignUpForm,
+  LogoStyle,
+  AcceptTerms,
+} from '../styles/SignUp';
+import Button from '../components/Common/Button';
 
 const signupResultMessage: Record<SignupStatusType, string> = {
   USER_CREATED: '회원가입이 완료되었습니다.',
@@ -15,6 +24,7 @@ const signupResultMessage: Record<SignupStatusType, string> = {
 };
 
 function SignUp() {
+  const theme = useTheme();
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -24,6 +34,10 @@ function SignUp() {
     }
     if (formData.get('isNicknameChecked') === 'FALSE') {
       alert('닉네임 중복확인을 해 주세요.');
+      return;
+    }
+    if (formData.get('acceptTermsCheckbox') !== 'on') {
+      alert('이용약관 동의는 필수입니다.');
       return;
     }
     if (formData.get('domain') === 'type')
@@ -45,14 +59,31 @@ function SignUp() {
   };
 
   return (
-    <div>
-      <h1>회원 가입</h1>
-      <form onSubmit={onSubmit}>
-        <EmailCheck />
-        <PasswordCheck />
-        <NicknameCheck />
-        <button type='submit'>회원 가입</button>
-      </form>
+    <div className='inner'>
+      <div css={PageBox(theme)}>
+        <h2 style={{ display: 'none' }}>회원가입</h2>
+        <img src={logoImg} alt='logo' css={LogoStyle} />
+        <form css={SignUpForm} onSubmit={onSubmit}>
+          <EmailCheck />
+          <PasswordCheck />
+          <NicknameCheck />
+          <label css={AcceptTerms(theme)}>
+            <input
+              type='checkbox'
+              name='acceptTermsCheckbox'
+              id='acceptTermsCheckbox'
+            />
+            <span className='required'>(필수) </span>
+            <span>
+              인터뷰 룸 이용시 사용자가 대화한 기록이 모두 보관되는 것에
+              동의합니다.
+            </span>
+          </label>
+          <Button className='submit-button' type='submit' status='main'>
+            회원 가입
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }

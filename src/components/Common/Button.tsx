@@ -1,4 +1,5 @@
 import { Theme, css, useTheme } from '@emotion/react';
+import { MouseEventHandler } from 'react';
 
 const StyledBtn = (theme: Theme) =>
   css({
@@ -26,9 +27,11 @@ const StyledBtn = (theme: Theme) =>
 
 interface BtnProps {
   children: React.ReactNode;
+  form?: string; // form id
   type?: 'button' | 'submit' | 'reset';
-  onClick(): void;
+  onClick?: (() => void) | MouseEventHandler<HTMLButtonElement>;
   status?: 'main' | 'sub' | 'disable';
+  className?: string;
 }
 
 const Button = (props: BtnProps) => {
@@ -39,7 +42,7 @@ const Button = (props: BtnProps) => {
       type={type}
       onClick={onClick}
       css={StyledBtn(theme)}
-      className={status}
+      className={`${status} ${props.className}`}
       disabled={status === 'disable' ? true : false}
     >
       {children}

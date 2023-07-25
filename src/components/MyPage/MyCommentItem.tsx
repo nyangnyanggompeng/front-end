@@ -1,6 +1,12 @@
 import { Link } from 'react-router-dom';
+import { useTheme } from '@emotion/react';
 import { MyCommentType } from '../../types/MyPage/MyCommentTypes';
 import { getDate } from '../../utils/Common/getDate';
+import {
+  MyCommentItemContainer,
+  MyCommentItemStyle,
+} from '../../styles/MyPage';
+import { OverflowEllipsis } from '../../styles/utils';
 
 type MyCommentItemProps = {
   isDeleteMode: boolean;
@@ -13,20 +19,29 @@ export default function MyCommentItem({
   myComment,
   selectHandler,
 }: MyCommentItemProps) {
+  const theme = useTheme();
   return (
-    <div>
+    <div css={MyCommentItemContainer(isDeleteMode ? 'DELETE' : 'VIEW')}>
       {isDeleteMode && (
         <input
           type='checkbox'
           onChange={(e) => selectHandler(e.target.checked, myComment.id)}
         />
       )}
-      <div>{myComment.writer}</div>
-      <div>{getDate(new Date(myComment.createdAt))}</div>
-      <div>{myComment.content}</div>
-      <Link
-        to={`/community/${myComment.postId}`}
-      >{`게시글 제목: ${myComment.Post.title}`}</Link>
+      <div css={MyCommentItemStyle(theme)}>
+        <div className='writer' css={OverflowEllipsis}>
+          {myComment.writer}
+        </div>
+        <div className='date' css={OverflowEllipsis}>
+          {getDate(new Date(myComment.createdAt))}
+        </div>
+        <div className='content'>{myComment.content}</div>
+        <Link
+          className='postLink'
+          css={OverflowEllipsis}
+          to={`/community/${myComment.postId}`}
+        >{`게시글 제목: ${myComment.Post.title}`}</Link>
+      </div>
     </div>
   );
 }
