@@ -7,11 +7,11 @@ import { signup } from '../utils/SignUp';
 import {
   logoImg,
   PageBox,
-  SignUpSubmitButton,
   SignUpForm,
   LogoStyle,
   AcceptTerms,
 } from '../styles/SignUp';
+import Button from '../components/Common/Button';
 
 const signupResultMessage: Record<SignupStatusType, string> = {
   USER_CREATED: '회원가입이 완료되었습니다.',
@@ -67,10 +67,6 @@ function SignUp() {
           <EmailCheck />
           <PasswordCheck />
           <NicknameCheck />
-          {/* TODO : 기존 styled button에 흑백 버튼을 넣는 방식 논의 필요 */}
-          {/* <Button type='submit' status='?'>
-            회원 가입
-          </Button> */}
           <label css={AcceptTerms(theme)}>
             <input
               type='checkbox'
@@ -83,9 +79,9 @@ function SignUp() {
               동의합니다.
             </span>
           </label>
-          <button type='submit' css={SignUpSubmitButton(theme)}>
+          <Button className='submit-button' type='submit' status='main'>
             회원 가입
-          </button>
+          </Button>
         </form>
       </div>
     </div>

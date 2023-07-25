@@ -31,6 +31,7 @@ interface BtnProps {
   type?: 'button' | 'submit' | 'reset';
   onClick?: (() => void) | MouseEventHandler<HTMLButtonElement>;
   status?: 'main' | 'sub' | 'disable';
+  className?: string;
 }
 
 const Button = (props: BtnProps) => {
@@ -41,7 +42,7 @@ const Button = (props: BtnProps) => {
       type={type}
       onClick={onClick}
       css={StyledBtn(theme)}
-      className={status}
+      className={`${status} ${props.className}`}
       disabled={status === 'disable' ? true : false}
     >
       {children}
