@@ -1,3 +1,4 @@
+import { useTheme } from '@emotion/react';
 import { ModalPropsType } from './ModalTypes';
 import {
   ModalOverlayStyles,
@@ -9,6 +10,7 @@ type ModalContainerProps = ModalPropsType & {
 };
 
 export function ModalContainer({ resetModal, children }: ModalContainerProps) {
+  const theme = useTheme();
   function onClick(e: React.MouseEvent<HTMLDivElement>) {
     if (e.target === e.currentTarget) {
       resetModal();
@@ -16,7 +18,7 @@ export function ModalContainer({ resetModal, children }: ModalContainerProps) {
   }
   return (
     <div css={ModalOverlayStyles} onClick={onClick}>
-      <div css={ModalContainerStyles}>{children}</div>
+      <div css={ModalContainerStyles(theme)}>{children}</div>
     </div>
   );
 }

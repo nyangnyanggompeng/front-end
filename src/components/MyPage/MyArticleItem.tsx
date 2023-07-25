@@ -1,5 +1,6 @@
 import { ArticleListItem } from '../Community/ArticleListItem';
 import { ArticleDataItemType } from '../../types/Community/articleTypes';
+import { MyArticleItemContainer } from '../../styles/MyPage/MyArticleItem.styles';
 
 type MyArticleItemProps = {
   isDeleteMode: boolean;
@@ -13,7 +14,7 @@ export default function MyArticleItem({
   selectHandler,
 }: MyArticleItemProps) {
   return (
-    <div>
+    <div css={MyArticleItemContainer(isDeleteMode ? 'DELETE' : 'VIEW')}>
       {isDeleteMode && (
         <input
           type='checkbox'

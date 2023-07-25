@@ -1,22 +1,43 @@
-export const UserInfo = () => {
-  // TODO : store에 저장되어 있는 유저 정보를 불러와서 렌더링
-  // const userInfo = useSelector((state) => state.user);
-  const userInfo = {
-    profileImage: 'https://avatars.githubusercontent.com/u/76847245?v=4',
-    email: 'pengpeng@gmail.com',
-    nickName: 'pengpeng',
-  };
+import { Dispatch, SetStateAction } from 'react';
+import { useTheme } from '@emotion/react';
+import {
+  UserInfoContainer,
+  UserInfoContent,
+  MenuButton,
+} from '../../styles/MyPage';
+import { ModalType } from '../../types/MyPage/UserInfoTypes';
+import Button from '../Common/Button';
+import { useUser } from '../../hooks/Common';
+import { ProfilePhoto } from './ProfilePhoto';
+
+type UserInfoProps = {
+  modalSetter: Dispatch<SetStateAction<ModalType>>;
+};
+
+export const UserInfo = ({ modalSetter }: UserInfoProps) => {
+  const theme = useTheme();
+  const userInfo = useUser();
   return (
-    <div>
-      {/* NOTE : 프로필 이미지 기능은 구현 여부 미정 */}
-      <img src={userInfo.profileImage} alt='profileImage' width='100px' />
-      <div>
-        <span>아이디 (이메일)</span>
-        <span>{userInfo.email}</span>
+    <div css={UserInfoContainer(theme)}>
+      {/* TODO : user에 profileImage 타입 추가하기 */}
+      <ProfilePhoto src={userInfo.profilePhoto} />
+      <div css={UserInfoContent}>
+        <span className='nickname'>{userInfo.nickname}</span>
+        <span className='email'>{`${userInfo.username}@${userInfo.domain}`}</span>
       </div>
-      <div>
-        <span>닉네임</span>
-        <span>{userInfo.nickName}</span>
+      <div css={MenuButton}>
+        <div className='edit-container'>
+          <Button onClick={() => modalSetter('EDIT')}>정보 수정</Button>
+          <Button onClick={() => modalSetter('CHANGEPASSWORD')}>
+            비밀번호 변경
+          </Button>
+        </div>
+        <button
+          className='delete-account'
+          onClick={() => modalSetter('DELETE')}
+        >
+          탈퇴 하기
+        </button>
       </div>
     </div>
   );

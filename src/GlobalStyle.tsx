@@ -83,6 +83,12 @@ const style = (theme: Theme) =>
       fontWeight: 700,
     },
 
+    // form 제목 등
+    h4: {
+      fontSize: '2.4rem',
+      fontWeight: 700,
+    },
+
     input: {
       border: `1px solid ${theme.gray1}`,
       backgroundColor: 'transparent',
