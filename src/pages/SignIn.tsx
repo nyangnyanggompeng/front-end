@@ -70,11 +70,19 @@ const StyledSignIn = (theme: Theme) =>
       '> p': {
         textAlign: 'center',
         marginBottom: '1rem',
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
         a: {
           color: `${theme.orange1}`,
           fontWeight: 700,
           marginLeft: '1.5rem',
         },
+      },
+    },
+    [mq[0]]: {
+      '.signin-wrap': {
+        width: '70%',
       },
     },
     [mq[1]]: {
