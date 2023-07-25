@@ -7,4 +7,3 @@ export { default as Article } from './Article';
 export { default as InterviewRoom } from './InterviewRoom';
 export { default as InterviewDetail } from './InterviewDetail';
 export { default as ErrorPage } from './ErrorPage';
-export { default as InterviewSearch } from './InterviewSearch';
