@@ -1,4 +1,5 @@
 import { Global, Theme, css } from '@emotion/react';
+import { mq } from './theme';
 
 const style = (theme: Theme) =>
   css({
@@ -27,6 +28,7 @@ const style = (theme: Theme) =>
 
     html: {
       fontSize: '62.5%',
+      overflowX: 'hidden',
     },
 
     body: {
@@ -34,6 +36,8 @@ const style = (theme: Theme) =>
       backgroundColor: `${theme.bgColor}`,
       color: `${theme.fontColor}`,
       fontFamily: `'Noto Sans KR','Apple SD Gothic Neo', arial, sans-serif`,
+      position: 'relative',
+      overflowX: 'hidden',
     },
 
     'img, picture, video, canvas, svg': {
@@ -68,6 +72,7 @@ const style = (theme: Theme) =>
 
     '.container': {
       padding: '5rem 0',
+      minHeight: 'calc(100vh - 25rem)',
     },
 
     // 페이지 제목
@@ -98,6 +103,16 @@ const style = (theme: Theme) =>
 
       '&::placeholder': {
         color: `${theme.gray2}`,
+      },
+    },
+
+    [mq[0]]: {
+      body: {
+        fontSize: '1.4rem',
+      },
+
+      '.inner': {
+        width: '90%',
       },
     },
   });

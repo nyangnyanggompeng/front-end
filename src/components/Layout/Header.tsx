@@ -3,7 +3,12 @@ import logo from '../../asset/logo.png';
 import logoWhite from '../../asset/logo-white.png';
 import Button from '../Common/Button';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSun,
+  faMoon,
+  faLock,
+  faLockOpen,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
@@ -11,6 +16,8 @@ import axios from 'axios';
 import { modeChange } from '../../store/slices/modeSlices';
 import { setIsLogin } from '../../store/slices/loginSlices';
 import { logoutFn } from '../../utils/SignIn/signInFn';
+import { mq } from '../../theme';
+import { useState } from 'react';
 
 const StyledHeader = (theme: Theme) =>
   css({
@@ -21,12 +28,14 @@ const StyledHeader = (theme: Theme) =>
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
+      position: 'relative',
     },
 
     '.right-box': {
       display: 'flex',
-      justifyContent: 'space-between',
+      justifyContent: 'flex-end',
       alignItems: 'center',
+      gap: '3rem',
     },
 
     nav: {
@@ -38,8 +47,10 @@ const StyledHeader = (theme: Theme) =>
         gap: '3rem',
 
         a: {
+          display: 'inline-block',
+          paddingBottom: '0.5rem',
           '&.active': {
-            fontWeight: 'bold',
+            borderBottom: `3px solid ${theme.fontColor}`,
           },
         },
       },
@@ -59,7 +70,6 @@ const StyledHeader = (theme: Theme) =>
       alignItems: 'center',
       position: 'relative',
       padding: 10,
-      margin: '0 3rem',
 
       '&:after': {
         content: "''",
@@ -94,6 +104,107 @@ const StyledHeader = (theme: Theme) =>
         },
       },
     },
+
+    '.btn-menu, .nav-bg, .mobile-menu': {
+      display: 'none',
+    },
+
+    [mq[0]]: {
+      '.right-box': {
+        display: 'none',
+      },
+      '.mobile-menu': {
+        position: 'absolute',
+        top: 0,
+        right: '-30%',
+        width: '30%',
+        height: '100%',
+        backgroundColor: `${theme.headFoot}`,
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '1rem 3rem 3rem',
+        transition: 'all .5s',
+        '&.on': {
+          right: 0,
+        },
+        '.btns': {
+          alignSelf: 'flex-start',
+          fontSize: '3.5rem',
+          display: 'flex',
+          gap: '2rem',
+          marginBottom: '5rem',
+        },
+        nav: {
+          ul: {
+            flexDirection: 'column',
+          },
+        },
+      },
+      '.nav-bg': {
+        display: 'block',
+        width: '100%',
+        height: '100%',
+        backgroundColor: `${theme.fontColor}`,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        opacity: 0,
+        visibility: 'hidden',
+        transition: '.5s',
+        '&.on': {
+          opacity: 0.5,
+          visibility: 'visible',
+        },
+      },
+      '.btn-menu': {
+        display: 'flex',
+        flexFlow: 'column wrap',
+        justifyContent: 'space-between',
+        width: '4rem',
+        height: '3rem',
+        position: 'absolute',
+        top: '50%',
+        right: 0,
+        transform: 'translateY(-50%)',
+        zIndex: 9,
+        span: {
+          display: 'block',
+          width: '100%',
+          height: 5,
+          borderRadius: '5rem',
+          background: `${theme.fontColor}`,
+          transition: '.5s',
+        },
+        '&.on': {
+          'span:first-of-type': {
+            transform: 'rotate(45deg) translate(10px, 10px)',
+          },
+          'span:nth-of-type(2)': {
+            opacity: 0,
+          },
+          'span:last-of-type': {
+            transform: 'rotate(-45deg) translate(8px ,-7px)',
+          },
+        },
+      },
+    },
+    [mq[1]]: {
+      '.mobile-menu': {
+        width: '45%',
+        right: '-45%',
+      },
+      h1: {
+        img: {
+          width: '80%',
+        },
+      },
+      '.btn-menu': {
+        width: '3rem',
+        height: '2.5rem',
+      },
+    },
   });
 
 const Header = () => {
@@ -102,6 +213,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const isDark = useSelector((state: RootState) => state.mode);
   const isLogin = useSelector((state: RootState) => state.login);
+  const [isMenuOn, setIsMenuOn] = useState(false);
 
   const onModeChange = () => {
     dispatch(modeChange(!isDark));
@@ -137,7 +249,7 @@ const Header = () => {
             <nav>
               <ul>
                 <li>
-                  <NavLink to='#'>인터뷰 룸</NavLink>
+                  <NavLink to='/interview-room'>인터뷰 룸</NavLink>
                 </li>
                 <li>
                   <NavLink to='/community'>커뮤니티</NavLink>
@@ -161,6 +273,52 @@ const Header = () => {
             <Button onClick={() => navigate('/sign-in')}>로그인</Button>
           )}
         </div>
+        <button
+          type='button'
+          className={isMenuOn ? 'btn-menu on' : 'btn-menu'}
+          onClick={() => setIsMenuOn(!isMenuOn)}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      <div
+        className={isMenuOn ? 'nav-bg on' : 'nav-bg'}
+        onClick={() => setIsMenuOn(!isMenuOn)}
+      ></div>
+      <div className={isMenuOn ? 'mobile-menu on' : 'mobile-menu'}>
+        <div className='btns'>
+          <button type='button' onClick={onModeChange}>
+            {isDark ? (
+              <FontAwesomeIcon icon={faMoon} />
+            ) : (
+              <FontAwesomeIcon icon={faSun} />
+            )}
+          </button>
+          {isLogin ? (
+            <button type='button' onClick={logoutHandler}>
+              <FontAwesomeIcon icon={faLockOpen} />
+            </button>
+          ) : (
+            <button type='button' onClick={() => navigate('/sign-in')}>
+              <FontAwesomeIcon icon={faLock} />
+            </button>
+          )}
+        </div>
+        <nav>
+          <ul>
+            <li>
+              <NavLink to='/interview-room'>인터뷰 룸</NavLink>
+            </li>
+            <li>
+              <NavLink to='/community'>커뮤니티</NavLink>
+            </li>
+            <li>
+              <NavLink to='/my-page'>마이페이지</NavLink>
+            </li>
+          </ul>
+        </nav>
       </div>
     </header>
   );
