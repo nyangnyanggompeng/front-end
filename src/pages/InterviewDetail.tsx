@@ -286,7 +286,11 @@ const InterviewDetail = () => {
             <select
               id='count'
               className='count'
-              value={data && data[0].count}
+              value={
+                data && data[1].length !== 0
+                  ? data && data[0].count
+                  : formData.count
+              }
               disabled={data && data[1].length !== 0}
               onChange={(e) =>
                 handleOnChange(e.target.className, e.target.value)
@@ -328,7 +332,7 @@ const InterviewDetail = () => {
               }
               placeholder='자기소개서를 입력해 주세요.'
               maxLength={3000}
-              value={data && data[0].prompt}
+              value={(data && data[0].prompt) || formData.prompt}
               disabled={data && data[1].length !== 0}
               onChange={(e) =>
                 handleOnChange(e.target.className, e.target.value)
