@@ -8,7 +8,6 @@ import {
   Article,
   InterviewRoom,
   InterviewDetail,
-  InterviewSearch,
   ErrorPage,
 } from './pages';
 
@@ -24,7 +23,6 @@ function Router() {
       {/* path='/community */}
       <Route path='/interview-room' element={<InterviewRoom />} />
       <Route path='/interview-room/:id' element={<InterviewDetail />} />
-      <Route path='/interview-room/search' element={<InterviewSearch />} />
       <Route path='/community' element={<Community />} />
       <Route path='/community/:id' element={<Article />} />
       <Route path='/community/edit/:id' element={<EditArticle mode='EDIT' />} />
