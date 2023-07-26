@@ -123,7 +123,11 @@ const ReplyItem = ({
       </div>
       <ul className='message-wrap' ref={messageArea}>
         {messages.map((item) => {
-          return <MessageItem key={item.id} message={item} />;
+          return (
+            <li>
+              <MessageItem key={item.id} message={item} />
+            </li>
+          );
         })}
       </ul>
       <div className='text' ref={txtArea}>

@@ -134,7 +134,12 @@ const InterviewSearch = () => {
                   createdAt={item.createdAt}
                 />
               ) : (
-                <MessageItem key={item.id} message={item} />
+                <MessageItem
+                  key={item.id}
+                  message={item}
+                  listName={item.ChatGPTList.name}
+                  listId={item.listId}
+                />
               );
             })
           )}

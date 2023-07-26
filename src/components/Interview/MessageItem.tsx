@@ -12,9 +12,12 @@ import { parseDate } from '../../utils/Interview/interviewListFn';
 import { Theme, css, useTheme } from '@emotion/react';
 import { bookmarkToggle } from '../../utils/Interview/interviewDetailFn';
 import { useQueryClient } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 
 interface MessageProps {
   message: InterviewDetailData;
+  listName?: string;
+  listId?: number;
 }
 
 const StyledMessageItem = (theme: Theme) =>
@@ -47,6 +50,7 @@ const StyledMessageItem = (theme: Theme) =>
       alignSelf: 'flex-start',
       justifyContent: 'space-between',
       gap: '2rem',
+      position: 'relative',
       '>div': {
         display: 'flex',
         flexFlow: 'row wrap',
@@ -71,9 +75,18 @@ const StyledMessageItem = (theme: Theme) =>
         backgroundColor: `${theme.orange2}`,
       },
     },
+    '.list-name': {
+      fontSize: '1.4rem',
+      fontWeight: 500,
+      alignSelf: 'flex-start',
+      borderBottom: `1px solid transparent`,
+      '&:hover': {
+        borderBottomColor: `${theme.fontColor}`,
+      },
+    },
   });
 
-const MessageItem = ({ message }: MessageProps) => {
+const MessageItem = ({ message, listName, listId }: MessageProps) => {
   const theme = useTheme();
   const queryClient = useQueryClient();
   const onBookmarkChange = () => {
@@ -82,7 +95,7 @@ const MessageItem = ({ message }: MessageProps) => {
     );
   };
   return (
-    <li css={StyledMessageItem(theme)} className={message.sender}>
+    <div css={StyledMessageItem(theme)} className={message.sender}>
       <div className='icon'>
         {message.sender === 'assistant' ? (
           <FontAwesomeIcon icon={faDesktop} />
@@ -91,6 +104,11 @@ const MessageItem = ({ message }: MessageProps) => {
         )}
       </div>
       <div className='content-wrap'>
+        {listId && (
+          <Link className='list-name' to={`/interview-room/${listId}`}>
+            {listName}
+          </Link>
+        )}
         <div>
           <p className='content'>{message.content}</p>
           {message.sender === 'assistant' && (
@@ -103,9 +121,9 @@ const MessageItem = ({ message }: MessageProps) => {
             </button>
           )}
         </div>
-        <span className='date'>{parseDate(message.updatedAt)}</span>
+        <span className='date'>{parseDate(message.createdAt)}</span>
       </div>
-    </li>
+    </div>
   );
 };
 
