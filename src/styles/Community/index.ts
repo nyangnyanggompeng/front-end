@@ -18,3 +18,5 @@ export { EditArticleContainer } from './EditArticle.styles';
 export { EditorWrapper } from './Editor.styles';
 
 export { CommentItemContainer, CommentItemStyle } from './CommentItem.styles';
+
+export { CommentContainer, CommentForm } from './CommentContainer.styles';
