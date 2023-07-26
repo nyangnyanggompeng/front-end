@@ -46,7 +46,8 @@ function App() {
                     break;
                   default:
                     logoutFn();
-                    alert('서버 오류입니다. 다시 로그인해주세요.');
+                    // alert('서버 오류입니다. 다시 로그인해주세요.');
+                    navigate(`/error/${err.response?.status}`);
                 }
                 navigate('/sign-in');
               }
