@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { resetUserInfo } from '../../store/slices/userSlices';
 
 const JWT_EXPIRY_TIME = 60 * 60 * 1000; // 만료 시간 1h (24시간 밀리 초로 표현)
 
@@ -25,6 +26,7 @@ export const loginSuccess = (accessToken: string) => {
 
 export const logoutFn = async () => {
   await axios.get('/users/logout');
+  resetUserInfo();
 };
 
 export const getUserInfo = async () => {

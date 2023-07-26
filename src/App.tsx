@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './store';
 import { useEffect } from 'react';
 import { getUserInfo, logoutFn, silentRefresh } from './utils/SignIn/signInFn';
-import { setUserInfo } from './store/slices/userSlices';
+import { resetUserInfo, setUserInfo } from './store/slices/userSlices';
 import { useNavigate } from 'react-router-dom';
 
 const queryClient = new QueryClient();
@@ -41,15 +41,17 @@ function App() {
               if (axios.isAxiosError(err)) {
                 switch (err.response && err.response.status) {
                   case 400:
+                    resetUserInfo();
                     logoutFn();
                     alert('세션이 만료되었습니다. 다시 로그인 해주세요.');
+                    navigate('/sign-in');
                     break;
                   default:
+                    resetUserInfo();
                     logoutFn();
-                    // alert('서버 오류입니다. 다시 로그인해주세요.');
+                    // 에러 페이지로 이동
                     navigate(`/error/${err.response?.status}`);
                 }
-                navigate('/sign-in');
               }
             });
           } else {
