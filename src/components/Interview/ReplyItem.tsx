@@ -124,8 +124,8 @@ const ReplyItem = ({
       <ul className='message-wrap' ref={messageArea}>
         {messages.map((item) => {
           return (
-            <li>
-              <MessageItem key={item.id} message={item} />
+            <li key={item.id}>
+              <MessageItem message={item} />
             </li>
           );
         })}
