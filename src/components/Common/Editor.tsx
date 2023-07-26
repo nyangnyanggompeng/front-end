@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Editor as TuiEditor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import { EditorWrapper } from '../../styles/Community';
 
 interface Props {
   content: string;
@@ -23,7 +24,7 @@ export const Editor = ({ content, editorRef }: Props) => {
   ];
 
   return (
-    <>
+    <div css={EditorWrapper}>
       {editorRef && (
         <TuiEditor
           ref={editorRef}
@@ -35,6 +36,6 @@ export const Editor = ({ content, editorRef }: Props) => {
           placeholder='내용을 입력하세요'
         />
       )}
-    </>
+    </div>
   );
 };

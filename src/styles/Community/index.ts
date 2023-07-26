@@ -12,3 +12,7 @@ export { ViewerWrapper } from './Viewer.styles';
 export { ArticleListContainer } from './ArticleList.styles';
 
 export { CommunityContainer, ButtonContainer } from './Community.styles';
+
+export { EditArticleContainer } from './EditArticle.styles';
+
+export { EditorWrapper } from './Editor.styles';
