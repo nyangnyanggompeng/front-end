@@ -72,6 +72,28 @@ const StyledInterviewRoom = (theme: Theme) =>
     },
   });
 
+const StyledModal = (theme: Theme) =>
+  css({
+    h4: {
+      marginBottom: '3rem',
+    },
+    '.input-box': {
+      marginBottom: '3rem',
+      label: {
+        fontSize: '1.8rem',
+        fontWeight: 500,
+        marginBottom: '0.5rem',
+        display: 'block',
+      },
+    },
+    '.btn-box': {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: '1rem',
+    },
+  });
+
 const InterviewRoom = () => {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -271,26 +293,29 @@ const InterviewRoom = () => {
       </main>
       {isOpen && (
         <ModalContainer resetModal={() => setIsOpen(!isOpen)}>
-          <p>새 인터뷰 만들기</p>
-          <div className='input-box'>
-            <label htmlFor='newInterviewName'>인터뷰 이름</label>
-            <input
-              type='text'
-              id='newInterviewName'
-              value={chatName}
-              onChange={(e) => setChatName(e.target.value)}
-            />
-          </div>
-          <div className='btn-box'>
-            <Button
-              status='sub'
-              onClick={() => {
-                setIsOpen(false), setChatName('');
-              }}
-            >
-              취소
-            </Button>
-            <Button onClick={createNewChat}>완료</Button>
+          <div css={StyledModal(theme)}>
+            <h4>새 인터뷰 만들기</h4>
+            <div className='input-box'>
+              <label htmlFor='newInterviewName'>인터뷰 이름</label>
+              <input
+                type='text'
+                id='newInterviewName'
+                value={chatName}
+                onChange={(e) => setChatName(e.target.value)}
+                placeholder='인터뷰 이름'
+              />
+            </div>
+            <div className='btn-box'>
+              <Button
+                status='sub'
+                onClick={() => {
+                  setIsOpen(false), setChatName('');
+                }}
+              >
+                취소
+              </Button>
+              <Button onClick={createNewChat}>완료</Button>
+            </div>
           </div>
         </ModalContainer>
       )}
