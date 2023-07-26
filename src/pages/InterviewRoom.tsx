@@ -10,7 +10,7 @@ import Pagination from '../components/Common/Pagination';
 import { Theme, css, useTheme } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
 import { InterviewData, errMsg } from '../types/Interview/ListTypes';
-import { getList } from '../utils/Interview/interviewListFn';
+import { getList, getSearchList } from '../utils/Interview/interviewListFn';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 const StyledInterviewRoom = (theme: Theme) =>
@@ -221,15 +221,10 @@ const InterviewRoom = () => {
   };
 
   const onSearch = async () => {
-    const payload =
-      searchValues.type === 'lists'
-        ? { name: searchValues.keyword }
-        : { content: searchValues.keyword };
-    const res = await axios.post(
-      `/chatgpt/search/${searchValues.type}/${currentPage}`,
-      payload
-    );
-    navigate('/interview-room/search', { state: res.data });
+    const data = await getSearchList(searchValues, currentPage);
+    console.log(data);
+
+    // navigate('/interview-room/search', { state: data });
   };
 
   return (
@@ -254,7 +249,7 @@ const InterviewRoom = () => {
               </select>
               <input
                 type='text'
-                placeholder='인터뷰 이름을 입력해주세요'
+                placeholder='검색할 키워드를 입력해주세요'
                 value={searchValues.keyword}
                 onChange={(e) =>
                   setSearchValues({ ...searchValues, keyword: e.target.value })
