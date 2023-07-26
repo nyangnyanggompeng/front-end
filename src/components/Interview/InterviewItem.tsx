@@ -5,15 +5,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 import { deleteChat, parseDate } from '../../utils/Interview/interviewListFn';
 import { useState } from 'react';
+import axios from 'axios';
+import { useQueryClient } from '@tanstack/react-query';
+import { errMsg } from '../../types/Interview/ListTypes';
 
 interface InterviewItemProps {
   id: number;
   type: string;
   name: string;
   createdAt: string;
-  isSelectMode: boolean;
-  onChangeCheck(e: React.MouseEvent<HTMLInputElement>, id: number): void;
-  changeName(id: number, newName: string): void;
+  isSelectMode?: boolean;
+  onChangeCheck?(e: React.MouseEvent<HTMLInputElement>, id: number): void;
 }
 
 const StyledInterviewItem = (theme: Theme) =>
@@ -92,12 +94,32 @@ const InterviewItem = ({
   createdAt,
   isSelectMode,
   onChangeCheck,
-  changeName,
 }: InterviewItemProps) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const [isEdit, setIsEdit] = useState(false);
   const [newName, setNewName] = useState(name);
+  const queryClient = useQueryClient();
+
+  const changeName = async (id: number, name: string) => {
+    try {
+      if (!name) {
+        alert('수정할 내용을 입력해주세요.');
+        return;
+      }
+      await axios.patch(`/chatgpt/lists/${id}`, { name });
+      queryClient.invalidateQueries({ queryKey: ['InterviewList'] });
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        switch (err.status) {
+          case 400:
+            return alert('수정할 내용을 입력해주세요.');
+          case 500:
+            return alert(errMsg.INTERNAL_SERVER_ERROR);
+        }
+      }
+    }
+  };
 
   const onEdit = (id: number, name: string) => {
     changeName(id, name);
@@ -109,7 +131,10 @@ const InterviewItem = ({
       {isSelectMode && (
         <div className='left'>
           <label className='checkbox'>
-            <input type='checkbox' onClick={(e) => onChangeCheck(e, id)} />
+            <input
+              type='checkbox'
+              onClick={(e) => onChangeCheck && onChangeCheck(e, id)}
+            />
           </label>
         </div>
       )}
