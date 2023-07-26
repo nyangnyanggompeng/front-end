@@ -11,8 +11,8 @@ interface InterviewItemProps {
   type: string;
   name: string;
   createdAt: string;
-  deleteChat(id: number): void;
   isSelectMode: boolean;
+  deleteChat(id: number): void;
   onChangeCheck(e: React.MouseEvent<HTMLInputElement>, id: number): void;
   changeName(id: number, newName: string): void;
 }

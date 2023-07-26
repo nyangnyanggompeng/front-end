@@ -22,6 +22,7 @@ const StyledInterviewRoom = (theme: Theme) =>
       borderBottom: `1px solid ${theme.gray2}`,
       paddingBottom: '3rem',
       marginBottom: '3rem',
+      gap: '10rem',
     },
     h3: {
       marginBottom: '0.5rem',
@@ -31,14 +32,15 @@ const StyledInterviewRoom = (theme: Theme) =>
       color: `${theme.gray1}`,
     },
     '.search-box': {
-      width: '30%',
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
+      flexWrap: 'wrap',
       gap: '1rem',
+      flexGrow: 1,
 
       input: {
-        width: '70%',
+        width: '55%',
       },
     },
 
@@ -222,9 +224,7 @@ const InterviewRoom = () => {
 
   const onSearch = async () => {
     const data = await getSearchList(searchValues, currentPage);
-    console.log(data);
-
-    // navigate('/interview-room/search', { state: data });
+    navigate('/interview-room/search', { state: [searchValues.type, data] });
   };
 
   return (
@@ -277,11 +277,11 @@ const InterviewRoom = () => {
           </div>
           <ul className='interview-list'>
             {!data || data.List.length === 0 ? (
-              <div className='message'>
+              <li className='message'>
                 <FontAwesomeIcon icon={faComments} />
                 인터뷰 룸이 존재하지 않습니다. <br />
                 새로운 인터뷰 룸을 생성해 보세요!
-              </div>
+              </li>
             ) : (
               data?.List.map((item) => {
                 return (
