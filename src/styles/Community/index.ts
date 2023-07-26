@@ -16,3 +16,5 @@ export { CommunityContainer, ButtonContainer } from './Community.styles';
 export { EditArticleContainer } from './EditArticle.styles';
 
 export { EditorWrapper } from './Editor.styles';
+
+export { CommentItemContainer, CommentItemStyle } from './CommentItem.styles';

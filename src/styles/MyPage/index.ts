@@ -21,11 +21,7 @@ export {
   BookMarkItemBottom,
 } from './BookMark.styles';
 
-export {
-  MyCommentListContainer,
-  MyCommentItemContainer,
-  MyCommentItemStyle,
-} from './MyComment.styles';
+export { MyCommentListContainer } from './MyComment.styles';
 
 export { BottomButtonsContainer } from './Common';
 
@@ -36,3 +32,5 @@ export { InstructionStyles } from './DeleteAccountModal.styles';
 export { ProfileImageEdit } from './UserInfoEditModal.styles';
 
 export { FormContainer } from './ChangePasswordModal.styles';
+
+export { CommentItemContainer, CommentItemStyle } from '../Community';
