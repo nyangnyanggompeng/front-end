@@ -38,6 +38,8 @@ function Pagination({
     }
   }, [currentPage, totalPage]);
 
+  if (totalPage === 0) return null;
+
   return (
     <div css={PaginationContainer}>
       <button onClick={() => setCurrentPage(1)}>
