@@ -7,6 +7,12 @@ type ArticleListProps = {
 };
 
 export function ArticleList({ articleList }: ArticleListProps) {
+  if (articleList.length === 0)
+    return (
+      <div css={ArticleListContainer}>
+        <div className='empty-message'>게시물이 없습니다.</div>
+      </div>
+    );
   return (
     <div css={ArticleListContainer}>
       {articleList.map((article) => (

@@ -24,10 +24,7 @@ function Community() {
       .finally(() => setIsLoading(false));
   }, [currentPage]);
 
-  if (isLoading) return <div>로딩중</div>;
-
-  if (!ArticleData || !ArticleData.Post || ArticleData.Post.length === 0)
-    return <div>게시물이 없습니다.</div>;
+  if (isLoading || !ArticleData) return <div>로딩중</div>;
 
   return (
     <div css={CommunityContainer(theme)}>
