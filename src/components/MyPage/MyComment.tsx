@@ -1,10 +1,18 @@
 import { useState } from 'react';
+import { useTheme } from '@emotion/react';
 import useGetMyComment from '../../hooks/MyPage/useGetMyComment';
 import { MyCommentType } from '../../types/MyPage/MyCommentTypes';
 import Pagination from '../Common/Pagination';
 import MyCommentItem from './MyCommentItem';
 import { deleteMyComments } from '../../utils/MyPage/deleteMyComments';
 import { DeleteMyCommentRequestType } from '../../types/MyPage/MyCommentTypes';
+import {
+  ContentTotal,
+  ContentTitleContainer,
+  TwoButtonsContainer,
+  MyCommentListContainer,
+} from '../../styles/MyPage';
+import Button from '../Common/Button';
 
 const deleteStatusMessage: Record<
   'OK' | 'BAD_REQUEST' | 'INTERNAL_SERVER_ERROR',
@@ -16,6 +24,7 @@ const deleteStatusMessage: Record<
 };
 
 export default function MyComment() {
+  const theme = useTheme();
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedComment, setSelectedComment] = useState<Set<number>>(
     new Set()
@@ -60,32 +69,34 @@ export default function MyComment() {
         <div>작성한 댓글이 없습니다.</div>
       ) : (
         <div>
-          <div>{`전체 ${data.numberOfMyComment}개`}</div>
-          <div>
+          <div css={ContentTitleContainer}>
+            <div css={ContentTotal}>{`전체 ${data.numberOfMyComment}개`}</div>
             {isDeleteMode ? (
-              <>
-                <button onClick={() => setIsDeleteMode(false)}>❌ 취소</button>
-                <button onClick={() => deleteHandler()}>🗑삭제하기</button>
-              </>
+              <div css={TwoButtonsContainer}>
+                <Button onClick={() => setIsDeleteMode(false)}>취소</Button>
+                <Button onClick={() => deleteHandler()}>삭제하기</Button>
+              </div>
             ) : (
-              <button
+              <Button
                 onClick={() => {
                   setIsDeleteMode(true);
                   setSelectedComment(new Set());
                 }}
               >
-                🗑 선택 삭제
-              </button>
+                선택 삭제
+              </Button>
             )}
           </div>
-          {data.Comment.map((comment: MyCommentType) => (
-            <MyCommentItem
-              key={comment.id}
-              isDeleteMode={isDeleteMode}
-              myComment={comment}
-              selectHandler={handleSelectComment}
-            />
-          ))}
+          <div css={MyCommentListContainer(theme)}>
+            {data.Comment.map((comment: MyCommentType) => (
+              <MyCommentItem
+                key={comment.id}
+                isDeleteMode={isDeleteMode}
+                myComment={comment}
+                selectHandler={handleSelectComment}
+              />
+            ))}
+          </div>
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}

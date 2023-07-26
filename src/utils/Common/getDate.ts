@@ -5,7 +5,11 @@ export function getDate(date: Date) {
     date.getMonth() !== currentDate.getMonth() ||
     date.getDate() !== currentDate.getDate()
   ) {
-    return `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
+    const month = `${date.getMonth() + 1}`.padStart(2, '0');
+    const day = `${date.getDate()}`.padStart(2, '0');
+    return `${date.getFullYear()}.${month}.${day}`;
   }
-  return `${date.getHours()}:${date.getMinutes()}`;
+  const hour = `${date.getHours()}`.padStart(2, '0');
+  const minute = `${date.getMinutes()}`.padStart(2, '0');
+  return `${hour}:${minute}`;
 }

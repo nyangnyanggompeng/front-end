@@ -10,6 +10,7 @@ import { RootState } from '../store';
 import { setIsLogin } from '../store/slices/loginSlices';
 import { getUserInfo, loginFn } from '../utils/SignIn/signInFn';
 import { setUserInfo } from '../store/slices/userSlices';
+import { mq } from '../theme';
 
 interface LoginInfo {
   userId: string;
@@ -58,7 +59,7 @@ const StyledSignIn = (theme: Theme) =>
           display: 'block',
         },
         '.err-msg': {
-          color: `${theme.orange1}`, // FIXME
+          color: `${theme.red}`,
           fontSize: '1.4rem',
           marginTop: '0.5rem',
         },
@@ -69,10 +70,32 @@ const StyledSignIn = (theme: Theme) =>
       '> p': {
         textAlign: 'center',
         marginBottom: '1rem',
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
         a: {
           color: `${theme.orange1}`,
           fontWeight: 700,
           marginLeft: '1.5rem',
+        },
+      },
+    },
+    [mq[0]]: {
+      '.signin-wrap': {
+        width: '70%',
+      },
+    },
+    [mq[1]]: {
+      '.signin-wrap': {
+        width: '80%',
+        padding: '3rem',
+        img: {
+          width: '50%',
+        },
+        form: {
+          label: {
+            fontSize: '1.8rem',
+          },
         },
       },
     },

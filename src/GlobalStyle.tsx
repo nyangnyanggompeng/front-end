@@ -1,4 +1,5 @@
 import { Global, Theme, css } from '@emotion/react';
+import { mq } from './theme';
 
 const style = (theme: Theme) =>
   css({
@@ -27,6 +28,7 @@ const style = (theme: Theme) =>
 
     html: {
       fontSize: '62.5%',
+      overflowX: 'hidden',
     },
 
     body: {
@@ -34,6 +36,8 @@ const style = (theme: Theme) =>
       backgroundColor: `${theme.bgColor}`,
       color: `${theme.fontColor}`,
       fontFamily: `'Noto Sans KR','Apple SD Gothic Neo', arial, sans-serif`,
+      position: 'relative',
+      overflowX: 'hidden',
     },
 
     'img, picture, video, canvas, svg': {
@@ -68,6 +72,7 @@ const style = (theme: Theme) =>
 
     '.container': {
       padding: '5rem 0',
+      minHeight: 'calc(100vh - 25rem)',
     },
 
     // 페이지 제목
@@ -80,6 +85,12 @@ const style = (theme: Theme) =>
     // 페이지 서브타이틀
     h3: {
       fontSize: '3rem',
+      fontWeight: 700,
+    },
+
+    // form 제목 등
+    h4: {
+      fontSize: '2.4rem',
       fontWeight: 700,
     },
 
@@ -101,6 +112,16 @@ const style = (theme: Theme) =>
     textarea: {
       resize: 'vertical',
       width: '100%',
+    },
+
+    [mq[0]]: {
+      body: {
+        fontSize: '1.4rem',
+      },
+
+      '.inner': {
+        width: '90%',
+      },
     },
   });
 

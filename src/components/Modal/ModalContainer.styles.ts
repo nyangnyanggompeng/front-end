@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { Theme, css } from '@emotion/react';
 
 export const ModalOverlayStyles = css({
   position: 'fixed',
@@ -8,14 +8,19 @@ export const ModalOverlayStyles = css({
   height: '100vh',
   overflow: 'hidden',
   zIndex: 1000,
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  backgroundColor: 'rgba(0, 0, 0, 0.30)',
 });
 
-export const ModalContainerStyles = css({
-  position: 'fixed',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  background: '#ffffff',
-  borderRadius: '24px',
-});
+export const ModalContainerStyles = (theme: Theme) =>
+  css({
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    background: theme.bgColor,
+    borderRadius: '0.5rem', // NOTE: small radius
+    padding: '5rem',
+    h3: {
+      marginBottom: '5rem',
+    },
+  });
