@@ -37,10 +37,10 @@ const StyledInterviewRoom = (theme: Theme) =>
       alignItems: 'center',
       flexWrap: 'wrap',
       gap: '1rem',
-      flexGrow: 1,
+      width: '50%',
 
       input: {
-        width: '55%',
+        width: '64%',
       },
     },
 
