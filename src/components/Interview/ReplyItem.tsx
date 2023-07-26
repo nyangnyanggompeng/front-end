@@ -64,9 +64,12 @@ const StyledReplyItem = (theme: Theme) =>
     },
     '&.close': {
       height: '6.5rem',
+      '.message-title': {
+        borderBottomColor: 'transparent',
+      },
     },
     '&.open': {
-      height: '34.9rem',
+      height: 'auto',
     },
   });
 
@@ -123,11 +126,7 @@ const ReplyItem = ({
       </div>
       <ul className='message-wrap' ref={messageArea}>
         {messages.map((item) => {
-          return (
-            <li key={item.id}>
-              <MessageItem message={item} />
-            </li>
-          );
+          return <MessageItem key={item.id} message={item} />;
         })}
       </ul>
       <div className='text' ref={txtArea}>

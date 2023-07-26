@@ -95,7 +95,7 @@ const MessageItem = ({ message, listName, listId }: MessageProps) => {
     );
   };
   return (
-    <div css={StyledMessageItem(theme)} className={message.sender}>
+    <li css={StyledMessageItem(theme)} className={message.sender}>
       <div className='icon'>
         {message.sender === 'assistant' ? (
           <FontAwesomeIcon icon={faDesktop} />
@@ -123,7 +123,7 @@ const MessageItem = ({ message, listName, listId }: MessageProps) => {
         </div>
         <span className='date'>{parseDate(message.createdAt)}</span>
       </div>
-    </div>
+    </li>
   );
 };
 
