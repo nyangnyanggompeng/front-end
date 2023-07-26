@@ -3,7 +3,7 @@ import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { faCheck, faEraser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
-import { parseDate } from '../../utils/Interview/interviewListFn';
+import { deleteChat, parseDate } from '../../utils/Interview/interviewListFn';
 import { useState } from 'react';
 
 interface InterviewItemProps {
@@ -12,7 +12,6 @@ interface InterviewItemProps {
   name: string;
   createdAt: string;
   isSelectMode: boolean;
-  deleteChat(id: number): void;
   onChangeCheck(e: React.MouseEvent<HTMLInputElement>, id: number): void;
   changeName(id: number, newName: string): void;
 }
@@ -91,7 +90,6 @@ const InterviewItem = ({
   type,
   name,
   createdAt,
-  deleteChat,
   isSelectMode,
   onChangeCheck,
   changeName,
@@ -154,7 +152,7 @@ const InterviewItem = ({
         <button
           type='button'
           className='btn-delete'
-          onClick={() => deleteChat(id)}
+          onClick={() => deleteChat([id])}
         >
           <FontAwesomeIcon icon={faEraser} />
         </button>

@@ -154,21 +154,21 @@ const InterviewRoom = () => {
     }
   };
 
-  const deleteChat = async (id: number) => {
-    try {
-      if (
-        window.confirm(
-          `인터뷰가 삭제되고 이 내용은 복구할 수 없습니다.\n정말 삭제하시겠습니까?`
-        )
-      ) {
-        axios.put('/chatgpt/lists', { listIdList: [id] });
-        alert('인터뷰가 삭제되었습니다.');
-        queryClient.invalidateQueries({ queryKey: ['InterviewList'] });
-      }
-    } catch (err) {
-      if (axios.isAxiosError(err)) alert(errMsg.INTERNAL_SERVER_ERROR);
-    }
-  };
+  // const deleteChat = async (id: number) => {
+  //   try {
+  //     if (
+  //       window.confirm(
+  //         `인터뷰가 삭제되고 이 내용은 복구할 수 없습니다.\n정말 삭제하시겠습니까?`
+  //       )
+  //     ) {
+  //       axios.put('/chatgpt/lists', { listIdList: [id] });
+  //       alert('인터뷰가 삭제되었습니다.');
+  //       queryClient.invalidateQueries({ queryKey: ['InterviewList'] });
+  //     }
+  //   } catch (err) {
+  //     if (axios.isAxiosError(err)) alert(errMsg.INTERNAL_SERVER_ERROR);
+  //   }
+  // };
 
   const deleteAllChat = async () => {
     if (data?.List.length === 0) {
@@ -291,7 +291,7 @@ const InterviewRoom = () => {
                     type={item.type}
                     name={item.name}
                     createdAt={item.createdAt}
-                    deleteChat={deleteChat}
+                    // deleteChat={deleteChat}
                     isSelectMode={isSelectMode}
                     onChangeCheck={onChangeCheck}
                     changeName={changeName}
