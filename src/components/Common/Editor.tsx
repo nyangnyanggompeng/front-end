@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { Editor as TuiEditor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import { EditorWrapper } from '../../styles/Community';
+import { useTuiDarkMode } from '../../hooks/Article';
 
 interface Props {
   content: string;
@@ -9,6 +11,8 @@ interface Props {
 }
 
 export const Editor = ({ content, editorRef }: Props) => {
+  useTuiDarkMode('EDITOR');
+
   useEffect(() => {
     if (editorRef.current) {
       editorRef.current.getInstance().setMarkdown(content);
@@ -19,7 +23,7 @@ export const Editor = ({ content, editorRef }: Props) => {
     ['heading', 'bold', 'italic', 'strike'],
     ['hr', 'quote'],
     ['ul', 'ol', 'task'],
-    ['table', 'image', 'link'], // TODO : 게시판 이미지 업로드 기능 가능 여부 확인하기
+    ['table', 'link'],
     ['code'],
   ];
 
