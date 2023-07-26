@@ -4,7 +4,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useLocation } from 'react-router-dom';
 import InterviewItem from '../components/Interview/InterviewItem';
 import MessageItem from '../components/Interview/MessageItem';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Pagination from '../components/Common/Pagination';
 import { getSearchList } from '../utils/Interview/interviewListFn';
 import { Theme, useTheme, css } from '@emotion/react';
@@ -58,7 +58,7 @@ const StyledInterviewSearch = (theme: Theme) =>
   });
 
 interface SearchDataTypes {
-  Result: any[];
+  Result: any[]; // TODO: 해결중...
   numberOfResult: number;
   totalPages: number;
 }
@@ -66,7 +66,7 @@ interface SearchDataTypes {
 const InterviewSearch = () => {
   const theme = useTheme();
   const location = useLocation();
-  const searchType = location.state[0];
+  const [searchType, setSearchType] = useState(location.state[0]);
   const { Result, numberOfResult, totalPages } = location.state[1];
   const [searchValues, setSearchValues] = useState({
     type: 'lists',
@@ -81,17 +81,17 @@ const InterviewSearch = () => {
 
   const onSearch = async () => {
     const data = await getSearchList(searchValues, currentPage);
-    setSearchList(data);
+    setSearchType(searchValues.type);
+    setSearchList({ ...searchList, ...data });
   };
 
-  console.log(location);
   return (
     <main css={StyledInterviewSearch(theme)}>
       <div className='inner'>
         <h2>검색결과</h2>
         <div className='subtit'>
           <div className='left'>
-            <h3>전체 {numberOfResult}개</h3>
+            <h3>전체 {searchList.numberOfResult}개</h3>
           </div>
           <div className='search-box'>
             <select

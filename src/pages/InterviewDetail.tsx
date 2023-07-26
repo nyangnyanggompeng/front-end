@@ -10,6 +10,7 @@ import { parseDate } from '../utils/Interview/interviewListFn';
 import { Theme, css, useTheme } from '@emotion/react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getChatData } from '../utils/Interview/interviewDetailFn';
+import { Loading } from '../components/Common';
 
 const StyledInterviewDetail = (theme: Theme) =>
   css({
@@ -221,7 +222,7 @@ const InterviewDetail = () => {
     setIsCloseList(obj);
   };
 
-  if (isLoading) return <div>로딩중...</div>;
+  if (isLoading) return <Loading theme={theme} />;
 
   return (
     <main css={StyledInterviewDetail(theme)}>
