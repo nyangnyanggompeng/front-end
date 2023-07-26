@@ -207,24 +207,6 @@ const InterviewDetail = () => {
     }
   };
 
-  const bookmarkToggle = async (contentId: number, isBookmarked: boolean) => {
-    try {
-      await axios.patch(
-        `/chatgpt/bookmark/${contentId}?isBookmarked=${isBookmarked}`
-      );
-      queryClient.invalidateQueries({ queryKey: ['InterviewDetailData'] });
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        switch (err.response?.status) {
-          case 500:
-            return alert('북마크 상태가 변경되지 않았습니다.');
-          default:
-            return alert('서버 오류입니다. 잠시 후 다시 시도해 주세요.');
-        }
-      }
-    }
-  };
-
   const questionsCloseToggle = () => {
     const value =
       Object.values(isCloseList).filter((el) => el === true).length >= 1
@@ -383,7 +365,6 @@ const InterviewDetail = () => {
                       messages={filtered}
                       sendAnswer={sendAnswer}
                       deleteQuestion={deleteQuestion}
-                      bookmarkToggle={bookmarkToggle}
                       isCloseList={isCloseList}
                       setIsCloseList={setIsCloseList}
                     />
