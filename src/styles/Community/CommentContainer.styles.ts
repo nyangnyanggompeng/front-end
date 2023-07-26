@@ -1,6 +1,19 @@
 import { Theme, css } from '@emotion/react';
 
-export const CommentContainer = css({});
+export const CommentContainer = css({
+  '.total-comments': {
+    margin: '2rem',
+    fontSize: '2rem',
+    fontWeight: '700',
+  },
+});
+
+export const CommentListContainer = (theme: Theme) =>
+  css({
+    '> li:first-of-type': {
+      borderTop: `1px solid ${theme.black}`,
+    },
+  });
 
 export const CommentForm = (theme: Theme) =>
   css({

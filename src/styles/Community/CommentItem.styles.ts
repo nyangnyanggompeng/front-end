@@ -15,7 +15,7 @@ export const CommentItemContainer = (mode?: 'VIEW' | 'DELETE') =>
 export const CommentItemStyle = (theme: Theme) =>
   css({
     display: 'grid',
-    gridTemplateColumns: '2fr 2fr 2fr 6fr 2fr',
+    gridTemplateColumns: '11rem 11rem 2fr 6fr 15rem',
     gridGap: '1.1rem 3.2rem',
     padding: '2rem 2.9rem',
     borderBottom: `1px solid ${theme.gray2}`,
