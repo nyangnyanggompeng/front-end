@@ -24,3 +24,5 @@ export {
   CommentListContainer,
   CommentForm,
 } from './CommentContainer.styles';
+
+export { ArticleButtonsContainer } from './ArticleButtons.styles';
