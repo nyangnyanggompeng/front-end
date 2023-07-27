@@ -27,10 +27,8 @@ export default function CommentList({ postId }: CommentListProps) {
         <div className='total-comments'>{`댓글 ${data.numberOfComment}`}</div>
       )}
       <ul css={CommentListContainer(theme)}>
-        {/* TODO: 댓글이 없는 경우의 표시 방법 정하기 */}
         {data.numberOfComment === 0
-          ? // <div>등록된 댓글이 없습니다.</div>
-            null
+          ? null
           : data.Comment.map((comment) => (
               <CommentItem key={comment.id} comment={comment} postId={postId} />
             ))}
