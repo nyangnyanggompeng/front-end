@@ -1,4 +1,5 @@
 import { useTheme } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 import { ModalPropsType } from '../Modal/ModalTypes';
 import { ModalContainer } from '../Modal/ModalContainer';
 import Button from '../Common/Button';
@@ -12,6 +13,7 @@ import {
   deleteAccount,
   DeleteAccountStatusTypeChecker,
 } from '../../utils/MyPage/deleteAccount';
+import { logoutFn } from '../../utils/SignIn/signInFn';
 
 const deleteAccountStatusMessage: Record<DeleteAccountStatusType, string> = {
   DELETE_USER_SUCCESS: '회원 탈퇴가 완료되었습니다.',
@@ -24,6 +26,7 @@ const deleteAccountStatusMessage: Record<DeleteAccountStatusType, string> = {
 
 export function DeleteAccountModal({ resetModal }: ModalPropsType) {
   const theme = useTheme();
+  const navigate = useNavigate();
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -37,7 +40,9 @@ export function DeleteAccountModal({ resetModal }: ModalPropsType) {
     deleteAccount(request)
       .then((res) => {
         alert(deleteAccountStatusMessage[res]);
+        logoutFn();
         resetModal();
+        navigate('/sign-in');
       })
       .catch((e: unknown) => {
         if (e instanceof Error && DeleteAccountStatusTypeChecker(e.message)) {
