@@ -52,6 +52,7 @@ const Button = (props: BtnProps) => {
       css={StyledBtn(theme)}
       className={`${status} ${props.className}`}
       disabled={status === 'disable' ? true : false}
+      form={props.form}
     >
       {children}
     </button>
