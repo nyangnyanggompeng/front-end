@@ -48,8 +48,10 @@ export function ChangePasswordModal({ resetModal }: ModalPropsType) {
         alert(changePasswordStatusMessage[res]);
       })
       .catch((e: unknown) => {
-        if (ChangePasswordStatusTypeChecker(e))
-          alert(changePasswordStatusMessage[e as ChangePasswordStatusType]);
+        if (e instanceof Error && ChangePasswordStatusTypeChecker(e.message))
+          alert(
+            changePasswordStatusMessage[e.message as ChangePasswordStatusType]
+          );
         else alert(changePasswordStatusMessage['INTERNAL_SERVER_ERROR']);
       });
   }

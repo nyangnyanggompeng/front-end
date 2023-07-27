@@ -39,8 +39,8 @@ export function UserInfoEditModal({ resetModal }: ModalPropsType) {
         alert(userInfoEditStatusMessage[res]);
       })
       .catch((e: unknown) => {
-        if (UserInfoEditStatusTypeChecker(e))
-          alert(userInfoEditStatusMessage[e as UserInfoEditStatusType]);
+        if (e instanceof Error && UserInfoEditStatusTypeChecker(e.message))
+          alert(userInfoEditStatusMessage[e.message as UserInfoEditStatusType]);
         else alert(userInfoEditStatusMessage['INTERNAL_SERVER_ERROR']);
       });
   }

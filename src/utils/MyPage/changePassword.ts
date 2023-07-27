@@ -7,9 +7,7 @@ import {
 
 export function ChangePasswordStatusTypeChecker(status: unknown) {
   if (typeof status !== 'string') return false;
-  return ChangePasswordStatus.includes(
-    status as (typeof ChangePasswordStatus)[number]
-  );
+  return ChangePasswordStatus.includes(status as ChangePasswordStatusType);
 }
 
 export async function changePassword(

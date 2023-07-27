@@ -7,9 +7,7 @@ import {
 
 export function UserInfoEditStatusTypeChecker(status: unknown) {
   if (typeof status !== 'string') return false;
-  return UserInfoEditStatus.includes(
-    status as (typeof UserInfoEditStatus)[number]
-  );
+  return UserInfoEditStatus.includes(status as UserInfoEditStatusType);
 }
 
 export async function updateUserInfo(
