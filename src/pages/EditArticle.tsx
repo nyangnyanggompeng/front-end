@@ -14,6 +14,9 @@ import useHandleUnloadEvent from '../hooks/Article/useHandleUnloadEvent';
 import { ArticleDetailType } from '../types/Community/articleTypes';
 import { updateArticle } from '../utils/Community/updateArticle';
 import { useUser } from '../hooks/Common';
+import { ArticleTitle } from '../components/Common';
+import Button from '../components/Common/Button';
+import { EditArticleContainer } from '../styles/Community';
 
 const statusMessage: Record<
   ArticleWriteStateType | 'UNAUTHORIZED' | 'BAD_ACCESS',
@@ -100,22 +103,20 @@ function EditArticle({ mode }: WritingProps) {
   }
 
   return (
-    <>
-      <div>글쓰기</div>
-      <input
-        type='text'
-        placeholder='제목'
-        ref={titleRef}
-        defaultValue={articleData ? articleData.title : ''}
+    <div css={EditArticleContainer}>
+      <ArticleTitle
+        title={articleData?.title}
+        titleRef={titleRef}
+        mode={'EDIT'}
       />
       <Editor
         editorRef={editorRef}
         content={articleData ? articleData.content : ' '}
       />
-      <button onClick={handleClick}>
+      <Button className='edit-button' onClick={handleClick}>
         {mode === 'WRITE' ? '등록하기' : '수정하기'}
-      </button>
-    </>
+      </Button>
+    </div>
   );
 }
 

@@ -1,0 +1,1 @@
+export { useTuiDarkMode } from './useTuiDarkMode';

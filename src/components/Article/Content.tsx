@@ -1,5 +1,7 @@
 import { ArticleDetailType } from '../../types/Community/articleTypes';
 import { Viewer } from './Viewer';
+import { ArticleTitle } from '../Common';
+import { ArticleInfo } from './ArticleInfo';
 
 type ContentProps = {
   articleDetail: ArticleDetailType;
@@ -8,20 +10,14 @@ type ContentProps = {
 function Content({ articleDetail }: ContentProps) {
   return (
     <div>
-      <div>{articleDetail.title}</div>
-      <div>{articleDetail.writer}</div>
-      <div>{getDate(articleDetail.createdAt)}</div>
+      <ArticleTitle title={articleDetail.title} mode='VIEW' />
+      <ArticleInfo
+        writer={articleDetail.writer}
+        createdAt={articleDetail.createdAt}
+      />
       <Viewer content={articleDetail.content} />
     </div>
   );
-}
-
-function getDate(date: string) {
-  const dateObj = new Date(date);
-  const year = dateObj.getFullYear();
-  const month = dateObj.getMonth();
-  const day = dateObj.getDate();
-  return `${year}.${month}.${day}`;
 }
 
 export default Content;

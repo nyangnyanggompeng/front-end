@@ -1,14 +1,18 @@
 import { useRef } from 'react';
+import { useTheme } from '@emotion/react';
+import { useQueryClient } from '@tanstack/react-query';
 import CommentList from './CommentList';
 import { CommentWriteType } from '../../types/Community/commentTypes';
 import { postComment } from '../../utils/Community/postComment';
-import { useQueryClient } from '@tanstack/react-query';
+import { CommentForm } from '../../styles/Community';
+import Button from '../Common/Button';
 
 type CommentContainerProps = {
   postId?: string;
 };
 
 export default function CommentContainer({ postId }: CommentContainerProps) {
+  const theme = useTheme();
   const commentRef = useRef<HTMLTextAreaElement>(null);
   const queryClient = useQueryClient();
   function handlePostComment(e: React.FormEvent<HTMLFormElement>) {
@@ -42,13 +46,13 @@ export default function CommentContainer({ postId }: CommentContainerProps) {
   return (
     <div>
       <CommentList postId={parseInt(postId)} />
-      <form onSubmit={handlePostComment}>
+      <form onSubmit={handlePostComment} css={CommentForm(theme)}>
         <textarea
           ref={commentRef}
           name='newComment'
           placeholder='댓글을 작성해주세요.'
         ></textarea>
-        <button type='submit'>등록하기</button>
+        <Button type='submit'>등록하기</Button>
       </form>
     </div>
   );
