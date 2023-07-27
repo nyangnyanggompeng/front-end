@@ -15,6 +15,14 @@ export const CommentListContainer = (theme: Theme) =>
     },
   });
 
+// export const EmptyCommentContainer = css({
+//   display: 'flex',
+//   justifyContent: 'center',
+//   alignItems: 'center',
+//   height: '10rem',
+//   fontSize: '1.6rem',
+// });
+
 export const CommentForm = (theme: Theme) =>
   css({
     display: 'flex',

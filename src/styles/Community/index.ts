@@ -12,6 +12,7 @@ export { CommentItemContainer, CommentItemStyle } from './CommentItem.styles';
 export {
   CommentContainer,
   CommentListContainer,
+  // EmptyCommentContainer,
   CommentForm,
 } from './CommentContainer.styles';
 export { ArticleButtonsContainer } from './ArticleButtons.styles';

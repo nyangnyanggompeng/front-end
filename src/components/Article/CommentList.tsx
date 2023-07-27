@@ -3,7 +3,11 @@ import { useTheme } from '@emotion/react';
 import useGetComments from '../../hooks/Article/useGetComments';
 import CommentItem from './CommentItem';
 import Pagination from '../Common/Pagination';
-import { CommentContainer, CommentListContainer } from '../../styles/Community';
+import {
+  CommentContainer,
+  CommentListContainer,
+  // EmptyCommentContainer,
+} from '../../styles/Community';
 
 type CommentListProps = {
   postId: number;
@@ -23,13 +27,13 @@ export default function CommentList({ postId }: CommentListProps) {
         <div className='total-comments'>{`댓글 ${data.numberOfComment}`}</div>
       )}
       <ul css={CommentListContainer(theme)}>
-        {data.numberOfComment === 0 ? (
-          <div>등록된 댓글이 없습니다.</div>
-        ) : (
-          data.Comment.map((comment) => (
-            <CommentItem key={comment.id} comment={comment} postId={postId} />
-          ))
-        )}
+        {/* TODO: 댓글이 없는 경우의 표시 방법 정하기 */}
+        {data.numberOfComment === 0
+          ? // <div>등록된 댓글이 없습니다.</div>
+            null
+          : data.Comment.map((comment) => (
+              <CommentItem key={comment.id} comment={comment} postId={postId} />
+            ))}
       </ul>
       <Pagination
         currentPage={currentPage}
