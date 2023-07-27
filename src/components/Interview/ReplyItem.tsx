@@ -90,7 +90,7 @@ const ReplyItem = ({
   return (
     <li
       css={StyledReplyItem(theme)}
-      className={isCloseList[messages[0].questionNum] ? 'close' : 'open'}
+      className={isCloseList[messages[0]?.questionNum] ? 'close' : 'open'}
     >
       <div className='message-title' ref={titleArea}>
         <p>질문 {questionNum}</p>
@@ -111,12 +111,12 @@ const ReplyItem = ({
             onClick={() =>
               setIsCloseList({
                 ...isCloseList,
-                [messages[0].questionNum]:
-                  !isCloseList[messages[0].questionNum],
+                [messages[0]?.questionNum]:
+                  !isCloseList[messages[0]?.questionNum],
               })
             }
           >
-            {isCloseList[messages[0].questionNum] ? (
+            {isCloseList[messages[0]?.questionNum] ? (
               <FontAwesomeIcon icon={faChevronDown} />
             ) : (
               <FontAwesomeIcon icon={faChevronUp} />

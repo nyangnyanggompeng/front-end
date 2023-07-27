@@ -55,6 +55,7 @@ function App() {
               }
             });
           } else {
+            resetUserInfo();
             logoutFn();
             alert('서버 에러입니다. 다시 로그인 해주세요.');
             navigate('/sign-in');
