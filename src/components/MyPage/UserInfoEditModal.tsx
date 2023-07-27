@@ -1,3 +1,4 @@
+import { useState, useRef } from 'react';
 import { ModalPropsType } from '../Modal/ModalTypes';
 import { ModalContainer } from '../Modal/ModalContainer';
 import NicknameCheck from '../SignUp/NicknameCheck';
@@ -12,7 +13,6 @@ import {
   updateUserInfo,
   UserInfoEditStatusTypeChecker,
 } from '../../utils/MyPage/updateUserInfo';
-import { useState } from 'react';
 
 const userInfoEditStatusMessage: Record<UserInfoEditStatusType, string> = {
   UPDATE_INFO_SUCCESS: '정보가 변경되었습니다.',
@@ -25,23 +25,11 @@ const userInfoEditStatusMessage: Record<UserInfoEditStatusType, string> = {
 
 export function UserInfoEditModal({ resetModal }: ModalPropsType) {
   const [imgFile, setImgFile] = useState<string>('');
+  const nicknameRef = useRef<HTMLInputElement>(null);
+  const imageRef = useRef<HTMLInputElement>(null);
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const request: UserInfoEditRequestType = {
-      image: formData.get('profile-image') as File,
-      nickname: formData.get('nickname')?.toString() || '',
-    };
-    updateUserInfo(request)
-      .then((res) => {
-        alert(userInfoEditStatusMessage[res]);
-      })
-      .catch((e: unknown) => {
-        if (e instanceof Error && UserInfoEditStatusTypeChecker(e.message))
-          alert(userInfoEditStatusMessage[e.message as UserInfoEditStatusType]);
-        else alert(userInfoEditStatusMessage['INTERNAL_SERVER_ERROR']);
-      });
+  function handleUploadButtonClick() {
+    if (imageRef.current) imageRef.current.click();
   }
 
   function handlePreview(e: React.ChangeEvent<HTMLInputElement>) {
@@ -56,35 +44,45 @@ export function UserInfoEditModal({ resetModal }: ModalPropsType) {
     };
   }
 
+  function handleUpdate(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    const request: UserInfoEditRequestType = {
+      image: imageRef.current?.files?.[0] || null,
+      nickname: nicknameRef.current?.value || '',
+    };
+    updateUserInfo(request)
+      .then((res) => {
+        alert(userInfoEditStatusMessage[res]);
+      })
+      .catch((e: unknown) => {
+        if (e instanceof Error && UserInfoEditStatusTypeChecker(e.message))
+          alert(userInfoEditStatusMessage[e.message as UserInfoEditStatusType]);
+        else alert(userInfoEditStatusMessage['INTERNAL_SERVER_ERROR']);
+      });
+  }
+
   return (
     <ModalContainer resetModal={resetModal}>
       <h3>정보 수정</h3>
-      <form id='edit-profile' onSubmit={onSubmit} encType='multipart/form-data'>
-        <div css={ProfileImageEdit}>
-          <ProfilePhoto src={imgFile} mode={'USER_INFO_EDIT'} />
-          <Button>
-            <label htmlFor='profile-image'>
-              파일 업로드
-              <input
-                style={{ display: 'none' }}
-                name='profile-image'
-                id='profile-image'
-                type='file'
-                accept='image/*'
-                onChange={handlePreview}
-              />
-            </label>
-          </Button>
-        </div>
-        <NicknameCheck />
-      </form>
+      <div css={ProfileImageEdit}>
+        <ProfilePhoto src={imgFile} mode={'USER_INFO_EDIT'} />
+        <Button onClick={handleUploadButtonClick}>파일 업로드</Button>
+        <input
+          style={{ display: 'none' }}
+          name='image'
+          id='image'
+          type='file'
+          accept='image/*'
+          onChange={handlePreview}
+          ref={imageRef}
+        />
+      </div>
+      <NicknameCheck inputRef={nicknameRef} />
       <div css={BottomButtonsContainer}>
         <Button status='sub' onClick={resetModal}>
           취소
         </Button>
-        <Button form='edit-profile' type='submit'>
-          정보 수정
-        </Button>
+        <Button onClick={handleUpdate}>정보 수정</Button>
       </div>
     </ModalContainer>
   );

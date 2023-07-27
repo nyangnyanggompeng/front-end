@@ -16,7 +16,11 @@ const statusMessage: Record<NicknameStatusType, string> = {
   INTERNAL_SERVER_ERROR: '서버 오류입니다. 잠시 후 다시 시도해주세요.',
 };
 
-function NicknameCheck() {
+type NicknameCheckProps = {
+  inputRef?: React.RefObject<HTMLInputElement>;
+};
+
+function NicknameCheck({ inputRef }: NicknameCheckProps = {}) {
   const theme = useTheme();
   const [nickname, setNickname] = useState<string>('');
   const [message, setMessage] = useState<string>('');
@@ -60,6 +64,7 @@ function NicknameCheck() {
           name='nickname'
           placeholder='닉네임'
           onBlur={(e) => setNickname(e.target.value)}
+          ref={inputRef}
         />
         {/* TODO : 메시지가 없는 경우 컴포넌트 자체는 유지시키고 hidden 속성을 추가하기 */}
         <Button onClick={handleClick}>중복 확인</Button>

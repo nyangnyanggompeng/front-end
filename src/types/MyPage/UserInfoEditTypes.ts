@@ -2,7 +2,7 @@ import { ServerError } from '../SignUp/common';
 
 export type UserInfoEditRequestType = {
   nickname: string;
-  image: Blob;
+  image: File | null;
 };
 
 export const UserInfoEditStatus = [

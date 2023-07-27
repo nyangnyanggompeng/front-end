@@ -14,7 +14,15 @@ export async function updateUserInfo(
   req: UserInfoEditRequestType
 ): Promise<UserInfoEditStatusType> {
   try {
-    await axios.patch('/mypage/users', req);
+    console.log(req);
+    await axios({
+      method: 'patch',
+      url: '/mypage/users',
+      data: req,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return 'UPDATE_INFO_SUCCESS';
   } catch (e: unknown) {
     if (isAxiosError(e) && e.response) {
