@@ -66,7 +66,7 @@ function App() {
 
   useEffect(() => {
     authHandler();
-  }, []);
+  }, [userInfo]);
   return (
     <>
       <ThemeProvider theme={isDark ? darkMode : lightMode}>

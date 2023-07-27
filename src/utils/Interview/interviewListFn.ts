@@ -26,32 +26,17 @@ export const getSearchList = async (
   searchValues: { type: string; keyword: string },
   currentPage: number
 ) => {
-  try {
-    const payload =
-      searchValues.type === 'lists'
-        ? { name: searchValues.keyword }
-        : { content: searchValues.keyword };
+  const payload =
+    searchValues.type === 'lists'
+      ? { name: searchValues.keyword }
+      : { content: searchValues.keyword };
 
-    const res = await axios.post(
-      `/chatgpt/search/${searchValues.type}/${currentPage}`,
-      payload
-    );
+  const res = await axios.post(
+    `/chatgpt/search/${searchValues.type}/${currentPage}`,
+    payload
+  );
 
-    return res.data;
-  } catch (err) {
-    if (axios.isAxiosError(err)) {
-      switch (err.response?.status) {
-        case 400:
-          return {
-            Result: [],
-            numberOfResult: 0,
-            totalPages: 0,
-          };
-        default:
-          return console.log('500 페이지 이동');
-      }
-    }
-  }
+  return res.data;
 };
 
 export const deleteChat = async (id: number[]) => {

@@ -1,14 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../components/Common/Button';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import InterviewItem from '../components/Interview/InterviewItem';
 import MessageItem from '../components/Interview/MessageItem';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Pagination from '../components/Common/Pagination';
 import { getSearchList } from '../utils/Interview/interviewListFn';
 import { Theme, useTheme, css } from '@emotion/react';
 import { faFolderOpen } from '@fortawesome/free-regular-svg-icons';
+import axios from 'axios';
 
 const StyledInterviewSearch = (theme: Theme) =>
   css({
@@ -66,6 +67,7 @@ interface SearchDataTypes {
 const InterviewSearch = () => {
   const theme = useTheme();
   const location = useLocation();
+  const navigate = useNavigate();
   const [searchType, setSearchType] = useState(location.state[0]);
   const { Result, numberOfResult, totalPages } = location.state[1];
   const [searchValues, setSearchValues] = useState({
@@ -80,9 +82,26 @@ const InterviewSearch = () => {
   });
 
   const onSearch = async () => {
-    const data = await getSearchList(searchValues, currentPage);
-    setSearchType(searchValues.type);
-    setSearchList({ ...searchList, ...data });
+    try {
+      const data = await getSearchList(searchValues, currentPage);
+      setSearchType(searchValues.type);
+      setSearchList({ ...searchList, ...data });
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        switch (err.response?.status) {
+          case 400:
+            setSearchList({
+              Result: [],
+              numberOfResult: 0,
+              totalPages: 0,
+            });
+
+            break;
+          default:
+            navigate(`/error/${err.response?.status}`);
+        }
+      }
+    }
   };
 
   return (
