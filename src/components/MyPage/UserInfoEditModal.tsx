@@ -12,6 +12,7 @@ import {
   updateUserInfo,
   UserInfoEditStatusTypeChecker,
 } from '../../utils/MyPage/updateUserInfo';
+import { useState } from 'react';
 
 const userInfoEditStatusMessage: Record<UserInfoEditStatusType, string> = {
   UPDATE_INFO_SUCCESS: '정보가 변경되었습니다.',
@@ -23,13 +24,11 @@ const userInfoEditStatusMessage: Record<UserInfoEditStatusType, string> = {
 };
 
 export function UserInfoEditModal({ resetModal }: ModalPropsType) {
+  const [imgFile, setImgFile] = useState<string>('');
+
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    // const profileImage = formData.get('profile-image');
-    // const nickname = formData.get('nickname');
-    // console.log('프로필 사진 변경', profileImage);
-    // console.log('닉네임 변경', nickname);
     const request: UserInfoEditRequestType = {
       image: formData.get('profile-image') as File,
       nickname: formData.get('nickname')?.toString() || '',
@@ -45,13 +44,24 @@ export function UserInfoEditModal({ resetModal }: ModalPropsType) {
       });
   }
 
+  function handlePreview(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.files === null) return;
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      if (typeof reader.result === 'string') {
+        setImgFile(reader.result);
+      }
+    };
+  }
+
   return (
     <ModalContainer resetModal={resetModal}>
       <h3>정보 수정</h3>
       <form id='edit-profile' onSubmit={onSubmit} encType='multipart/form-data'>
         <div css={ProfileImageEdit}>
-          {/* TODO: 이미지 미리보기 구현 */}
-          <ProfilePhoto src='' />
+          <ProfilePhoto src={imgFile} mode={'USER_INFO_EDIT'} />
           <Button>
             <label htmlFor='profile-image'>
               파일 업로드
@@ -61,6 +71,7 @@ export function UserInfoEditModal({ resetModal }: ModalPropsType) {
                 id='profile-image'
                 type='file'
                 accept='image/*'
+                onChange={handlePreview}
               />
             </label>
           </Button>

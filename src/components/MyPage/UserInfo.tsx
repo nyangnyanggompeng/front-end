@@ -20,8 +20,7 @@ export const UserInfo = ({ modalSetter }: UserInfoProps) => {
   const userInfo = useUser();
   return (
     <div css={UserInfoContainer(theme)}>
-      {/* TODO : user에 profileImage 타입 추가하기 */}
-      <ProfilePhoto src={getImageUrl(userInfo.profile)} />
+      <ProfilePhoto src={getImageUrl(userInfo.profile)} mode={'MY_PAGE'} />
       <div css={UserInfoContent}>
         <span className='nickname'>{userInfo.nickname}</span>
         <span className='email'>{`${userInfo.username}@${userInfo.domain}`}</span>
