@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../components/Common/Button';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import ReplyItem from '../components/Interview/ReplyItem';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useState } from 'react';
 import { FormData, InterviewDetailData } from '../types/Interview/detailTypes';
@@ -111,6 +111,7 @@ const StyledInterviewDetail = (theme: Theme) =>
 const InterviewDetail = () => {
   const theme = useTheme();
   const location = useLocation();
+  const navigate = useNavigate();
   const { id, name, createdAt } = location.state;
   const radio = ['일반', '기술', '인성'];
   const [formData, setFormData] = useState({
@@ -158,35 +159,7 @@ const InterviewDetail = () => {
           case 'TOO_MANY_QUESTIONS':
             return alert('예상 질문은 최대 10개까지 받아볼 수 있습니다.');
           default:
-            return alert('서버 오류입니다. 잠시 후 다시 시도해 주세요.');
-        }
-      }
-    }
-  };
-
-  const sendAnswer = async (
-    listId: number,
-    questionNum: number,
-    answer: string
-  ) => {
-    try {
-      if (answer === '') {
-        alert('답변을 입력해주세요.');
-        return;
-      }
-      setCustomLoading(true);
-      await axios.post(`/chatgpt/contents/${listId}/${questionNum}`, {
-        answer,
-      });
-      queryClient.invalidateQueries({ queryKey: ['InterviewDetailData'] });
-      setCustomLoading(false);
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        switch (err.response?.status) {
-          case 400:
-            return alert('답변을 입력해 주세요.');
-          default:
-            return alert('서버 오류입니다. 잠시 후 다시 시도해 주세요.');
+            return navigate(`/error/${err.response?.status}`);
         }
       }
     }
@@ -377,7 +350,7 @@ const InterviewDetail = () => {
                       key={idx}
                       questionNum={item}
                       messages={filtered}
-                      sendAnswer={sendAnswer}
+                      // sendAnswer={sendAnswer}
                       deleteQuestion={deleteQuestion}
                       isCloseList={isCloseList}
                       setIsCloseList={setIsCloseList}
