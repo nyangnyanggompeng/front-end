@@ -9,6 +9,7 @@ import { ModalType } from '../../types/MyPage/UserInfoTypes';
 import Button from '../Common/Button';
 import { useUser } from '../../hooks/Common';
 import { ProfilePhoto } from './ProfilePhoto';
+import { getImageUrl } from '../../utils/MyPage/getImageUrl';
 
 type UserInfoProps = {
   modalSetter: Dispatch<SetStateAction<ModalType>>;
@@ -20,7 +21,7 @@ export const UserInfo = ({ modalSetter }: UserInfoProps) => {
   return (
     <div css={UserInfoContainer(theme)}>
       {/* TODO : user에 profileImage 타입 추가하기 */}
-      <ProfilePhoto src={userInfo.profilePhoto} />
+      <ProfilePhoto src={getImageUrl(userInfo.profile)} />
       <div css={UserInfoContent}>
         <span className='nickname'>{userInfo.nickname}</span>
         <span className='email'>{`${userInfo.username}@${userInfo.domain}`}</span>

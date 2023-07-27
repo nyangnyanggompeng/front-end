@@ -5,7 +5,7 @@ interface userInfoType {
   username: string;
   domain: string;
   nickname: string;
-  profilePhoto: string;
+  profile: string;
 }
 
 const initialState: userInfoType = {
@@ -13,7 +13,7 @@ const initialState: userInfoType = {
   username: '',
   domain: '',
   nickname: '',
-  profilePhoto: '',
+  profile: '',
 };
 
 const userSlice = createSlice({
