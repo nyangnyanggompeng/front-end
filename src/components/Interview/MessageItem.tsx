@@ -12,7 +12,7 @@ import { parseDate } from '../../utils/Interview/interviewListFn';
 import { Theme, css, useTheme } from '@emotion/react';
 import { bookmarkToggle } from '../../utils/Interview/interviewDetailFn';
 import { useQueryClient } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface MessageProps {
   message: InterviewDetailData;
@@ -80,6 +80,7 @@ const StyledMessageItem = (theme: Theme) =>
       fontWeight: 500,
       alignSelf: 'flex-start',
       borderBottom: `1px solid transparent`,
+      cursor: 'pointer',
       '&:hover': {
         borderBottomColor: `${theme.fontColor}`,
       },
@@ -88,6 +89,7 @@ const StyledMessageItem = (theme: Theme) =>
 
 const MessageItem = ({ message, listName, listId }: MessageProps) => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const onBookmarkChange = () => {
     bookmarkToggle(message.id, !message.bookmark).then(() =>
@@ -105,9 +107,20 @@ const MessageItem = ({ message, listName, listId }: MessageProps) => {
       </div>
       <div className='content-wrap'>
         {listId && (
-          <Link className='list-name' to={`/interview-room/${listId}`}>
+          <p
+            className='list-name'
+            onClick={() =>
+              navigate(`/interview-room/${listId}`, {
+                state: {
+                  id: listId,
+                  name: listName,
+                  createdAt: message.createdAt,
+                },
+              })
+            }
+          >
             {listName}
-          </Link>
+          </p>
         )}
         <div>
           <p className='content'>{message.content}</p>
