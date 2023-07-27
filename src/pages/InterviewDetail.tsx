@@ -172,9 +172,9 @@ const InterviewDetail = () => {
         return;
       }
 
-      await axios
-        .post(`/chatgpt/contents/${listId}/${questionNum}`, { answer })
-        .then((res) => console.log(res.data));
+      await axios.post(`/chatgpt/contents/${listId}/${questionNum}`, {
+        answer,
+      });
       queryClient.invalidateQueries({ queryKey: ['InterviewDetailData'] });
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -191,6 +191,7 @@ const InterviewDetail = () => {
   const deleteQuestion = async (listId: number, contentIdList: number[]) => {
     try {
       await axios.put(`/chatgpt/lists/${listId}/contents`, { contentIdList });
+      alert('질문이 삭제되었습니다.');
       queryClient.invalidateQueries({ queryKey: ['InterviewDetailData'] });
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -231,10 +232,10 @@ const InterviewDetail = () => {
         <div className='title'>
           <span
             className={
-              data && data[1].length !== 0 ? `type ${data[0].type}` : 'type'
+              data && data[0].prompt !== '' ? `type ${data[0].type}` : 'type'
             }
           >
-            {data && data[1].length !== 0 ? `${data[0].type}면접` : '작성 중'}
+            {data && data[0].prompt !== '' ? `${data[0].type}면접` : '작성 중'}
           </span>
           <h3>{name}</h3>
           <span className='date'>{parseDate(createdAt)}</span>
@@ -254,7 +255,7 @@ const InterviewDetail = () => {
                       (data && data[0].type === item) ||
                       (data === undefined && item === '일반')
                     }
-                    disabled={data && data[1].length !== 0}
+                    disabled={data && data[0].prompt !== ''}
                     onChange={(e) =>
                       handleOnChange(e.target.className, e.target.value)
                     }
@@ -274,7 +275,7 @@ const InterviewDetail = () => {
                   ? data && data[0].count
                   : formData.count
               }
-              disabled={data && data[1].length !== 0}
+              disabled={data && data[0].prompt !== ''}
               onChange={(e) =>
                 handleOnChange(e.target.className, e.target.value)
               }
@@ -311,12 +312,12 @@ const InterviewDetail = () => {
             <textarea
               id='text'
               className={
-                data && data[1].length !== 0 ? 'prompt disabled' : 'prompt'
+                data && data[0].prompt !== '' ? 'prompt disabled' : 'prompt'
               }
               placeholder='자기소개서를 입력해 주세요.'
               maxLength={3000}
               value={(data && data[0].prompt) || formData.prompt}
-              disabled={data && data[1].length !== 0}
+              disabled={data && data[0].prompt !== ''}
               onChange={(e) =>
                 handleOnChange(e.target.className, e.target.value)
               }
@@ -324,7 +325,7 @@ const InterviewDetail = () => {
           </div>
           <Button
             onClick={onSubmit}
-            status={data && data[1].length !== 0 ? 'disable' : 'main'}
+            status={data && data[0].prompt !== '' ? 'disable' : 'main'}
           >
             질문하기
           </Button>
@@ -345,10 +346,16 @@ const InterviewDetail = () => {
             )}
           </Button>
           {!data || data[1].length === 0 ? (
-            <div className='no-content'>
-              자기소개서를 입력하고 <br />
-              면접 예상 질문을 받아보세요!
-            </div>
+            data && data[0].prompt !== '' ? (
+              <div className='no-content'>
+                질문을 전송할 수 없습니다. <br />새 대화를 만들고 사용해 주세요.
+              </div>
+            ) : (
+              <div className='no-content'>
+                자기소개서를 입력하고 <br />
+                면접 예상 질문을 받아보세요!
+              </div>
+            )
           ) : (
             <ul className='reply-list'>
               {data &&
