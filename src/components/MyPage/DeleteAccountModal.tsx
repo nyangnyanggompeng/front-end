@@ -1,7 +1,7 @@
 import { ModalPropsType } from '../Modal/ModalTypes';
 import { ModalContainer } from '../Modal/ModalContainer';
 import Button from '../Common/Button';
-import { InstructionStyles } from '../../styles/MyPage';
+import { InstructionStyles, InputStyles } from '../../styles/MyPage';
 import { BottomButtonsContainer } from '../../styles/MyPage';
 import {
   DeleteAccountRequestType,
@@ -55,7 +55,8 @@ export function DeleteAccountModal({ resetModal }: ModalPropsType) {
         <br />
         이는 복구할 수 없습니다. 그래도 탈퇴하시겠습니까?
       </div>
-      <form id='delete-account-form' onSubmit={onSubmit}>
+      <form css={InputStyles} id='delete-account-form' onSubmit={onSubmit}>
+        <label>위 사항에 동의하신다면 비밀번호를 입력해주세요.</label>
         <input type='password' placeholder='비밀번호를 입력해주세요.' />
       </form>
       <div css={BottomButtonsContainer}>
