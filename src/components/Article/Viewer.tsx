@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react';
 import { Viewer as TuiViewer } from '@toast-ui/react-editor';
-import { ViewerWrapper } from '../../styles/Community';
+import { TuiCommonStyle, ViewerWrapper } from '../../styles/Community';
 import { useTuiDarkMode } from '../../hooks/Article';
 
 type viewerProps = {
@@ -11,7 +11,7 @@ export function Viewer({ content }: viewerProps) {
   useTuiDarkMode('VIEWER');
   const theme = useTheme();
   return (
-    <div css={ViewerWrapper(theme)} id='viewer-component'>
+    <div css={[ViewerWrapper(theme), TuiCommonStyle]} id='viewer-component'>
       <TuiViewer initialValue={content} />
     </div>
   );

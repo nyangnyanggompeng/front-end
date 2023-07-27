@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Editor as TuiEditor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
-import { EditorWrapper } from '../../styles/Community';
+import { EditorWrapper, TuiCommonStyle } from '../../styles/Community';
 import { useTuiDarkMode } from '../../hooks/Article';
 
 interface Props {
@@ -28,7 +28,7 @@ export const Editor = ({ content, editorRef }: Props) => {
   ];
 
   return (
-    <div css={EditorWrapper}>
+    <div css={[EditorWrapper, TuiCommonStyle]}>
       {editorRef && (
         <TuiEditor
           ref={editorRef}
