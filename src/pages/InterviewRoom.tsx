@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { InterviewData, errMsg } from '../types/Interview/ListTypes';
 import { getList, getSearchList } from '../utils/Interview/interviewListFn';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Loading } from '../components/Common';
 
 const StyledInterviewRoom = (theme: Theme) =>
   css({
@@ -106,10 +107,11 @@ const InterviewRoom = () => {
     type: 'lists',
     keyword: '',
   });
-  const { data } = useQuery<InterviewData | null>({
+  const { isLoading, data } = useQuery<InterviewData | null>({
     queryKey: ['InterviewList', currentPage],
     queryFn: () => getList(currentPage),
   });
+
   const queryClient = useQueryClient();
 
   const onChangeCheck = (e: React.MouseEvent<HTMLInputElement>, id: number) => {
@@ -209,9 +211,32 @@ const InterviewRoom = () => {
   };
 
   const onSearch = async () => {
-    const data = await getSearchList(searchValues, currentPage);
-    navigate('/interview-room/search', { state: [searchValues.type, data] });
+    try {
+      const data = await getSearchList(searchValues, currentPage);
+      navigate('/interview-room/search', { state: [searchValues.type, data] });
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        switch (err.response?.status) {
+          case 400:
+            navigate('/interview-room/search', {
+              state: [
+                searchValues.type,
+                {
+                  Result: [],
+                  numberOfResult: 0,
+                  totalPages: 0,
+                },
+              ],
+            });
+            break;
+          default:
+            navigate(`/error/${err.response?.status}`);
+        }
+      }
+    }
   };
+
+  if (isLoading) return <Loading theme={theme} />;
 
   return (
     <>
