@@ -10,6 +10,7 @@ import {
   InterviewDetail,
   Home,
 } from './pages';
+import { CommunityLayout } from './components/Layout';
 import { PrivateRoute } from './components/Util';
 
 function Router() {

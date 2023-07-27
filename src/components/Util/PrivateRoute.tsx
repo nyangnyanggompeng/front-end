@@ -9,7 +9,6 @@ import {
 } from '../../utils/SignIn/signInFn';
 import { setUserInfo } from '../../store/slices/userSlices';
 import { isAxiosError } from 'axios';
-// import { ErrorBoundary } from '.';
 
 export function PrivateRoute() {
   const userInfo = useUser();
