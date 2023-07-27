@@ -10,7 +10,7 @@ type ArticleTitleProps = {
 export function ArticleTitle({ title, titleRef, mode }: ArticleTitleProps) {
   const theme = useTheme();
   return (
-    <div css={ArticleTitleWrapper(theme)}>
+    <div css={ArticleTitleWrapper(theme, mode)}>
       {mode === 'VIEW' ? (
         <h3>{title}</h3>
       ) : (
