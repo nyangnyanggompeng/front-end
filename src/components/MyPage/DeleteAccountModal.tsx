@@ -1,3 +1,4 @@
+import { useTheme } from '@emotion/react';
 import { ModalPropsType } from '../Modal/ModalTypes';
 import { ModalContainer } from '../Modal/ModalContainer';
 import Button from '../Common/Button';
@@ -22,6 +23,7 @@ const deleteAccountStatusMessage: Record<DeleteAccountStatusType, string> = {
 };
 
 export function DeleteAccountModal({ resetModal }: ModalPropsType) {
+  const theme = useTheme();
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -38,9 +40,11 @@ export function DeleteAccountModal({ resetModal }: ModalPropsType) {
         resetModal();
       })
       .catch((e: unknown) => {
-        if (DeleteAccountStatusTypeChecker(e))
-          alert(deleteAccountStatusMessage[e as DeleteAccountStatusType]);
-        else alert(deleteAccountStatusMessage['INTERNAL_SERVER_ERROR']);
+        if (e instanceof Error && DeleteAccountStatusTypeChecker(e.message)) {
+          alert(
+            deleteAccountStatusMessage[e.message as DeleteAccountStatusType]
+          );
+        } else alert(deleteAccountStatusMessage['INTERNAL_SERVER_ERROR']);
       });
   }
   function onCancel(e: React.MouseEvent<Element, MouseEvent>) {
@@ -55,12 +59,22 @@ export function DeleteAccountModal({ resetModal }: ModalPropsType) {
         <br />
         이는 복구할 수 없습니다. 그래도 탈퇴하시겠습니까?
       </div>
-      <form css={InputStyles} id='delete-account-form' onSubmit={onSubmit}>
-        <label>위 사항에 동의하신다면 비밀번호를 입력해주세요.</label>
-        <input type='password' placeholder='비밀번호를 입력해주세요.' />
+      <form
+        css={InputStyles(theme)}
+        id='delete-account-form'
+        onSubmit={onSubmit}
+      >
+        <label>
+          확인을 위해 비밀번호를 입력해주세요.
+          <input
+            name='password'
+            type='password'
+            placeholder='비밀번호를 입력해주세요.'
+          />
+        </label>
       </form>
       <div css={BottomButtonsContainer}>
-        <Button form='delete-account-form' status='sub'>
+        <Button form='delete-account-form' status='sub' type='submit'>
           탈퇴하기
         </Button>
         <Button onClick={onCancel}>취소</Button>

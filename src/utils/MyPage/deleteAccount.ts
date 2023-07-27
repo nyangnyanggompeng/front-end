@@ -7,9 +7,7 @@ import {
 
 export function DeleteAccountStatusTypeChecker(status: unknown) {
   if (typeof status !== 'string') return false;
-  return DeleteAccountStatus.includes(
-    status as (typeof DeleteAccountStatus)[number]
-  );
+  return DeleteAccountStatus.includes(status as DeleteAccountStatusType);
 }
 
 export async function deleteAccount(
