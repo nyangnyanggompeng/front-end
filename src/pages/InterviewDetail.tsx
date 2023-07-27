@@ -119,6 +119,7 @@ const InterviewDetail = () => {
     prompt: '',
   });
   const [questionSet, setQusetionSet] = useState<Set<number>>(new Set());
+  const [customLoading, setCustomLoading] = useState(false);
 
   const { isLoading, data } = useQuery<[FormData, InterviewDetailData[]]>({
     queryKey: ['InterviewDetailData', id],
@@ -141,8 +142,10 @@ const InterviewDetail = () => {
       return;
     }
     try {
+      setCustomLoading(true);
       await axios.post(`/chatgpt/contents/${id}`, formData);
       queryClient.invalidateQueries({ queryKey: ['InterviewDetailData'] });
+      setCustomLoading(false);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         switch (err.response?.data) {
@@ -171,11 +174,12 @@ const InterviewDetail = () => {
         alert('답변을 입력해주세요.');
         return;
       }
-
+      setCustomLoading(true);
       await axios.post(`/chatgpt/contents/${listId}/${questionNum}`, {
         answer,
       });
       queryClient.invalidateQueries({ queryKey: ['InterviewDetailData'] });
+      setCustomLoading(false);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         switch (err.response?.status) {
@@ -190,9 +194,11 @@ const InterviewDetail = () => {
 
   const deleteQuestion = async (listId: number, contentIdList: number[]) => {
     try {
+      setCustomLoading(true);
       await axios.put(`/chatgpt/lists/${listId}/contents`, { contentIdList });
       alert('질문이 삭제되었습니다.');
       queryClient.invalidateQueries({ queryKey: ['InterviewDetailData'] });
+      setCustomLoading(false);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         switch (err.response?.data) {
@@ -223,7 +229,7 @@ const InterviewDetail = () => {
     setIsCloseList(obj);
   };
 
-  if (isLoading) return <Loading theme={theme} />;
+  if (isLoading || customLoading) return <Loading theme={theme} />;
 
   return (
     <main css={StyledInterviewDetail(theme)}>
