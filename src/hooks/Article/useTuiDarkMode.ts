@@ -9,7 +9,6 @@ export function useTuiDarkMode(mode: 'VIEWER' | 'EDITOR') {
       mode === 'VIEWER'
         ? document.getElementById('viewer-component')
         : document.getElementsByClassName('toastui-editor-defaultUI')[0];
-    console.log(el);
     if (!el) return;
     if (!isDark && el.classList.contains('toastui-editor-dark'))
       el.classList.remove('toastui-editor-dark');
