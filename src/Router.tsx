@@ -10,13 +10,13 @@ import {
   InterviewDetail,
   Home,
 } from './pages';
-import { PrivateRouteLayout, CommunityLayout } from './components/Layout';
+import { PrivateRoute } from './components/Util';
 
 function Router() {
   return (
     <Routes>
       <Route path='/' element={<Home />} />
-      <Route path='/' element={<PrivateRouteLayout />}>
+      <Route path='/' element={<PrivateRoute />}>
         <Route path='sign-up' element={<SignUp />} />
         <Route path='my-page' element={<MyPage />} />
         <Route path='sign-in' element={<SignIn />} />
