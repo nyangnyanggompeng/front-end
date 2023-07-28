@@ -182,7 +182,7 @@ const InterviewDetail = () => {
           case 'UNABLE_TO_DELETE_CONTENT':
             return alert('삭제할 수 없는 대화입니다.');
           default:
-            return alert('서버 오류입니다. 잠시 후 다시 시도해 주세요.');
+            return navigate(`/error/${err.response?.status}`);
         }
       }
     }

@@ -152,7 +152,7 @@ const InterviewRoom = () => {
             return alert(errMsg.LIST_NAME_NO_ENTERED);
           }
           default:
-            return alert(errMsg.INTERNAL_SERVER_ERROR);
+            return navigate(`/error/${err.response?.status}`);
         }
       }
     }
@@ -176,7 +176,8 @@ const InterviewRoom = () => {
         queryClient.invalidateQueries({ queryKey: ['InterviewList'] });
       }
     } catch (err) {
-      if (axios.isAxiosError(err)) alert(errMsg.INTERNAL_SERVER_ERROR);
+      if (axios.isAxiosError(err))
+        return navigate(`/error/${err.response?.status}`);
     }
   };
 
@@ -187,6 +188,7 @@ const InterviewRoom = () => {
     }
     setIsSelectMode(!isSelectMode);
     const listIdList = Array.from(checkedArr);
+
     if (isSelectMode && listIdList.length === 0) {
       alert('삭제할 인터뷰를 선택해주세요.');
       return;
@@ -205,7 +207,8 @@ const InterviewRoom = () => {
           queryClient.invalidateQueries({ queryKey: ['InterviewList'] });
         }
       } catch (err) {
-        if (axios.isAxiosError(err)) alert(errMsg.INTERNAL_SERVER_ERROR);
+        if (axios.isAxiosError(err))
+          return navigate(`/error/${err.response?.status}`);
       }
     }
   };
