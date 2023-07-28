@@ -4,7 +4,7 @@ export const PaginationContainer = css({
   display: 'flex',
   justifyContent: 'center',
   height: '3.1rem',
-  marginTop: '7.6rem',
+  margin: '7.6rem 0 4.5rem 0',
   '> *': {
     padding: '0 1rem',
   },

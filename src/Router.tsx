@@ -11,6 +11,7 @@ import {
   ErrorPage,
   InterviewSearch,
 } from './pages';
+import { CommunityLayout } from './components/Layout';
 
 function Router() {
   return (
@@ -26,11 +27,12 @@ function Router() {
       <Route path='/interview-room' element={<InterviewRoom />} />
       <Route path='/interview-room/:id' element={<InterviewDetail />} />
       <Route path='/interview-room/search' element={<InterviewSearch />} />
-      <Route path='/community' element={<Community />} />
-      <Route path='/community/:id' element={<Article />} />
-      <Route path='/community/edit/:id' element={<EditArticle mode='EDIT' />} />
-      {/* path='/community/writing */}
-      <Route path='/community/writing' element={<EditArticle mode='WRITE' />} />
+      <Route path='/community' element={<CommunityLayout />}>
+        <Route path='' element={<Community />} />
+        <Route path=':id' element={<Article />} />
+        <Route path='edit/:id' element={<EditArticle mode='EDIT' />} />
+        <Route path='writing' element={<EditArticle mode='WRITE' />} />
+      </Route>
     </Routes>
   );
 }

@@ -2,10 +2,7 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
 import { MyCommentType } from '../../types/MyPage/MyCommentTypes';
 import { getDate } from '../../utils/Common/getDate';
-import {
-  MyCommentItemContainer,
-  MyCommentItemStyle,
-} from '../../styles/MyPage';
+import { CommentItemContainer, CommentItemStyle } from '../../styles/MyPage';
 import { OverflowEllipsis } from '../../styles/utils';
 
 type MyCommentItemProps = {
@@ -21,14 +18,14 @@ export default function MyCommentItem({
 }: MyCommentItemProps) {
   const theme = useTheme();
   return (
-    <div css={MyCommentItemContainer(isDeleteMode ? 'DELETE' : 'VIEW')}>
+    <div css={CommentItemContainer(isDeleteMode ? 'DELETE' : 'VIEW')}>
       {isDeleteMode && (
         <input
           type='checkbox'
           onChange={(e) => selectHandler(e.target.checked, myComment.id)}
         />
       )}
-      <div css={MyCommentItemStyle(theme)}>
+      <div css={CommentItemStyle(theme)}>
         <div className='writer' css={OverflowEllipsis}>
           {myComment.writer}
         </div>
@@ -37,7 +34,7 @@ export default function MyCommentItem({
         </div>
         <div className='content'>{myComment.content}</div>
         <Link
-          className='postLink'
+          className='post-link'
           css={OverflowEllipsis}
           to={`/community/${myComment.postId}`}
         >{`게시글 제목: ${myComment.Post.title}`}</Link>
