@@ -66,7 +66,6 @@ function NicknameCheck({ inputRef }: NicknameCheckProps = {}) {
           onBlur={(e) => setNickname(e.target.value)}
           ref={inputRef}
         />
-        {/* TODO : 메시지가 없는 경우 컴포넌트 자체는 유지시키고 hidden 속성을 추가하기 */}
         <Button onClick={handleClick}>중복 확인</Button>
       </div>
       <p
@@ -75,7 +74,7 @@ function NicknameCheck({ inputRef }: NicknameCheckProps = {}) {
           `${status === 'AVAILABLE_NICKNAME' ? 'SUCCESS' : 'ERROR'}`
         )}
       >
-        {message ? message : '닉네임을 입력해주세요.'}
+        {message ? message : ''}
       </p>
       <input type='hidden' name='isNicknameChecked' value={isNicknameChecked} />
     </div>
