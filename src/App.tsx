@@ -7,7 +7,7 @@ import GlobalStyle from './GlobalStyle';
 import Router from './Router';
 import { darkMode, lightMode } from './theme';
 import { useIsDark } from './hooks/Common';
-import { ErrorBoundary } from './components/Util';
+// import { ErrorBoundary } from './components/Util';
 
 const queryClient = new QueryClient();
 
@@ -25,13 +25,13 @@ function App() {
       <ThemeProvider theme={isDark ? darkMode : lightMode}>
         <QueryClientProvider client={queryClient}>
           <GlobalStyle />
-          <ErrorBoundary>
-            <Header />
-            <section className='container'>
-              <Router />
-            </section>
-            <Footer />
-          </ErrorBoundary>
+          {/* <ErrorBoundary> */}
+          <Header />
+          <section className='container'>
+            <Router />
+          </section>
+          <Footer />
+          {/* </ErrorBoundary> */}
         </QueryClientProvider>
       </ThemeProvider>
     </>

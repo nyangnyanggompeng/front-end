@@ -1,6 +1,6 @@
 import { Component, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { ErrorPage } from '../../pages';
+// import { ErrorPage } from '../../pages';
 
 type Props = {
   children: ReactNode;
@@ -45,7 +45,7 @@ export class ErrorBoundary extends Component<Props, State> {
       if (this.state.errorStatus === 401) {
         return <Navigate to='/login' />;
       }
-      return <ErrorPage error={this.state.errorStatus} />;
+      // return <ErrorPage error={this.state.errorStatus} />;
     }
 
     return this.props.children;
