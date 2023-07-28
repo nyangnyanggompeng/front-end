@@ -13,7 +13,7 @@ type ButtonsProps = {
 export function ArticleButtons({ writerId, postId }: ButtonsProps) {
   const navigate = useNavigate();
   const [isWriter, setIsWriter] = useState(false);
-  const userId = useUser().id;
+  const userId = useUser().userInfo?.id;
   useEffect(() => {
     if (userId && userId === writerId) setIsWriter(true);
     else setIsWriter(false);
