@@ -7,6 +7,7 @@ import Pagination from '../components/Common/Pagination';
 import { getArticles } from '../utils/Community/getArticles';
 import Button from '../components/Common/Button';
 import { CommunityContainer, ButtonContainer } from '../styles/Community';
+import { ErrorPageType, isErrorPageType } from '../types/Common';
 
 function Community() {
   const theme = useTheme();
@@ -18,8 +19,10 @@ function Community() {
     setIsLoading(true);
     getArticles(currentPage)
       .then((articleData: ArticleDataType) => setArticleData(articleData))
-      .catch(() => {
-        alert('서버 오류입니다. 잠시 후 다시 시도해주세요.');
+      .catch((err: unknown) => {
+        if (err instanceof Error && isErrorPageType(err.message))
+          throw new Error(err.message as ErrorPageType);
+        throw new Error('INTERNAL_SERVER_ERROR');
       })
       .finally(() => setIsLoading(false));
   }, [currentPage]);

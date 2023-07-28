@@ -15,11 +15,11 @@ export class ErrorBoundary extends Component<Props, State> {
   };
 
   public static getDerivedStateFromError(error: Error): State {
-    if (error.message === 'Forbidden') {
+    if (error.message === 'FORBIDDEN') {
       return { errorStatus: 403 };
-    } else if (error.message === 'Not Found') {
+    } else if (error.message === 'NOT_FOUND') {
       return { errorStatus: 404 };
-    } else if (error.message === 'Internal Server Error') {
+    } else if (error.message === 'INTERNAL_SERVER_ERROR') {
       return { errorStatus: 500 };
     }
 

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 import { ArticleDataType } from '../../types/Community/articleTypes';
 
 export async function getArticles(
@@ -8,7 +8,18 @@ export async function getArticles(
     const res = await axios.get(`/board/${currentPage}`);
     if (res.data) return res.data;
     throw new Error('INTERNAL_SERVER_ERROR');
-  } catch {
+  } catch (error: unknown) {
+    if (isAxiosError(error) && error.response) {
+      const errorCode = error.response.status;
+      switch (errorCode) {
+        case 403:
+          throw new Error('FORBIDDEN');
+        case 419: // NOTE ??
+          throw new Error('FORBIDDEN');
+        default:
+          throw new Error('INTERNAL_SERVER_ERROR');
+      }
+    }
     throw new Error('INTERNAL_SERVER_ERROR');
   }
 }
