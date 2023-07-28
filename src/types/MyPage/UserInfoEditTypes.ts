@@ -7,6 +7,8 @@ export type UserInfoEditRequestType = {
 
 export const UserInfoEditStatus = [
   'UPDATE_INFO_SUCCESS',
+  'SAME_AS_PREVIOUS_NICKNAME',
+  'NICKNAME_ALREADY_EXISTS',
   'UPDATE_INFO_FAILURE',
   'NICKNAME_OR_PROFILE_NOT_ENTERED',
   'NO_EXISTING_USER',

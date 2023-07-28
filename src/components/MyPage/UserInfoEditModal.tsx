@@ -16,6 +16,8 @@ import {
 
 const userInfoEditStatusMessage: Record<UserInfoEditStatusType, string> = {
   UPDATE_INFO_SUCCESS: '정보가 변경되었습니다.',
+  SAME_AS_PREVIOUS_NICKNAME: '이전 닉네임과 동일합니다.',
+  NICKNAME_ALREADY_EXISTS: '이미 존재하는 닉네임입니다.',
   UPDATE_INFO_FAILURE: '정보 변경에 실패했습니다. 다시 시도해주세요.',
   NICKNAME_OR_PROFILE_NOT_ENTERED: '변경할 정보가 없습니다.',
   NO_EXISTING_USER: '존재하지 않는 유저입니다.',
