@@ -7,7 +7,6 @@ import Pagination from '../components/Common/Pagination';
 import { getArticles } from '../utils/Community/getArticles';
 import Button from '../components/Common/Button';
 import { CommunityContainer, ButtonContainer } from '../styles/Community';
-import { ErrorPageType, isErrorPageType } from '../types/Common';
 
 function Community() {
   const theme = useTheme();
@@ -19,9 +18,7 @@ function Community() {
     setIsLoading(true);
     getArticles(currentPage)
       .then((articleData: ArticleDataType) => setArticleData(articleData))
-      .catch((err: unknown) => {
-        if (err instanceof Error && isErrorPageType(err.message))
-          throw new Error(err.message as ErrorPageType);
+      .catch(() => {
         throw new Error('INTERNAL_SERVER_ERROR');
       })
       .finally(() => setIsLoading(false));

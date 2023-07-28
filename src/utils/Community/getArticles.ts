@@ -10,15 +10,7 @@ export async function getArticles(
     throw new Error('INTERNAL_SERVER_ERROR');
   } catch (error: unknown) {
     if (isAxiosError(error) && error.response) {
-      const errorCode = error.response.status;
-      switch (errorCode) {
-        case 403:
-          throw new Error('FORBIDDEN');
-        case 419: // NOTE ??
-          throw new Error('FORBIDDEN');
-        default:
-          throw new Error('INTERNAL_SERVER_ERROR');
-      }
+      throw new Error('INTERNAL_SERVER_ERROR');
     }
     throw new Error('INTERNAL_SERVER_ERROR');
   }
