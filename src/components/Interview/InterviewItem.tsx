@@ -152,9 +152,7 @@ const InterviewItem = ({
           <p
             className='title'
             onClick={() =>
-              navigate(`/interview-room/${id}`, {
-                state: { id, type, name, createdAt },
-              })
+              navigate(`/interview-room/${id}`, { state: { name } })
             }
           >
             {name}

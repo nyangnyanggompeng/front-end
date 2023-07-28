@@ -2,11 +2,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../components/Common/Button';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import ReplyItem from '../components/Interview/ReplyItem';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormData, InterviewDetailData } from '../types/Interview/detailTypes';
-import { parseDate } from '../utils/Interview/interviewListFn';
+import {
+  getList,
+  getSearchList,
+  parseDate,
+} from '../utils/Interview/interviewListFn';
 import { Theme, css, useTheme } from '@emotion/react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getChatData } from '../utils/Interview/interviewDetailFn';
@@ -111,8 +115,10 @@ const StyledInterviewDetail = (theme: Theme) =>
 const InterviewDetail = () => {
   const theme = useTheme();
   const location = useLocation();
+  const param = useParams();
+  const id = Number(param.id);
+  const { name } = location.state;
   const navigate = useNavigate();
-  const { id, name, createdAt } = location.state;
   const radio = ['일반', '기술', '인성'];
   const [formData, setFormData] = useState({
     type: '일반',
@@ -121,6 +127,7 @@ const InterviewDetail = () => {
   });
   const [questionSet, setQusetionSet] = useState<Set<number>>(new Set());
   const [customLoading, setCustomLoading] = useState(false);
+  const [createdAt, setCreatedAt] = useState('');
 
   const { isLoading, data } = useQuery<[FormData, InterviewDetailData[]]>({
     queryKey: ['InterviewDetailData', id],
@@ -201,6 +208,13 @@ const InterviewDetail = () => {
 
     setIsCloseList(obj);
   };
+
+  useEffect(() => {
+    (async () => {
+      const data = await getSearchList({ type: 'lists', keyword: name }, 1);
+      setCreatedAt(data.Result[0].createdAt);
+    })();
+  }, []);
 
   if (isLoading || customLoading) return <Loading theme={theme} />;
 
