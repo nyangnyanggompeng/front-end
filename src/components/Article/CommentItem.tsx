@@ -27,7 +27,7 @@ const statusMessage: Record<CommentStatusType, string> = {
 export default function CommentItem({ comment, postId }: CommentItemProps) {
   const theme = useTheme();
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const currentUserId = useUser().id;
+  const currentUserId = useUser().userInfo?.id;
   const queryClient = useQueryClient();
   function deleteHander() {
     deleteComments(postId, comment.id)
