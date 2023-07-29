@@ -6,6 +6,9 @@ on:
 jobs:
   build:
     runs-on: macos-12
+    permissions:
+      id-token: write
+      contents: write
     steps:
       - name: Git Checkout
         uses: actions/checkout@v1
