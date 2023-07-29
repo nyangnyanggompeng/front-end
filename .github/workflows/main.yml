@@ -2,7 +2,7 @@ name: nyangnyanggompeng_deploy
 on: 
   push:
     branches:
-      - bug/prepare-to-deploy-#41
+      - main
 jobs:
   build:
     runs-on: macos-12
@@ -29,14 +29,10 @@ jobs:
       - name: Configure AWS
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          # aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
-          # aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ secrets.AWS_REGION }}
           
       - name: Deploy to S3
         run: |
-          pwd
-          ls -al
-          aws s3 sync ./${{ secrets.BUILD_DIRECTORY }} ${{ secrets.AWS_BUCKET_NAME }} --delete    
+          aws s3 sync ./${{ secrets.BUILD_DIRECTORY }} ${{ secrets.AWS_BUCKET_URI }} --delete    
         
