@@ -1,0 +1,39 @@
+name: deploy
+on: 
+  push:
+    branches:
+      - deploy
+jobs:
+  build:
+    runs-on: macos-12
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v1
+      
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.x
+      
+      - name: Build
+        env: 
+          VITE_SERVER_URL: ${{ secrets.VITE_SERVER_URL }}
+          VITE_IMAGE_SERVER_URL: ${{ secrets.VITE_IMAGE_SERVER_URL }}
+        run: |
+          yarn install
+          yarn build
+      
+      - name: Configure AWS
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          # aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+          # aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          
+      - name: Deploy to S3
+        run: |
+          pwd
+          ls -al
+          aws s3 sync ./${{ secrets.BUILD_DIRECTORY }} ${{ secrets.AWS_BUCKET_NAME }} --delete    
+        
