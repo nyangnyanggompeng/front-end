@@ -34,5 +34,6 @@ export const getUserInfo = async () => {
     username: res.data.username,
     domain: res.data.domain,
     nickname: res.data.nickname,
+    profile: res.data.profile,
   };
 };
