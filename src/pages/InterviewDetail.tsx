@@ -173,8 +173,7 @@ const InterviewDetail = () => {
       setCustomLoading(true);
       await axios.put(`/chatgpt/lists/${listId}/contents`, { contentIdList });
       alert('질문이 삭제되었습니다.');
-      queryClient.invalidateQueries({ queryKey: ['InterviewDetailData'] });
-      setCustomLoading(false);
+      navigate(0);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         switch (err.response?.data) {
@@ -348,9 +347,9 @@ const InterviewDetail = () => {
           ) : (
             <ul className='reply-list'>
               {data &&
-                data[1].map((el: InterviewDetailData) =>
-                  questionSet.add(el.questionNum)
-                ) &&
+                data[1].map((el: InterviewDetailData) => {
+                  questionSet.add(el.questionNum);
+                }) &&
                 Array.from(questionSet).map((item, idx) => {
                   const filtered = data[1].filter(
                     (el) => el.questionNum === item
