@@ -4,8 +4,6 @@ import { ArticleButtons } from '../components/Article/ArticleButtons';
 import useGetArticleDetail from '../hooks/Article/useGetArticleDetail';
 import CommentContainer from '../components/Article/CommentContainer';
 
-import { ArticleDetailType } from '../types/Community/articleTypes';
-
 function Article() {
   const { id } = useParams();
   const { articleDetail, isLoading } = useGetArticleDetail(id);
