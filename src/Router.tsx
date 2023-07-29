@@ -9,6 +9,8 @@ import {
   InterviewRoom,
   InterviewDetail,
   Home,
+  ErrorPage,
+  InterviewSearch,
 } from './pages';
 import { CommunityLayout } from './components/Layout';
 import { PrivateRoute } from './components/Util';
@@ -23,6 +25,7 @@ function Router() {
         <Route path='sign-in' element={<SignIn />} />
         <Route path='interview-room' element={<InterviewRoom />} />
         <Route path='interview-room/:id' element={<InterviewDetail />} />
+        <Route path='/interview-room/search' element={<InterviewSearch />} />
         <Route path='community' element={<CommunityLayout />}>
           <Route path='' element={<Community />} />
           <Route path=':id' element={<Article />} />
@@ -30,6 +33,8 @@ function Router() {
           <Route path='writing' element={<EditArticle mode='WRITE' />} />
         </Route>
       </Route>
+      <Route path='/error/:error' element={<ErrorPage />} />
+      <Route path='/*' element={<ErrorPage />} />
     </Routes>
   );
 }

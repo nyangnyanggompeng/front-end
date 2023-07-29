@@ -23,8 +23,11 @@ const userSlice = createSlice({
     setUserInfo(_, action: PayloadAction<userInfoType>) {
       return action.payload;
     },
+    resetUserInfo() {
+      return initialState;
+    },
   },
 });
 
-export const { setUserInfo } = userSlice.actions;
+export const { setUserInfo, resetUserInfo } = userSlice.actions;
 export default userSlice.reducer;
