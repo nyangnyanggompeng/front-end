@@ -10,7 +10,7 @@ function Article() {
 
   if (isLoading) return <div>로딩중</div>;
 
-  if (!articleDetail) return; // TODO : 에러의 경우 어떤 것을 랜더링해야 할 지 고민. 에러페이지?
+  if (!articleDetail) return; // TODO : 에러페이지 이동 로직 추가하기
 
   return (
     <div>
