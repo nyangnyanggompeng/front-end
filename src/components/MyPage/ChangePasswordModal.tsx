@@ -13,11 +13,15 @@ import {
 
 const changePasswordStatusMessage: Record<ChangePasswordStatusType, string> = {
   RESET_PASSWORD_SUCCESS: '비밀번호가 변경되었습니다.',
-  RESET_PASSWORD_FAILURE: '비밀번호 변경에 실패했습니다. 다시 시도해주세요.',
+  RESET_PASSWORD_FAILURE:
+    '비밀번호 변경에 실패했습니다. 잠시 후 다시 시도해주세요.',
   PASSWORD_OR_PASSWORD_VERIFY_NOT_ENTERED:
-    '비밀번호 또는 비밀번호 확인란이 비어있습니다.',
+    '비밀번호나 비밀번호 확인이 비어있습니다.',
   PASSWORD_NOT_MATCHED: '비밀번호와 비밀번호 확인이 일치하지 않습니다.',
+  INVALID_CURRENT_PASSWORD: '현재 비밀번호가 일치하지 않습니다.',
   CURRENT_USING_PASSWORD: '현재 사용중인 비밀번호입니다.',
+  INVALID_FORM:
+    '비밀번호는 영문, 숫자, 특수문자(!@#$%^&* 중 적어도 하나)를 모두 포함해야 합니다.',
   INTERNAL_SERVER_ERROR: '서버 오류입니다. 잠시 후 다시 시도해주세요.',
 };
 
@@ -29,7 +33,7 @@ export function ChangePasswordModal({ resetModal }: ModalPropsType) {
     // const password = formData.get('password');
     // const passwordCheck = formData.get('password-check');
     const request: ChangePasswordRequestType = {
-      // currentPassword: currentPassword === null ? '' : currentPassword.toString(),
+      currentPassword: formData.get('current-password')?.toString() || '',
       password: formData.get('password')?.toString() || '',
       passwordVerify: formData.get('password-check')?.toString() || '',
     };
@@ -60,8 +64,8 @@ export function ChangePasswordModal({ resetModal }: ModalPropsType) {
     <ModalContainer resetModal={resetModal}>
       <h3>비밀번호 변경</h3>
       <form onSubmit={onSubmit} id='change-password' css={FormContainer}>
-        {/* <h4>현재 비밀번호</h4>
-        <input name='current-password' type='password' /> */}
+        <h4>현재 비밀번호</h4>
+        <input name='current-password' type='password' />
         <h4>변경할 비밀번호</h4>
         <input name='password' type='password' />
         <h4>변경할 비밀번호 확인 </h4>
