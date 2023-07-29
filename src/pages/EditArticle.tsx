@@ -41,7 +41,7 @@ function EditArticle({ mode }: WritingProps) {
   const titleRef = useRef<HTMLInputElement>(null);
   useHandleUnloadEvent();
 
-  const currentUserID = useUser().id;
+  const currentUserID = useUser().userInfo?.id;
 
   useEffect(() => {
     if (mode === 'EDIT') {
