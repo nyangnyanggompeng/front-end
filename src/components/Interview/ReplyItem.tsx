@@ -14,11 +14,6 @@ import { Loading } from '../Common';
 interface ReplyItemProps {
   questionNum: number;
   messages: InterviewDetailData[];
-  // sendAnswer(
-  //   listId: number,
-  //   questionNum: number,
-  //   answer: string
-  // ): Promise<void>;
   deleteQuestion(listId: number, contentIdList: number[]): Promise<void>;
   isCloseList: { [key: number]: boolean };
   setIsCloseList: React.Dispatch<
@@ -80,7 +75,6 @@ const StyledReplyItem = (theme: Theme) =>
 const ReplyItem = ({
   questionNum,
   messages,
-  // sendAnswer,
   deleteQuestion,
   isCloseList,
   setIsCloseList,

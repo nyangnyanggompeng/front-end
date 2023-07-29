@@ -6,11 +6,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { FormData, InterviewDetailData } from '../types/Interview/detailTypes';
-import {
-  getList,
-  getSearchList,
-  parseDate,
-} from '../utils/Interview/interviewListFn';
+import { getSearchList, parseDate } from '../utils/Interview/interviewListFn';
 import { Theme, css, useTheme } from '@emotion/react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getChatData } from '../utils/Interview/interviewDetailFn';
@@ -364,7 +360,6 @@ const InterviewDetail = () => {
                       key={idx}
                       questionNum={item}
                       messages={filtered}
-                      // sendAnswer={sendAnswer}
                       deleteQuestion={deleteQuestion}
                       isCloseList={isCloseList}
                       setIsCloseList={setIsCloseList}
