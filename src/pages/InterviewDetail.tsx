@@ -121,7 +121,7 @@ const InterviewDetail = () => {
     count: '1',
     prompt: '',
   });
-  const [questionSet, setQusetionSet] = useState<Set<number>>(new Set());
+  const [questionSet, _setQusetionSet] = useState<Set<number>>(new Set());
   const [customLoading, setCustomLoading] = useState(false);
   const [createdAt, setCreatedAt] = useState('');
 

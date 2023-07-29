@@ -12,7 +12,7 @@ import { parseDate } from '../../utils/Interview/interviewListFn';
 import { Theme, css, useTheme } from '@emotion/react';
 import { bookmarkToggle } from '../../utils/Interview/interviewDetailFn';
 import { useQueryClient } from '@tanstack/react-query';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface MessageProps {
   message: InterviewDetailData;

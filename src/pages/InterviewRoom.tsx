@@ -73,7 +73,7 @@ const StyledInterviewRoom = (theme: Theme) =>
     },
   });
 
-const StyledModal = (theme: Theme) =>
+const StyledModal = () =>
   css({
     h4: {
       marginBottom: '3rem',
@@ -321,7 +321,7 @@ const InterviewRoom = () => {
       </main>
       {isOpen && (
         <ModalContainer resetModal={() => setIsOpen(!isOpen)}>
-          <div css={StyledModal(theme)}>
+          <div css={StyledModal()}>
             <h4>새 인터뷰 만들기</h4>
             <div className='input-box'>
               <label htmlFor='newInterviewName'>인터뷰 이름</label>
