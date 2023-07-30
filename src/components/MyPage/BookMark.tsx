@@ -3,14 +3,14 @@ import { useTheme } from '@emotion/react';
 import BookMarkItem from './BookMarkItem';
 import Pagination from '../Common/Pagination';
 import { Loading } from '../Common';
-import { BookMarkData, BookMarkType } from '../../types/MyPage/BookMarkTypes';
+import { BookMarkType } from '../../types/MyPage/BookMarkTypes';
 import useGetBookMark from '../../hooks/MyPage/useGetBookMark';
 import { ContentTotal } from '../../styles/MyPage';
 
 export default function BookMark() {
   const theme = useTheme();
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { isLoading, isError, error, data } = useGetBookMark(currentPage);
+  const { isLoading, isError, data } = useGetBookMark(currentPage);
   if (isLoading) return <Loading theme={theme} />;
   if (isError || data === undefined) return <div>에러!</div>;
 

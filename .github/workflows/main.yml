@@ -1,0 +1,38 @@
+name: nyangnyanggompeng_deploy
+on: 
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: macos-12
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v1
+      
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.x
+      
+      - name: Build
+        env: 
+          VITE_SERVER_URL: ${{ secrets.VITE_SERVER_URL }}
+          VITE_IMAGE_SERVER_URL: ${{ secrets.VITE_IMAGE_SERVER_URL }}
+        run: |
+          yarn install
+          yarn build
+      
+      - name: Configure AWS
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          
+      - name: Deploy to S3
+        run: |
+          aws s3 sync ./${{ secrets.BUILD_DIRECTORY }} ${{ secrets.AWS_BUCKET_URI }} --delete    
+        

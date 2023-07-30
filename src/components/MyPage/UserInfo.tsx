@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+// import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
 import {
   UserInfoContainer,
@@ -18,6 +19,7 @@ type UserInfoProps = {
 export const UserInfo = ({ modalSetter }: UserInfoProps) => {
   const theme = useTheme();
   const { userInfo } = useUser();
+  // const navigate = useNavigate();
   if (!userInfo) {
     // 에러페이지 이동
     return null;
