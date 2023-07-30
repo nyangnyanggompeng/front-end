@@ -1,4 +1,5 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { ModalPropsType } from '../Modal/ModalTypes';
 import { ModalContainer } from '../Modal/ModalContainer';
 import NicknameCheck from '../SignUp/NicknameCheck';
@@ -13,6 +14,8 @@ import {
   updateUserInfo,
   UserInfoEditStatusTypeChecker,
 } from '../../utils/MyPage/updateUserInfo';
+import { useUser } from '../../hooks/Common';
+import { getImageUrl } from '../../utils/MyPage/getImageUrl';
 
 const userInfoEditStatusMessage: Record<UserInfoEditStatusType, string> = {
   UPDATE_INFO_SUCCESS: '정보가 변경되었습니다.',
@@ -27,8 +30,16 @@ const userInfoEditStatusMessage: Record<UserInfoEditStatusType, string> = {
 
 export function UserInfoEditModal({ resetModal }: ModalPropsType) {
   const [imgFile, setImgFile] = useState<string>('');
+  const { userInfo } = useUser();
   const nicknameRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef<HTMLInputElement>(null);
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (userInfo) {
+      setImgFile(getImageUrl(userInfo.profile));
+    }
+  }, [userInfo]);
 
   function handleUploadButtonClick() {
     if (imageRef.current) imageRef.current.click();
@@ -54,7 +65,13 @@ export function UserInfoEditModal({ resetModal }: ModalPropsType) {
     };
     updateUserInfo(request)
       .then((res) => {
-        alert(userInfoEditStatusMessage[res]);
+        if (res === 'UPDATE_INFO_SUCCESS') {
+          queryClient.invalidateQueries({ queryKey: ['user'] });
+          alert(userInfoEditStatusMessage[res]);
+          resetModal();
+        } else {
+          throw new Error(res);
+        }
       })
       .catch((e: unknown) => {
         if (e instanceof Error && UserInfoEditStatusTypeChecker(e.message))

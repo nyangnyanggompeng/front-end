@@ -14,7 +14,6 @@ export async function updateUserInfo(
   req: UserInfoEditRequestType
 ): Promise<UserInfoEditStatusType> {
   try {
-    console.log(req);
     await axios({
       method: 'patch',
       url: '/mypage/users',
