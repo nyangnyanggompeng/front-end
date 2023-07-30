@@ -3,10 +3,7 @@ import useGetMyArticle from '../../hooks/MyPage/useGetMyArticle';
 import { ArticleDataItemType } from '../../types/Community/articleTypes';
 import Pagination from '../Common/Pagination';
 import MyArticleItem from './MyArticleItem';
-import {
-  DeleteMyArticleRequestType,
-  myArticlesDataType,
-} from '../../types/MyPage/MyArticleTypes';
+import { DeleteMyArticleRequestType } from '../../types/MyPage/MyArticleTypes';
 import { deleteMyArticles } from '../../utils/MyPage/deleteMyArticles';
 import Button from '../Common/Button';
 import {
@@ -29,7 +26,7 @@ export default function MyArticle() {
     new Set()
   );
   const [isDeleteMode, setIsDeleteMode] = useState(false);
-  const { isLoading, isError, error, data } = useGetMyArticle(currentPage);
+  const { isLoading, isError, data } = useGetMyArticle(currentPage);
   if (isLoading) return <div>로딩중</div>;
   if (isError || data === undefined) return <div>에러!</div>;
 

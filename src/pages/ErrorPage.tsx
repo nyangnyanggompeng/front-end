@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Common/Button';
-import { Theme, css, useTheme } from '@emotion/react';
+import { css } from '@emotion/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCircleExclamation,
@@ -8,7 +8,7 @@ import {
   faUserLock,
 } from '@fortawesome/free-solid-svg-icons';
 
-const StyledErrorPage = (theme: Theme) =>
+const StyledErrorPage = () =>
   css({
     display: 'flex',
     justifyContent: 'center',
@@ -71,7 +71,7 @@ const errorCase = [
 const ErrorPage = () => {
   const { error } = useParams();
   const navigate = useNavigate();
-  const theme = useTheme();
+  // const theme = useTheme();
 
   let code;
   switch (error) {
@@ -92,7 +92,7 @@ const ErrorPage = () => {
   }
 
   return (
-    <main css={StyledErrorPage(theme)}>
+    <main css={StyledErrorPage()}>
       <div className='inner'>
         <FontAwesomeIcon icon={code.icon} />
         <h2>{error}</h2>
