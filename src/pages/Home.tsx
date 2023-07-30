@@ -44,6 +44,7 @@ const StyledHome = (theme: Theme) =>
 
     '.visual': {
       backgroundColor: `${theme.blue1}`,
+      color: '#333',
       '.inner': {
         display: 'flex',
         justifyContent: 'space-between',
