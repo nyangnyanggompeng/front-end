@@ -3,7 +3,6 @@ import imgInterview from '../asset/img-interview.png';
 import imgCommunity from '../asset/img-community.png';
 import imgOutro from '../asset/img-outro.png';
 import icoHandShake from '../asset/ico-handshake.png';
-import Button from '../components/Common/Button';
 import { useNavigate } from 'react-router-dom';
 import { Theme, css, useTheme } from '@emotion/react';
 import { useEffect } from 'react';
@@ -28,6 +27,18 @@ const StyledHome = (theme: Theme) =>
     },
     section: {
       height: 'calc(100vh - 8rem)',
+    },
+    button: {
+      fontSize: '1.8rem',
+      fontWeight: 700,
+      backgroundColor: `${theme.orange1}`,
+      color: `${theme.white}`,
+      padding: '1.5rem 2rem',
+      borderRadius: 5,
+      transition: 'all 0.3s',
+      '&:hover': {
+        backgroundColor: `${theme.orange2}`,
+      },
     },
 
     '.visual': {
@@ -130,7 +141,7 @@ const StyledHome = (theme: Theme) =>
         alignItems: 'center',
         height: '100%',
 
-        '> img': {
+        '.imgs': {
           position: 'absolute',
           top: '50%',
           left: 0,
@@ -166,6 +177,9 @@ export function Home() {
 
   const duration = 1000;
   const delay = 500;
+  // data-aos='fade-up'
+  // data-aos-duration={duration}
+  // data-aos-delay={delay}
 
   useEffect(() => {
     AOS.init();
@@ -177,33 +191,80 @@ export function Home() {
         <div className='inner'>
           <div className='contents'>
             <div className='dots'>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
+              <span
+                data-aos='fade-up'
+                data-aos-duration={duration}
+                data-aos-delay={delay * 2.5}
+              ></span>
+              <span
+                data-aos='fade-up'
+                data-aos-duration={duration}
+                data-aos-delay={delay * 3}
+              ></span>
+              <span
+                data-aos='fade-up'
+                data-aos-duration={duration}
+                data-aos-delay={delay * 3.5}
+              ></span>
+              <span
+                data-aos='fade-up'
+                data-aos-duration={duration}
+                data-aos-delay={delay * 4}
+              ></span>
             </div>
-            <h2>똑똑하게 면접 준비하기</h2>
-            <h2>인터뷰 연구소</h2>
-            <p className='tit-desc'>
+            <h2 data-aos='fade-up' data-aos-duration={duration}>
+              똑똑하게 면접 준비하기
+            </h2>
+            <h2
+              data-aos='fade-up'
+              data-aos-duration={duration}
+              data-aos-delay={delay}
+            >
+              인터뷰 연구소
+            </h2>
+            <p
+              className='tit-desc'
+              data-aos='fade-up'
+              data-aos-duration={duration}
+              data-aos-delay={delay * 2}
+            >
               인공지능 AI 서비스인 ChatGPT를 이용하여 <br />
               쉽고 간편하게 면접 준비해보세요!
             </p>
-            <Button onClick={() => navigate('/sign-in')}>
+            <button
+              type='button'
+              onClick={() => navigate('/sign-in')}
+              data-aos='fade-up'
+              data-aos-duration={duration}
+              data-aos-delay={delay * 3}
+            >
               서비스 이용하기
-            </Button>
+            </button>
           </div>
         </div>
       </section>
       <section className='interview'>
         <div className='inner'>
-          <h3>개인별 맞춤 예상 질문</h3>
-          <p className='tit-desc'>
+          <h3 data-aos='fade-up' data-aos-duration={duration}>
+            개인별 맞춤 예상 질문
+          </h3>
+          <p
+            className='tit-desc'
+            data-aos='fade-up'
+            data-aos-duration={duration}
+            data-aos-delay={delay}
+          >
             내 자기소개서를 바탕으로 나에게 꼭 필요한 예상 질문을 받아볼 수
             있습니다.
           </p>
           <div className='flex-box'>
-            <ul className='left'>
-              <li>
+            <ul
+              className='left'
+              data-aos='fade-up'
+              data-aos-duration={duration}
+              data-aos-delay={delay * 3}
+            >
+              <li data-aos='fade-up' data-aos-duration={duration}>
                 <div className='number'>1</div>
                 <h4>다양한 면접 유형</h4>
                 <p className='desc'>
@@ -211,7 +272,7 @@ export function Home() {
                   받아볼 수 있어요.
                 </p>
               </li>
-              <li>
+              <li data-aos='fade-up' data-aos-duration={duration}>
                 <div className='number'>2</div>
                 <h4>자소서별 면접질문 관리</h4>
                 <p className='desc'>
@@ -219,7 +280,7 @@ export function Home() {
                   관리할 수 있어요.
                 </p>
               </li>
-              <li>
+              <li data-aos='fade-up' data-aos-duration={duration}>
                 <div className='number'>3</div>
                 <h4>맞춤형 예상질문</h4>
                 <p className='desc'>
@@ -227,7 +288,7 @@ export function Home() {
                   받아볼 수 있어요.
                 </p>
               </li>
-              <li>
+              <li data-aos='fade-up' data-aos-duration={duration}>
                 <div className='number'>4</div>
                 <h4>원하는 것만 모아보기</h4>
                 <p className='desc'>
@@ -235,7 +296,12 @@ export function Home() {
                 </p>
               </li>
             </ul>
-            <div className='right'>
+            <div
+              className='right'
+              data-aos='fade-left'
+              data-aos-duration={duration}
+              data-aos-delay={delay * 2}
+            >
               <img src={imgInterview} alt='인터뷰 룸 예시 페이지' />
             </div>
           </div>
@@ -243,13 +309,36 @@ export function Home() {
       </section>
       <section className='community'>
         <div className='inner'>
-          <img src={imgCommunity} alt='인터뷰 연구소 커뮤니티 예시 페이지' />
+          <div className='imgs'>
+            <img
+              src={imgCommunity}
+              alt='인터뷰 연구소 커뮤니티 예시 페이지'
+              data-aos='fade-right'
+              data-aos-duration={duration}
+            />
+          </div>
           <div className='contents'>
-            <div className='icon'>
+            <div
+              className='icon'
+              data-aos='fade-up'
+              data-aos-duration={duration}
+              data-aos-delay={delay}
+            >
               <img src={icoHandShake} alt='악수 아이콘' />
             </div>
-            <h3>함께 면접 준비하기</h3>
-            <p className='tit-desc'>
+            <h3
+              data-aos='fade-up'
+              data-aos-duration={duration}
+              data-aos-delay={delay * 2}
+            >
+              함께 면접 준비하기
+            </h3>
+            <p
+              className='tit-desc'
+              data-aos='fade-up'
+              data-aos-duration={duration}
+              data-aos-delay={delay * 2.5}
+            >
               커뮤니티 공간에서 같은 취업 준비생들과 <br />
               면접 팁이나 경험을 나눌 수 있어요.
             </p>
@@ -258,11 +347,25 @@ export function Home() {
       </section>
       <section className='outro'>
         <div className='inner'>
-          <h3>지금 바로 시작해 보세요!</h3>
-          <img src={imgOutro} alt='인터뷰 연구소 모니터 목업' />
-          <Button onClick={() => navigate('/sign-in')}>
+          <h3 data-aos='fade-up' data-aos-duration={duration}>
+            지금 바로 시작해 보세요!
+          </h3>
+          <img
+            src={imgOutro}
+            alt='인터뷰 연구소 모니터 목업'
+            data-aos='fade-up'
+            data-aos-delay={delay * 2}
+            data-aos-duration={duration}
+          />
+          <button
+            type='button'
+            onClick={() => navigate('/sign-in')}
+            data-aos='fade-up'
+            data-aos-duration={duration}
+            // data-aos-delay={delay}
+          >
             서비스 이용하러 가기
-          </Button>
+          </button>
         </div>
       </section>
     </main>
