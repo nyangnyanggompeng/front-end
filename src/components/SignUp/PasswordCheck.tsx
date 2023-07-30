@@ -3,7 +3,6 @@ import { useTheme } from '@emotion/react';
 import { PasswordStatusType } from '../../types/SignUp';
 import { ItemContainer, StatusMessage } from '../../styles/SignUp';
 
-// TODO : 비밀번호 규칙 확정 필요
 const statusMessage: Record<PasswordStatusType, string> = {
   OK: '사용 가능한 비밀번호입니다.',
   INVALID_LENGTH: '8자 이상 12자 이하로 입력해주세요.',
@@ -13,14 +12,17 @@ const statusMessage: Record<PasswordStatusType, string> = {
   MATCHED: '비밀번호가 일치합니다.',
 };
 
-function PasswordCheck() {
+type PasswordCheckProps = {
+  mode: 'SIGN_UP' | 'CHANGE_PASSWORD';
+};
+
+function PasswordCheck({ mode }: PasswordCheckProps) {
   const theme = useTheme();
   const [password, setPassword] = useState<string>('');
   const [passwordCheck, setPasswordCheck] = useState<string>('');
   const [message, setMessage] = useState<string>('');
   const [status, setStatus] = useState<PasswordStatusType | null>(null);
 
-  // TODO - useEffect 순서 고민
   useEffect(() => {
     if (password.length < 8 || password.length > 12) {
       setMessage(statusMessage['INVALID_LENGTH']);
@@ -70,21 +72,20 @@ function PasswordCheck() {
 
   return (
     <div css={ItemContainer}>
-      <h4>비밀번호</h4>
+      <h4>{mode === 'SIGN_UP' ? '비밀번호' : '변경할 비밀번호'}</h4>
       <input
         type='password'
         name='password'
         placeholder='비밀번호'
         onChange={onChange}
       />
-      <h4>비밀번호 확인</h4>
+      <h4>{mode === 'SIGN_UP' ? '비밀번호 확인' : '변경할 비밀번호'}</h4>
       <input
         type='password'
         name='passwordVerify'
         placeholder='비밀번호 확인'
         onChange={onChangeCheck}
       />
-      {/* TODO : 메시지가 없는 경우 컴포넌트 자체는 유지시키고 hidden 속성을 추가하기 */}
       <p
         css={StatusMessage(
           theme,
