@@ -50,6 +50,7 @@ export function ChangePasswordModal({ resetModal }: ModalPropsType) {
     changePassword(request)
       .then((res) => {
         alert(changePasswordStatusMessage[res]);
+        if (res === 'RESET_PASSWORD_SUCCESS') resetModal();
       })
       .catch((e: unknown) => {
         if (e instanceof Error && ChangePasswordStatusTypeChecker(e.message))
