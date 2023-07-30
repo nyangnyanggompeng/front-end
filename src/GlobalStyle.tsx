@@ -123,6 +123,12 @@ const style = (theme: Theme) =>
         width: '90%',
       },
     },
+
+    [mq[1]]: {
+      '.container': {
+        padding: '7rem 0',
+      },
+    },
   });
 
 const GlobalStyle = () => {

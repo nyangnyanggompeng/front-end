@@ -8,6 +8,7 @@ import { Theme, css, useTheme } from '@emotion/react';
 import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { mq } from '../theme';
 
 const StyledHome = (theme: Theme) =>
   css({
@@ -147,11 +148,18 @@ const StyledHome = (theme: Theme) =>
           left: 0,
           transform: 'translateY(-50%)',
         },
+        '.contents': {
+          width: '40%',
+        },
         '.icon': {
           border: `2px solid ${theme.white}`,
           borderRadius: 5,
-          display: 'inline-block',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
           padding: '1rem',
+          width: 'fit-content',
+          marginBottom: '2rem',
         },
       },
     },
@@ -169,6 +177,163 @@ const StyledHome = (theme: Theme) =>
         },
       },
     },
+
+    [mq[0]]: {
+      h2: {
+        fontSize: '5rem',
+      },
+      h3: {
+        fontSize: '4rem',
+      },
+      '.visual': {
+        '.inner': {
+          backgroundPosition: '200% 50%',
+        },
+      },
+      '.interview': {
+        '.flex-box': {
+          '.left': {
+            gap: '5rem',
+            '.number': {
+              fontSize: '3rem',
+              width: '6rem',
+              height: '6rem',
+            },
+            '.desc': {
+              fontSize: '1.6rem',
+            },
+          },
+          '.right': {
+            width: '60%',
+          },
+        },
+      },
+      '.community': {
+        '.inner': {
+          '.imgs': {
+            width: '50%',
+          },
+          '.icon': {
+            img: {
+              width: '90%',
+            },
+          },
+        },
+      },
+      '.outro': {
+        padding: '15rem 0 10rem',
+        '.inner': {
+          img: {
+            width: '80%',
+          },
+        },
+      },
+    },
+    [mq[1]]: {
+      h2: {
+        fontSize: '3rem',
+      },
+      h3: {
+        fontSize: '2.5rem',
+      },
+      '.tit-desc': {
+        fontSize: '1.6rem',
+      },
+      section: {
+        height: 'calc(100vh - 7rem)',
+      },
+      button: {
+        fontSize: '1.4rem',
+        padding: '1rem 1.5rem',
+      },
+
+      '.visual': {
+        '.inner': {
+          backgroundPosition: 'center',
+        },
+        h2: {
+          '&:first-of-type': {
+            marginBottom: '1rem',
+          },
+        },
+        '.tit-desc': {
+          margin: '2rem 0 3rem',
+        },
+      },
+
+      '.interview': {
+        padding: '10rem 0 15rem',
+        '.flex-box': {
+          flexFlow: 'column-reverse wrap',
+          gap: '5rem',
+
+          '.left': {
+            width: '100%',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+
+            li: {
+              width: '100%',
+              textAlign: 'left',
+              alignItems: 'flex-start',
+            },
+
+            '.number': {
+              fontSize: '2rem',
+              width: '5rem',
+              height: '5rem',
+            },
+
+            h4: {
+              fontSize: '1.8rem',
+            },
+            '.desc': {
+              fontSize: '1.6rem',
+            },
+          },
+
+          '.right': {
+            width: '80%',
+          },
+        },
+      },
+
+      '.community': {
+        padding: '10rem 0',
+        height: 'auto',
+        '.inner': {
+          flexDirection: 'column',
+          '.imgs': {
+            position: 'relative',
+            top: 0,
+            transform: 'translateY(0)',
+            marginBottom: '5rem',
+            width: '80%',
+          },
+          '.contents': {
+            width: '100%',
+            textAlign: 'center',
+          },
+          '.icon': {
+            margin: '0 auto 3rem',
+            img: {
+              width: '80%',
+            },
+          },
+        },
+      },
+
+      '.outro': {
+        padding: '10rem 0',
+        '.inner': {
+          img: {
+            width: '80%',
+            margin: '7rem 0',
+          },
+        },
+      },
+    },
   });
 
 export function Home() {
@@ -177,9 +342,6 @@ export function Home() {
 
   const duration = 1000;
   const delay = 500;
-  // data-aos='fade-up'
-  // data-aos-duration={duration}
-  // data-aos-delay={delay}
 
   useEffect(() => {
     AOS.init();
