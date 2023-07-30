@@ -10,8 +10,9 @@ import Pagination from '../components/Common/Pagination';
 import { Theme, css, useTheme } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
 import { InterviewData, errMsg } from '../types/Interview/ListTypes';
-import { getList } from '../utils/Interview/interviewListFn';
+import { getList, getSearchList } from '../utils/Interview/interviewListFn';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Loading } from '../components/Common';
 
 const StyledInterviewRoom = (theme: Theme) =>
   css({
@@ -22,6 +23,7 @@ const StyledInterviewRoom = (theme: Theme) =>
       borderBottom: `1px solid ${theme.gray2}`,
       paddingBottom: '3rem',
       marginBottom: '3rem',
+      gap: '10rem',
     },
     h3: {
       marginBottom: '0.5rem',
@@ -31,14 +33,15 @@ const StyledInterviewRoom = (theme: Theme) =>
       color: `${theme.gray1}`,
     },
     '.search-box': {
-      width: '30%',
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
+      flexWrap: 'wrap',
       gap: '1rem',
+      width: '50%',
 
       input: {
-        width: '70%',
+        width: '64%',
       },
     },
 
@@ -70,6 +73,28 @@ const StyledInterviewRoom = (theme: Theme) =>
     },
   });
 
+const StyledModal = (theme: Theme) =>
+  css({
+    h4: {
+      marginBottom: '3rem',
+    },
+    '.input-box': {
+      marginBottom: '3rem',
+      label: {
+        fontSize: '1.8rem',
+        fontWeight: 500,
+        marginBottom: '0.5rem',
+        display: 'block',
+      },
+    },
+    '.btn-box': {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: '1rem',
+    },
+  });
+
 const InterviewRoom = () => {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -78,10 +103,15 @@ const InterviewRoom = () => {
   const [chatName, setChatName] = useState('');
   const [isSelectMode, setIsSelectMode] = useState(false);
   const [checkedArr, setCheckedArr] = useState<Set<number>>(new Set());
-  const { data } = useQuery<InterviewData | null>({
+  const [searchValues, setSearchValues] = useState({
+    type: 'lists',
+    keyword: '',
+  });
+  const { isLoading, data } = useQuery<InterviewData | null>({
     queryKey: ['InterviewList', currentPage],
     queryFn: () => getList(currentPage),
   });
+
   const queryClient = useQueryClient();
 
   const onChangeCheck = (e: React.MouseEvent<HTMLInputElement>, id: number) => {
@@ -96,26 +126,6 @@ const InterviewRoom = () => {
     });
   };
 
-  const changeName = async (id: number, name: string) => {
-    try {
-      if (!name) {
-        alert('수정할 내용을 입력해주세요.');
-        return;
-      }
-      await axios.patch(`/chatgpt/lists/${id}`, { name });
-      queryClient.invalidateQueries({ queryKey: ['InterviewList'] });
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        switch (err.status) {
-          case 400:
-            return alert('수정할 내용을 입력해주세요.');
-          case 500:
-            return alert(errMsg.INTERNAL_SERVER_ERROR);
-        }
-      }
-    }
-  };
-
   const createNewChat = async () => {
     try {
       if (!chatName) {
@@ -123,7 +133,7 @@ const InterviewRoom = () => {
         return;
       }
 
-      const res = await axios.post(`/chatgpt/lists/8`, { name: chatName });
+      const res = await axios.post(`/chatgpt/lists`, { name: chatName });
       setChatName('');
       setIsOpen(false);
       navigate(`/interview-room/${res.data.id}`, {
@@ -142,25 +152,9 @@ const InterviewRoom = () => {
             return alert(errMsg.LIST_NAME_NO_ENTERED);
           }
           default:
-            return alert(errMsg.INTERNAL_SERVER_ERROR);
+            return navigate(`/error/${err.response?.status}`);
         }
       }
-    }
-  };
-
-  const deleteChat = async (id: number) => {
-    try {
-      if (
-        window.confirm(
-          `인터뷰가 삭제되고 이 내용은 복구할 수 없습니다.\n정말 삭제하시겠습니까?`
-        )
-      ) {
-        axios.put('/chatgpt/lists/', { listIdList: [id] });
-        alert('인터뷰가 삭제되었습니다.');
-        queryClient.invalidateQueries({ queryKey: ['InterviewList'] });
-      }
-    } catch (err) {
-      if (axios.isAxiosError(err)) alert(errMsg.INTERNAL_SERVER_ERROR);
     }
   };
 
@@ -177,12 +171,13 @@ const InterviewRoom = () => {
         )
       ) {
         const filtered = data?.List.map((item) => item.id);
-        await axios.put('/chatgpt/lists/', { listIdList: filtered });
+        await axios.put('/chatgpt/lists', { listIdList: filtered });
         alert('모든 인터뷰가 삭제되었습니다.');
         queryClient.invalidateQueries({ queryKey: ['InterviewList'] });
       }
     } catch (err) {
-      if (axios.isAxiosError(err)) alert(errMsg.INTERNAL_SERVER_ERROR);
+      if (axios.isAxiosError(err))
+        return navigate(`/error/${err.response?.status}`);
     }
   };
 
@@ -191,8 +186,13 @@ const InterviewRoom = () => {
       alert('삭제할 수 있는 인터뷰가 없습니다.');
       return;
     }
-
     setIsSelectMode(!isSelectMode);
+    const listIdList = Array.from(checkedArr);
+
+    if (isSelectMode && listIdList.length === 0) {
+      alert('삭제할 인터뷰를 선택해주세요.');
+      return;
+    }
 
     if (isSelectMode) {
       try {
@@ -202,15 +202,44 @@ const InterviewRoom = () => {
           )
         ) {
           await axios.put('/chatgpt/lists', {
-            listIdList: Array.from(checkedArr),
+            listIdList,
           });
           queryClient.invalidateQueries({ queryKey: ['InterviewList'] });
         }
       } catch (err) {
-        if (axios.isAxiosError(err)) alert(errMsg.INTERNAL_SERVER_ERROR);
+        if (axios.isAxiosError(err))
+          return navigate(`/error/${err.response?.status}`);
       }
     }
   };
+
+  const onSearch = async () => {
+    try {
+      const data = await getSearchList(searchValues, currentPage);
+      navigate('/interview-room/search', { state: [searchValues.type, data] });
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        switch (err.response?.status) {
+          case 400:
+            navigate('/interview-room/search', {
+              state: [
+                searchValues.type,
+                {
+                  Result: [],
+                  numberOfResult: 0,
+                  totalPages: 0,
+                },
+              ],
+            });
+            break;
+          default:
+            navigate(`/error/${err.response?.status}`);
+        }
+      }
+    }
+  };
+
+  if (isLoading) return <Loading theme={theme} />;
 
   return (
     <>
@@ -223,8 +252,24 @@ const InterviewRoom = () => {
               <h4>채팅방은 최대 30개까지 생성할 수 있습니다.</h4>
             </div>
             <div className='search-box'>
-              <input type='text' placeholder='인터뷰 이름을 입력해주세요' />
-              <Button onClick={() => console.log('검색')}>
+              <select
+                value={searchValues.type}
+                onChange={(e) =>
+                  setSearchValues({ ...searchValues, type: e.target.value })
+                }
+              >
+                <option value='lists'>인터뷰</option>
+                <option value='contents'>메시지</option>
+              </select>
+              <input
+                type='text'
+                placeholder='검색할 키워드를 입력해주세요'
+                value={searchValues.keyword}
+                onChange={(e) =>
+                  setSearchValues({ ...searchValues, keyword: e.target.value })
+                }
+              />
+              <Button onClick={onSearch}>
                 <FontAwesomeIcon icon={faSearch} />
                 검색
               </Button>
@@ -246,11 +291,11 @@ const InterviewRoom = () => {
           </div>
           <ul className='interview-list'>
             {!data || data.List.length === 0 ? (
-              <div className='message'>
+              <li className='message'>
                 <FontAwesomeIcon icon={faComments} />
                 인터뷰 룸이 존재하지 않습니다. <br />
                 새로운 인터뷰 룸을 생성해 보세요!
-              </div>
+              </li>
             ) : (
               data?.List.map((item) => {
                 return (
@@ -260,10 +305,8 @@ const InterviewRoom = () => {
                     type={item.type}
                     name={item.name}
                     createdAt={item.createdAt}
-                    deleteChat={deleteChat}
                     isSelectMode={isSelectMode}
                     onChangeCheck={onChangeCheck}
-                    changeName={changeName}
                   />
                 );
               })
@@ -278,26 +321,29 @@ const InterviewRoom = () => {
       </main>
       {isOpen && (
         <ModalContainer resetModal={() => setIsOpen(!isOpen)}>
-          <p>새 인터뷰 만들기</p>
-          <div className='input-box'>
-            <label htmlFor='newInterviewName'>인터뷰 이름</label>
-            <input
-              type='text'
-              id='newInterviewName'
-              value={chatName}
-              onChange={(e) => setChatName(e.target.value)}
-            />
-          </div>
-          <div className='btn-box'>
-            <Button
-              status='sub'
-              onClick={() => {
-                setIsOpen(false), setChatName('');
-              }}
-            >
-              취소
-            </Button>
-            <Button onClick={createNewChat}>완료</Button>
+          <div css={StyledModal(theme)}>
+            <h4>새 인터뷰 만들기</h4>
+            <div className='input-box'>
+              <label htmlFor='newInterviewName'>인터뷰 이름</label>
+              <input
+                type='text'
+                id='newInterviewName'
+                value={chatName}
+                onChange={(e) => setChatName(e.target.value)}
+                placeholder='인터뷰 이름'
+              />
+            </div>
+            <div className='btn-box'>
+              <Button
+                status='sub'
+                onClick={() => {
+                  setIsOpen(false), setChatName('');
+                }}
+              >
+                취소
+              </Button>
+              <Button onClick={createNewChat}>완료</Button>
+            </div>
           </div>
         </ModalContainer>
       )}

@@ -35,6 +35,7 @@ const StyledHeader = (theme: Theme) =>
       display: 'flex',
       justifyContent: 'flex-end',
       alignItems: 'center',
+      width: '50%',
       gap: '3rem',
     },
 

@@ -17,7 +17,11 @@ type UserInfoProps = {
 
 export const UserInfo = ({ modalSetter }: UserInfoProps) => {
   const theme = useTheme();
-  const userInfo = useUser();
+  const { userInfo } = useUser();
+  if (!userInfo) {
+    // 에러페이지 이동
+    return null;
+  }
   return (
     <div css={UserInfoContainer(theme)}>
       <ProfilePhoto src={getImageUrl(userInfo.profile)} mode={'MY_PAGE'} />

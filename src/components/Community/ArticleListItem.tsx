@@ -28,7 +28,7 @@ export function ArticleListItem({
 }: ArticleListItemProps) {
   const theme = useTheme();
   return (
-    <div css={ArticleItemContainer(theme)}>
+    <div className='article-item-container' css={ArticleItemContainer(theme)}>
       <Link to={`/community/${id}`} css={ArticleItemTitle}>
         {title}
       </Link>

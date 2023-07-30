@@ -22,7 +22,7 @@ const style = (theme: Theme) =>
       cursor: 'default',
       lineHeight: 1.5,
       overflowWrap: 'break-word',
-      wordBreak: 'break-word',
+      wordBreak: 'keep-all',
       tabSize: 4,
     },
 
@@ -94,16 +94,24 @@ const style = (theme: Theme) =>
       fontWeight: 700,
     },
 
-    input: {
+    'input, select, textarea': {
       border: `1px solid ${theme.gray1}`,
       backgroundColor: 'transparent',
       borderRadius: 5,
       padding: '1rem 1.5rem',
-      width: '100%',
 
       '&::placeholder': {
         color: `${theme.gray2}`,
       },
+    },
+
+    input: {
+      width: '100%',
+    },
+
+    textarea: {
+      resize: 'vertical',
+      width: '100%',
     },
 
     [mq[0]]: {

@@ -9,3 +9,9 @@ export interface InterviewDetailData {
   deletedAt: string | null;
   listId: number;
 }
+
+export interface FormData {
+  type: string;
+  count: string;
+  prompt: string;
+}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTheme } from '@emotion/react';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   CommentStatusType,
@@ -9,6 +10,8 @@ import { getDate } from '../../utils/Common/getDate';
 import { deleteComments } from '../../utils/Community/deleteComments';
 import { updateComments } from '../../utils/Community/updateComments';
 import { useUser } from '../../hooks/Common';
+import { CommentItemStyle } from '../../styles/Community';
+import { CommentButtons } from '.';
 
 type CommentItemProps = {
   comment: CommentType;
@@ -22,11 +25,11 @@ const statusMessage: Record<CommentStatusType, string> = {
 };
 
 export default function CommentItem({ comment, postId }: CommentItemProps) {
+  const theme = useTheme();
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const currentUserId = useUser().id;
+  const currentUserId = useUser().userInfo?.id;
   const queryClient = useQueryClient();
-  function onDeleteHander(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    e.preventDefault();
+  function deleteHander() {
     deleteComments(postId, comment.id)
       .then(() => {
         queryClient.invalidateQueries({ queryKey: ['comments'] });
@@ -60,23 +63,26 @@ export default function CommentItem({ comment, postId }: CommentItemProps) {
   }
 
   return (
-    <li>
-      <div>{comment.writer}</div>
-      <div>{getDate(new Date(comment.createdAt))}</div>
-      {currentUserId && currentUserId === comment.userId && (
-        <div>
-          <button onClick={() => setIsEdit(true)}>✏️ 수정</button>
-          <button onClick={onDeleteHander}>🗑 삭제</button>
-        </div>
-      )}
+    <li css={CommentItemStyle(theme)}>
+      <div className='writer'>{comment.writer}</div>
+      <div className='date'>{getDate(new Date(comment.createdAt))}</div>
+      <CommentButtons
+        isEdit={isEdit}
+        currentUserId={currentUserId}
+        commentUserId={comment.userId}
+        setIsEdit={setIsEdit}
+        deleteFunction={deleteHander}
+      />
       {isEdit ? (
-        <form onSubmit={onEditHander}>
-          <input name='newComment' defaultValue={comment.content} />
-          <button type='submit'>✏️ 작성 완료</button>
-          <button onClick={() => setIsEdit(false)}>❌ 수정 취소</button>
+        <form
+          className='edit-input'
+          onSubmit={onEditHander}
+          id='comment-edit-form'
+        >
+          <textarea name='newComment' defaultValue={comment.content} />
         </form>
       ) : (
-        <div>{comment.content}</div>
+        <div className='content'>{comment.content}</div>
       )}
     </li>
   );

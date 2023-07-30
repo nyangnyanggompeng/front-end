@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { deleteArticle } from '../../utils/Community/deleteArticle';
 import { useUser } from '../../hooks/Common';
+import { ArticleButtonsContainer } from '../../styles/Community';
+import Button from '../Common/Button';
 
 type ButtonsProps = {
   writerId: number;
   postId: string | undefined;
 };
 
-export function Buttons({ writerId, postId }: ButtonsProps) {
+export function ArticleButtons({ writerId, postId }: ButtonsProps) {
   const navigate = useNavigate();
   const [isWriter, setIsWriter] = useState(false);
-  const userId = useUser().id;
+  const userId = useUser().userInfo?.id;
   useEffect(() => {
     if (userId && userId === writerId) setIsWriter(true);
     else setIsWriter(false);
@@ -30,14 +32,14 @@ export function Buttons({ writerId, postId }: ButtonsProps) {
   }
 
   return (
-    <div>
-      {isWriter && <button onClick={onDeleteHander}> 🗑 삭제하기</button>}
+    <div css={ArticleButtonsContainer}>
+      {isWriter && <Button onClick={onDeleteHander}>삭제하기</Button>}
       {isWriter && (
-        <button onClick={() => navigate(`/community/edit/${postId}`)}>
-          ✏️ 수정하기
-        </button>
+        <Button onClick={() => navigate(`/community/edit/${postId}`)}>
+          수정하기
+        </Button>
       )}
-      <button onClick={() => navigate('/community')}> ↩️ 목록으로</button>
+      <Button onClick={() => navigate('/community')}>목록으로</Button>
     </div>
   );
 }
