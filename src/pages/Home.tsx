@@ -6,6 +6,9 @@ import icoHandShake from '../asset/ico-handshake.png';
 import Button from '../components/Common/Button';
 import { useNavigate } from 'react-router-dom';
 import { Theme, css, useTheme } from '@emotion/react';
+import { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const StyledHome = (theme: Theme) =>
   css({
@@ -160,6 +163,13 @@ const StyledHome = (theme: Theme) =>
 export function Home() {
   const theme = useTheme();
   const navigate = useNavigate();
+
+  const duration = 1000;
+  const delay = 500;
+
+  useEffect(() => {
+    AOS.init();
+  }, []);
 
   return (
     <main css={StyledHome(theme)}>
