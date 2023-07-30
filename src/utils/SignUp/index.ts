@@ -1,3 +1,3 @@
 export { signup } from './signup';
-export { emailCheck } from './emailCheck';
+export { requestCheckMail } from './emailCheck';
 export { nicknameCheck } from './nicknameCheck';
