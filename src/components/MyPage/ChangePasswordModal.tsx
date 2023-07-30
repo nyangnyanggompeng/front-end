@@ -10,13 +10,13 @@ import {
   changePassword,
   ChangePasswordStatusTypeChecker,
 } from '../../utils/MyPage/changePassword';
+import PasswordCheck from '../SignUp/PasswordCheck';
 
 const changePasswordStatusMessage: Record<ChangePasswordStatusType, string> = {
   RESET_PASSWORD_SUCCESS: '비밀번호가 변경되었습니다.',
   RESET_PASSWORD_FAILURE:
     '비밀번호 변경에 실패했습니다. 잠시 후 다시 시도해주세요.',
-  PASSWORD_OR_PASSWORD_VERIFY_NOT_ENTERED:
-    '비밀번호나 비밀번호 확인이 비어있습니다.',
+  PASSWORD_OR_PASSWORD_VERIFY_NOT_ENTERED: '모든 항목을 입력해주세요.',
   PASSWORD_NOT_MATCHED: '비밀번호와 비밀번호 확인이 일치하지 않습니다.',
   INVALID_CURRENT_PASSWORD: '현재 비밀번호가 일치하지 않습니다.',
   CURRENT_USING_PASSWORD: '현재 사용중인 비밀번호입니다.',
@@ -29,24 +29,24 @@ export function ChangePasswordModal({ resetModal }: ModalPropsType) {
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    // const currentPassword = formData.get('current-password');
-    // const password = formData.get('password');
-    // const passwordCheck = formData.get('password-check');
-    const request: ChangePasswordRequestType = {
-      currentPassword: formData.get('current-password')?.toString() || '',
-      password: formData.get('password')?.toString() || '',
-      passwordVerify: formData.get('password-check')?.toString() || '',
-    };
-    if (request.password === request.passwordVerify) {
-      alert(changePasswordStatusMessage['PASSWORD_NOT_MATCHED']);
-      return;
-    }
-    if (request.password === '' || request.passwordVerify === '') {
+    const currentPassword = formData.get('currentPassword')?.toString();
+    const password = formData.get('password')?.toString();
+    const passwordVerify = formData.get('passwordVerify')?.toString();
+    if (!currentPassword || !password || !passwordVerify) {
       alert(
         changePasswordStatusMessage['PASSWORD_OR_PASSWORD_VERIFY_NOT_ENTERED']
       );
       return;
     }
+    if (password !== passwordVerify) {
+      alert(changePasswordStatusMessage['PASSWORD_NOT_MATCHED']);
+      return;
+    }
+    const request: ChangePasswordRequestType = {
+      currentPassword: currentPassword,
+      password: password,
+      passwordVerify: passwordVerify,
+    };
     changePassword(request)
       .then((res) => {
         alert(changePasswordStatusMessage[res]);
@@ -63,19 +63,16 @@ export function ChangePasswordModal({ resetModal }: ModalPropsType) {
   return (
     <ModalContainer resetModal={resetModal}>
       <h3>비밀번호 변경</h3>
-      <form onSubmit={onSubmit} id='change-password' css={FormContainer}>
+      <form onSubmit={onSubmit} id='changePasswordForm' css={FormContainer}>
         <h4>현재 비밀번호</h4>
-        <input name='current-password' type='password' />
-        <h4>변경할 비밀번호</h4>
-        <input name='password' type='password' />
-        <h4>변경할 비밀번호 확인 </h4>
-        <input name='password-check' type='password' />
+        <input name='currentPassword' type='password' />
+        <PasswordCheck mode={'CHANGE_PASSWORD'} />
       </form>
       <div css={BottomButtonsContainer}>
         <Button status='sub' onClick={resetModal}>
           취소
         </Button>
-        <Button form='change-password' type='submit'>
+        <Button form='changePasswordForm' type='submit'>
           변경하기
         </Button>
       </div>
