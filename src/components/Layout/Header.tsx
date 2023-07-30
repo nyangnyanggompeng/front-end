@@ -23,6 +23,9 @@ const StyledHeader = (theme: Theme) =>
   css({
     backgroundColor: `${theme.headFoot}`,
     padding: '2rem 0',
+    position: 'fixed',
+    width: '100%',
+    zIndex: 999,
 
     '.inner': {
       display: 'flex',
