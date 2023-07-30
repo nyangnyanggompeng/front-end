@@ -33,6 +33,7 @@ export function UserInfoEditModal({ resetModal }: ModalPropsType) {
   const { userInfo } = useUser();
   const nicknameRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef<HTMLInputElement>(null);
+  const checkRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -59,6 +60,10 @@ export function UserInfoEditModal({ resetModal }: ModalPropsType) {
 
   function handleUpdate(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
+    if (checkRef.current?.value !== 'TRUE') {
+      alert('닉네임 중복 확인을 해주세요.');
+      return;
+    }
     const request: UserInfoEditRequestType = {
       image: imageRef.current?.files?.[0] || null,
       nickname: nicknameRef.current?.value || '',
@@ -96,7 +101,7 @@ export function UserInfoEditModal({ resetModal }: ModalPropsType) {
           ref={imageRef}
         />
       </div>
-      <NicknameCheck inputRef={nicknameRef} />
+      <NicknameCheck inputRef={nicknameRef} checkRef={checkRef} />
       <div css={BottomButtonsContainer}>
         <Button status='sub' onClick={resetModal}>
           취소

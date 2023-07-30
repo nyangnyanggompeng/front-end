@@ -18,9 +18,10 @@ const statusMessage: Record<NicknameStatusType, string> = {
 
 type NicknameCheckProps = {
   inputRef?: React.RefObject<HTMLInputElement>;
+  checkRef?: React.RefObject<HTMLInputElement>;
 };
 
-function NicknameCheck({ inputRef }: NicknameCheckProps = {}) {
+function NicknameCheck({ inputRef, checkRef }: NicknameCheckProps = {}) {
   const theme = useTheme();
   const [nickname, setNickname] = useState<string>('');
   const [message, setMessage] = useState<string>('');
@@ -76,7 +77,12 @@ function NicknameCheck({ inputRef }: NicknameCheckProps = {}) {
       >
         {message ? message : ''}
       </p>
-      <input type='hidden' name='isNicknameChecked' value={isNicknameChecked} />
+      <input
+        type='hidden'
+        name='isNicknameChecked'
+        value={isNicknameChecked}
+        ref={checkRef}
+      />
     </div>
   );
 }
