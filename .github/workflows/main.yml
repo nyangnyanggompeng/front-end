@@ -2,7 +2,7 @@ name: nyangnyanggompeng_deploy
 on: 
   push:
     branches:
-      - main
+      - bug/deploy-error-#51
 jobs:
   build:
     runs-on: macos-12
@@ -35,4 +35,7 @@ jobs:
       - name: Deploy to S3
         run: |
           aws s3 sync ./${{ secrets.BUILD_DIRECTORY }} ${{ secrets.AWS_BUCKET_URI }} --delete    
-        
+      
+      - name: Create Invalidation
+        run: |
+          aws cloudfront create-invalidation --distribution-id ${{ env.AWS_DIST_ID }} --paths "/*"
