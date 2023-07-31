@@ -13,6 +13,7 @@ const queryClient = new QueryClient();
 
 function App() {
   const { VITE_SERVER_URL } = import.meta.env;
+  console.log(VITE_SERVER_URL.split('/')[0]);
   const isDark = useIsDark();
 
   // axios 전역 기본값 설정
