@@ -27,7 +27,7 @@ export { BottomButtonsContainer } from './Common';
 
 export { TwoButtonsContainer } from '../Common/TwoButtonsContainer';
 
-export { InstructionStyles } from './DeleteAccountModal.styles';
+export { InstructionStyles, InputStyles } from './DeleteAccountModal.styles';
 
 export { ProfileImageEdit } from './UserInfoEditModal.styles';
 
