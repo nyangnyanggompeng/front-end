@@ -10,7 +10,10 @@ import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from '../../utils/SignIn/signInFn';
 
 export const useUser = () => {
-  const { data, isLoading, error } = useQuery(['user'], getUserInfo);
+  const { data, isLoading, error } = useQuery(['user'], getUserInfo, {
+    retry: 2,
+    staleTime: Infinity,
+  });
   const userInfo = data ? data : null;
   return { userInfo, isLoading, error };
 };

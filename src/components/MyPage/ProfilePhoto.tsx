@@ -3,16 +3,17 @@ import { UserProfilePhoto, EmptyProfilePhoto } from '../../styles/MyPage';
 
 type ProfilePhotoProps = {
   src: string;
+  mode: 'MY_PAGE' | 'USER_INFO_EDIT';
 };
 
-export function ProfilePhoto({ src }: ProfilePhotoProps) {
+export function ProfilePhoto({ src, mode }: ProfilePhotoProps) {
   const theme = useTheme();
   return (
-    <div css={UserProfilePhoto}>
+    <div className='profile-image' css={UserProfilePhoto(mode)}>
       {src ? (
-        <img src={src} alt='profile' />
+        <img className='profile-image' src={src} alt='profile' />
       ) : (
-        <div css={EmptyProfilePhoto(theme)} />
+        <div className='profile-image' css={EmptyProfilePhoto(theme)} />
       )}
     </div>
   );

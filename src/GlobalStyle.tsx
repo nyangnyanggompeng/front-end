@@ -71,7 +71,7 @@ const style = (theme: Theme) =>
     },
 
     '.container': {
-      padding: '5rem 0',
+      padding: '8rem 0',
       minHeight: 'calc(100vh - 25rem)',
     },
 
@@ -121,6 +121,12 @@ const style = (theme: Theme) =>
 
       '.inner': {
         width: '90%',
+      },
+    },
+
+    [mq[1]]: {
+      '.container': {
+        padding: '7rem 0',
       },
     },
   });

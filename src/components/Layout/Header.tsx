@@ -23,6 +23,9 @@ const StyledHeader = (theme: Theme) =>
   css({
     backgroundColor: `${theme.headFoot}`,
     padding: '2rem 0',
+    position: 'fixed',
+    width: '100%',
+    zIndex: 99,
 
     '.inner': {
       display: 'flex',
@@ -115,7 +118,7 @@ const StyledHeader = (theme: Theme) =>
         display: 'none',
       },
       '.mobile-menu': {
-        position: 'absolute',
+        position: 'fixed',
         top: 0,
         right: '-30%',
         width: '30%',
@@ -125,6 +128,7 @@ const StyledHeader = (theme: Theme) =>
         flexDirection: 'column',
         padding: '1rem 3rem 3rem',
         transition: 'all .5s',
+        zIndex: 999,
         '&.on': {
           right: 0,
         },
@@ -146,7 +150,7 @@ const StyledHeader = (theme: Theme) =>
         width: '100%',
         height: '100%',
         backgroundColor: `${theme.fontColor}`,
-        position: 'absolute',
+        position: 'fixed',
         top: 0,
         left: 0,
         right: 0,
@@ -154,6 +158,7 @@ const StyledHeader = (theme: Theme) =>
         opacity: 0,
         visibility: 'hidden',
         transition: '.5s',
+        zIndex: 999,
         '&.on': {
           opacity: 0.5,
           visibility: 'visible',
@@ -169,7 +174,7 @@ const StyledHeader = (theme: Theme) =>
         top: '50%',
         right: 0,
         transform: 'translateY(-50%)',
-        zIndex: 9,
+        zIndex: 9999,
         span: {
           display: 'block',
           width: '100%',

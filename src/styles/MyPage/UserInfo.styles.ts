@@ -8,11 +8,14 @@ export const UserInfoContainer = (theme: Theme) =>
     border: `1px solid ${theme.black}`,
   });
 
-export const UserProfilePhoto = css({
-  width: '13.1rem',
-  height: '13.1rem',
-  borderRadius: '50%',
-});
+export const UserProfilePhoto = (mode: 'MY_PAGE' | 'USER_INFO_EDIT') =>
+  css({
+    '.profile-image': {
+      width: mode === 'MY_PAGE' ? '13.1rem' : '16.4rem',
+      height: mode === 'MY_PAGE' ? '13.1rem' : '16.4rem',
+      borderRadius: '50%',
+    },
+  });
 
 export const EmptyProfilePhoto = (theme: Theme) =>
   css({
