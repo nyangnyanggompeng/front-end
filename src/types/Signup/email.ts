@@ -31,5 +31,5 @@ export function EmailStatusTypeChecker(status: unknown) {
 export type EmailSendStatusType = (typeof EmailSendStatus)[number];
 
 export type EmailVerifyRequestType = {
-  authNum: string;
+  authNumber: string;
 };

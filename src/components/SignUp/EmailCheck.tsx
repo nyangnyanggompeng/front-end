@@ -94,7 +94,7 @@ function EmailCheck() {
     }
 
     const request: EmailVerifyRequestType = {
-      authNum: authRef.current.value,
+      authNumber: authRef.current.value,
     };
 
     emailCheck(request)
@@ -141,9 +141,10 @@ function EmailCheck() {
         <Button onClick={handleSendEmail}>인증번호 전송</Button>
         <input
           className='authNumberInput'
-          disabled={isEmailsend}
+          disabled={!isEmailsend}
           type='text'
           placeholder='인증번호를 입력해주세요'
+          ref={authRef}
         />
         <Button
           className='authNumberButton'
@@ -152,7 +153,7 @@ function EmailCheck() {
         >
           인증번호 확인
         </Button>
-        <input type='hidden' name='isVerify' value={isVerify} ref={authRef} />
+        <input type='hidden' name='isVerify' value={isVerify} />
       </div>
       <p
         css={StatusMessage(
