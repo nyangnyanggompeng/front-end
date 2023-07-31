@@ -37,5 +37,8 @@ jobs:
           aws s3 sync ./${{ secrets.BUILD_DIRECTORY }} ${{ secrets.AWS_BUCKET_URI }} --delete    
       
       - name: Create Invalidation
-        run: |
-          aws cloudfront create-invalidation --distribution-id ${{ env.AWS_DIST_ID }} --paths "/*"
+        uses: chetan/invalidate-cloudfront-action@v2
+        env:
+          DISTRIBUTION: ${{ secrets.AWS_DIST_ID }}
+          PATHS: "/*"
+          AWS_REGION: ${{ secrets.AWS_REGION }}
