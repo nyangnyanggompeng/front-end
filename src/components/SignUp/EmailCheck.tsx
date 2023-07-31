@@ -103,7 +103,7 @@ function EmailCheck() {
         setMessage(statusMessage[res]);
         setIsVerify(res === 'AVAILABLE_EMAIL' ? 'TRUE' : 'FALSE');
       })
-      .then(() => {
+      .catch(() => {
         setStatus('INTERNAL_SERVER_ERROR');
         setMessage(statusMessage['INTERNAL_SERVER_ERROR']);
         setIsVerify('FALSE');
