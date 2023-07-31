@@ -1,27 +1,47 @@
 import axios, { isAxiosError } from 'axios';
+import { EmailRequestType } from '../../types/SignUp';
 import {
-  EmailStatus,
   EmailStatusType,
-  EmailRequestType,
-} from '../../types/SignUp';
+  EmailSendStatusType,
+  EmailVerifyRequestType,
+  EmailStatusTypeChecker,
+} from '../../types/SignUp/email';
 
-function EmailStatusTypeChecker(status: unknown) {
-  if (typeof status !== 'string') return false;
-  return EmailStatus.includes(status as EmailStatusType);
+export async function requestCheckMail(
+  request: EmailRequestType
+): Promise<EmailSendStatusType> {
+  try {
+    await axios.post('/register/send_email', request);
+    return 'MAIL_SEND_SUCCESS';
+  } catch (error: unknown) {
+    if (isAxiosError(error) && error.response) {
+      const errorCode = error.response.status;
+      switch (errorCode) {
+        case 400:
+          return 'EMAIL_NOT_ENTERED';
+        case 500:
+          return 'MAIL_SEND_FAILURE';
+        default:
+          return 'INTERNAL_SERVER_ERROR';
+      }
+    }
+    return 'INTERNAL_SERVER_ERROR';
+  }
 }
 
 export async function emailCheck(
-  request: EmailRequestType
+  request: EmailVerifyRequestType
 ): Promise<EmailStatusType> {
   try {
-    await axios.post('/register/idcheck', request);
+    await axios.post('/register/email_check', request);
     return 'AVAILABLE_EMAIL';
   } catch (error: unknown) {
     if (isAxiosError(error) && error.response) {
       const errorCode = error.response.data;
-      if (EmailStatusTypeChecker(errorCode))
+      if (EmailStatusTypeChecker(errorCode)) {
         return errorCode as EmailStatusType;
-      else return 'INTERNAL_SERVER_ERROR';
+      }
+      return 'INTERNAL_SERVER_ERROR';
     }
     return 'INTERNAL_SERVER_ERROR';
   }

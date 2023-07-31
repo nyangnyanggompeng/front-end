@@ -65,7 +65,7 @@ function SignUp() {
         <img src={logoImg} alt='logo' css={LogoStyle} />
         <form css={SignUpForm} onSubmit={onSubmit}>
           <EmailCheck />
-          <PasswordCheck />
+          <PasswordCheck mode={'SIGN_UP'} />
           <NicknameCheck />
           <label css={AcceptTerms(theme)}>
             <input
