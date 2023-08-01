@@ -18,6 +18,7 @@ import { setIsLogin } from '../../store/slices/loginSlices';
 import { logoutFn } from '../../utils/SignIn/signInFn';
 import { mq } from '../../theme';
 import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
 const StyledHeader = (theme: Theme) =>
   css({
@@ -220,6 +221,7 @@ const Header = () => {
   const isDark = useSelector((state: RootState) => state.mode);
   const isLogin = useSelector((state: RootState) => state.login);
   const [isMenuOn, setIsMenuOn] = useState(false);
+  const queryClient = useQueryClient();
 
   const onModeChange = () => {
     dispatch(modeChange(!isDark));
@@ -236,6 +238,7 @@ const Header = () => {
         alert('로그아웃에 실패했습니다.');
       }
     }
+    queryClient.invalidateQueries({ queryKey: ['user'] });
   };
 
   return (
