@@ -92,7 +92,7 @@ function PasswordCheck({ mode }: PasswordCheckProps) {
           `${status === 'OK' || status === 'MATCHED' ? 'SUCCESS' : 'ERROR'}`
         )}
       >
-        {message}
+        {password.length === 0 ? '' : message}
       </p>
     </div>
   );

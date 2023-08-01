@@ -43,6 +43,7 @@ export const FormContainer = css({
 export const StatusMessage = (theme: Theme, status: 'SUCCESS' | 'ERROR') =>
   css({
     fontSize: '1.6rem',
+    minHeight: '2.4rem',
     color: status === 'SUCCESS' ? theme.green : theme.red,
   });
 

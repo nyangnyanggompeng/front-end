@@ -165,7 +165,7 @@ function EmailCheck() {
           }`
         )}
       >
-        {message ? message : '이메일을 입력해주세요.'}
+        {message ? message : ''}
       </p>
     </div>
   );
