@@ -60,7 +60,10 @@ export function UserInfoEditModal({ resetModal }: ModalPropsType) {
 
   function handleUpdate(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    if (checkRef.current?.value !== 'TRUE') {
+    if (
+      nicknameRef.current?.value !== '' &&
+      checkRef.current?.value !== 'TRUE'
+    ) {
       alert('닉네임 중복 확인을 해주세요.');
       return;
     }
