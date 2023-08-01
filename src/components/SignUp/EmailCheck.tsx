@@ -67,6 +67,8 @@ function EmailCheck() {
       setMessage(emailMessage['EMAIL_NOT_ENTERED']);
       return;
     }
+    if (confirm(`${username}@${domain} 로 인증번호를 전송합니다.`) === false)
+      return;
     const request: EmailRequestType = {
       username: username,
       domain: domain,
