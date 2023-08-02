@@ -144,6 +144,7 @@ const style = (theme: Theme) =>
 
       h2: {
         fontSize: '2.4rem',
+        margin: '2rem 0',
       },
 
       h3: {

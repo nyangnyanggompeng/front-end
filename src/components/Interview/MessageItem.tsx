@@ -13,6 +13,7 @@ import { Theme, css, useTheme } from '@emotion/react';
 import { bookmarkToggle } from '../../utils/Interview/interviewDetailFn';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { mq } from '../../theme';
 
 interface MessageProps {
   message: InterviewDetailData;
@@ -74,6 +75,13 @@ const StyledMessageItem = (theme: Theme) =>
       '.icon': {
         backgroundColor: `${theme.orange2}`,
       },
+      '.content-wrap': {
+        '>div': {
+          p: {
+            width: '100%',
+          },
+        },
+      },
     },
     '.list-name': {
       fontSize: '1.4rem',
@@ -83,6 +91,35 @@ const StyledMessageItem = (theme: Theme) =>
       cursor: 'pointer',
       '&:hover': {
         borderBottomColor: `${theme.fontColor}`,
+      },
+    },
+
+    [mq[1]]: {
+      padding: '1rem',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      gap: '1rem',
+      '.icon': {
+        padding: 0,
+        width: '3rem',
+        height: '3rem',
+        fontSize: '1.4rem',
+      },
+      '.content-wrap': {
+        width: '100%',
+        '>div': {
+          p: {
+            width: 'calc(100% - 2.5rem)',
+          },
+        },
+      },
+      '&.user': {
+        flexDirection: 'column',
+        alignSelf: 'flex-end',
+        '> div': {
+          alignSelf: 'flex-end',
+          textAlign: 'right',
+        },
       },
     },
   });
