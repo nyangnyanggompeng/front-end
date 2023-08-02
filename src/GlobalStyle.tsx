@@ -79,7 +79,7 @@ const style = (theme: Theme) =>
     h2: {
       fontSize: '3.6rem',
       fontWeight: 700,
-      marginBottom: '2.5rem',
+      margin: '5rem 0 2.5rem',
     },
 
     // 페이지 서브타이틀
@@ -117,6 +117,14 @@ const style = (theme: Theme) =>
     [mq[0]]: {
       body: {
         fontSize: '1.4rem',
+      },
+
+      h2: {
+        fontSize: '3rem',
+      },
+
+      h3: {
+        fontSize: '2.5rem',
       },
 
       '.inner': {
