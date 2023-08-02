@@ -24,7 +24,6 @@ const StyledInterviewRoom = (theme: Theme) =>
       borderBottom: `1px solid ${theme.gray2}`,
       paddingBottom: '3rem',
       marginBottom: '3rem',
-      // gap: '10rem',
       flexWrap: 'wrap',
     },
     h3: {
@@ -43,7 +42,7 @@ const StyledInterviewRoom = (theme: Theme) =>
       width: '50%',
 
       input: {
-        width: '64%',
+        flex: '1 1 50%',
       },
     },
 
@@ -53,6 +52,7 @@ const StyledInterviewRoom = (theme: Theme) =>
       alignItems: 'center',
       gap: '1rem',
       marginBottom: '3rem',
+      flexWrap: 'wrap',
     },
 
     '.interview-list': {
@@ -75,11 +75,16 @@ const StyledInterviewRoom = (theme: Theme) =>
     },
 
     [mq[0]]: {
-      // '.search-box': {
-      //   width: '70%',
-      // },
+      '.subtit': {
+        flexDirection: 'column',
+        justifyContent: 'stretch',
+        alignItems: 'stretch',
+        gap: '2rem',
+        '> div': {
+          width: '100%',
+        },
+      },
     },
-    [mq[1]]: {},
   });
 
 const StyledModal = () =>

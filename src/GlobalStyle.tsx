@@ -121,6 +121,7 @@ const style = (theme: Theme) =>
 
       h2: {
         fontSize: '3rem',
+        margin: '3rem 0 2rem',
       },
 
       h3: {
@@ -130,11 +131,23 @@ const style = (theme: Theme) =>
       '.inner': {
         width: '90%',
       },
+
+      'input, select, textarea': {
+        padding: '0.5rem 1rem',
+      },
     },
 
     [mq[1]]: {
       '.container': {
         padding: '7rem 0',
+      },
+
+      h2: {
+        fontSize: '2.4rem',
+      },
+
+      h3: {
+        fontSize: '1.8rem',
       },
     },
   });
