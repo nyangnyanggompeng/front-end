@@ -1,4 +1,3 @@
-// TODO : 회원가입 api 구현 완료되면 업데이트 필요함
 export type EmailCheckStatus = 'OK' | 'DUPLICATED' | 'INVALID';
 export type PasswordCheckStatus =
   | 'OK'
