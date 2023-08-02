@@ -107,6 +107,7 @@ const StyledMessageItem = (theme: Theme) =>
       },
       '.content-wrap': {
         width: '100%',
+        gap: '1rem',
         '>div': {
           p: {
             width: 'calc(100% - 2.5rem)',
@@ -116,9 +117,8 @@ const StyledMessageItem = (theme: Theme) =>
       '&.user': {
         flexDirection: 'column',
         alignSelf: 'flex-end',
-        '> div': {
+        '> .icon': {
           alignSelf: 'flex-end',
-          textAlign: 'right',
         },
       },
     },

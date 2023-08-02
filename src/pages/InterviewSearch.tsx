@@ -10,6 +10,7 @@ import { getSearchList } from '../utils/Interview/interviewListFn';
 import { Theme, useTheme, css } from '@emotion/react';
 import { faFolderOpen } from '@fortawesome/free-regular-svg-icons';
 import axios from 'axios';
+import { mq } from '../theme';
 
 const StyledInterviewSearch = (theme: Theme) =>
   css({
@@ -20,7 +21,7 @@ const StyledInterviewSearch = (theme: Theme) =>
       borderBottom: `1px solid ${theme.gray2}`,
       paddingBottom: '3rem',
       marginBottom: '3rem',
-      gap: '25rem',
+      flexWrap: 'wrap',
     },
     h3: {
       marginBottom: '0.5rem',
@@ -34,7 +35,7 @@ const StyledInterviewSearch = (theme: Theme) =>
       width: '50%',
 
       input: {
-        width: '64%',
+        flex: '1 1 50%',
       },
     },
 
@@ -53,6 +54,18 @@ const StyledInterviewSearch = (theme: Theme) =>
           display: 'block',
           margin: '0 auto 3rem',
           fontSize: '8rem',
+        },
+      },
+    },
+
+    [mq[0]]: {
+      '.subtit': {
+        flexDirection: 'column',
+        justifyContent: 'stretch',
+        alignItems: 'stretch',
+        gap: '2rem',
+        '> div': {
+          width: '100%',
         },
       },
     },
