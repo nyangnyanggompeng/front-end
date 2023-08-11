@@ -1,4 +1,5 @@
 import { useTheme } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 import EmailCheck from '../components/SignUp/EmailCheck';
 import PasswordCheck from '../components/SignUp/PasswordCheck';
 import NicknameCheck from '../components/SignUp/NicknameCheck';
@@ -25,6 +26,7 @@ const signupResultMessage: Record<SignupStatusType, string> = {
 
 function SignUp() {
   const theme = useTheme();
+  const navigate = useNavigate();
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -52,6 +54,7 @@ function SignUp() {
     signup(requestForm)
       .then((res: SignupStatusType) => {
         alert(signupResultMessage[res]);
+        if (res === 'USER_CREATED') navigate('/sign-in');
       })
       .catch(() => {
         alert(signupResultMessage['INTERNAL_SERVER_ERROR']);
