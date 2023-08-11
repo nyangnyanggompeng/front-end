@@ -3,7 +3,7 @@ import { ServerError } from './common';
 export const NicknameStatus = [
   'AVAILABLE_NICKNAME',
   'NICKNAME_ALREADY_EXISTS',
-  'NICKNAME_NO_ENTERED',
+  'NICKNAME_NOT_ENTERED',
   ServerError,
 ] as const;
 
