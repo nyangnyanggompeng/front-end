@@ -91,7 +91,7 @@ function EmailCheck() {
   function handleVerify(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     if (!authRef.current || authRef.current.value === '') {
-      alert(emailMessage['EMAIL_NOT_ENTERED']);
+      alert(statusMessage['AUTHENTICATION_NUMBER_NOT_ENTERED']);
       return;
     }
 
