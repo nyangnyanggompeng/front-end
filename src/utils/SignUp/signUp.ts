@@ -17,7 +17,6 @@ export async function signup(
     await axios.post('/register/register_process', signupForm);
     return 'USER_CREATED';
   } catch (error: unknown) {
-    console.log(error);
     if (isAxiosError(error) && error.response) {
       const errorCode = error.response.data;
       if (SignupStatusTypeChecker(errorCode))

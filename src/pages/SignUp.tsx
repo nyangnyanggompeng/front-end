@@ -1,4 +1,5 @@
 import { useTheme } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 import EmailCheck from '../components/SignUp/EmailCheck';
 import PasswordCheck from '../components/SignUp/PasswordCheck';
 import NicknameCheck from '../components/SignUp/NicknameCheck';
@@ -21,10 +22,12 @@ const signupResultMessage: Record<SignupStatusType, string> = {
   WRONG_PASSWORD: '비밀번호가 일치하지 않습니다.',
   EMAIL_OR_PASSWORD_OR_NICKNAME_NO_ENTERED: '입력되지 않은 항목이 있습니다.',
   INTERNAL_SERVER_ERROR: '서버 오류입니다. 잠시 후 다시 시도해주세요.',
+  EMAIL_AUTHENTICATION_FAILURE: '이메일 인증에 실패했습니다.',
 };
 
 function SignUp() {
   const theme = useTheme();
+  const navigate = useNavigate();
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -52,6 +55,7 @@ function SignUp() {
     signup(requestForm)
       .then((res: SignupStatusType) => {
         alert(signupResultMessage[res]);
+        if (res === 'USER_CREATED') navigate('/sign-in');
       })
       .catch(() => {
         alert(signupResultMessage['INTERNAL_SERVER_ERROR']);

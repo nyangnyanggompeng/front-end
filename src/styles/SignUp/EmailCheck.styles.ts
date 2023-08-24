@@ -19,4 +19,7 @@ export const EmailContainer = (theme: Theme) =>
       gridRow: '2 / 3',
       gridColumn: '1 / 5',
     },
+    'input[type=text]:disabled': {
+      backgroundColor: `${theme.gray2}`,
+    },
   });

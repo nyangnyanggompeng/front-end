@@ -67,6 +67,8 @@ function EmailCheck() {
       setMessage(emailMessage['EMAIL_NOT_ENTERED']);
       return;
     }
+    if (confirm(`${username}@${domain} 로 인증번호를 전송합니다.`) === false)
+      return;
     const request: EmailRequestType = {
       username: username,
       domain: domain,
@@ -89,7 +91,7 @@ function EmailCheck() {
   function handleVerify(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     if (!authRef.current || authRef.current.value === '') {
-      alert(emailMessage['EMAIL_NOT_ENTERED']);
+      alert(statusMessage['AUTHENTICATION_NUMBER_NOT_ENTERED']);
       return;
     }
 
@@ -165,7 +167,7 @@ function EmailCheck() {
           }`
         )}
       >
-        {message ? message : '이메일을 입력해주세요.'}
+        {message ? message : ''}
       </p>
     </div>
   );

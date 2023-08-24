@@ -3,6 +3,7 @@ import { ServerError } from './common';
 export const SignupStatus = [
   'USER_CREATED',
   'EMAIL_ALREADY_EXISTS',
+  'EMAIL_AUTHENTICATION_FAILURE',
   'NICKNAME_ALREADY_EXISTS',
   'INVALID_PASSWORD',
   'WRONG_PASSWORD',
