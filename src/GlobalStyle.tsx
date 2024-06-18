@@ -79,7 +79,7 @@ const style = (theme: Theme) =>
     h2: {
       fontSize: '3.6rem',
       fontWeight: 700,
-      marginBottom: '2.5rem',
+      margin: '5rem 0 2.5rem',
     },
 
     // 페이지 서브타이틀
@@ -119,14 +119,36 @@ const style = (theme: Theme) =>
         fontSize: '1.4rem',
       },
 
+      h2: {
+        fontSize: '3rem',
+        margin: '3rem 0 2rem',
+      },
+
+      h3: {
+        fontSize: '2.5rem',
+      },
+
       '.inner': {
         width: '90%',
+      },
+
+      'input, select, textarea': {
+        padding: '0.5rem 1rem',
       },
     },
 
     [mq[1]]: {
       '.container': {
         padding: '7rem 0',
+      },
+
+      h2: {
+        fontSize: '2.4rem',
+        margin: '2rem 0',
+      },
+
+      h3: {
+        fontSize: '1.8rem',
       },
     },
   });

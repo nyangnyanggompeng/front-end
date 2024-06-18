@@ -13,6 +13,7 @@ import { InterviewData, errMsg } from '../types/Interview/ListTypes';
 import { getList, getSearchList } from '../utils/Interview/interviewListFn';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Loading } from '../components/Common';
+import { mq } from '../theme';
 
 const StyledInterviewRoom = (theme: Theme) =>
   css({
@@ -23,7 +24,7 @@ const StyledInterviewRoom = (theme: Theme) =>
       borderBottom: `1px solid ${theme.gray2}`,
       paddingBottom: '3rem',
       marginBottom: '3rem',
-      gap: '10rem',
+      flexWrap: 'wrap',
     },
     h3: {
       marginBottom: '0.5rem',
@@ -41,7 +42,7 @@ const StyledInterviewRoom = (theme: Theme) =>
       width: '50%',
 
       input: {
-        width: '64%',
+        flex: '1 1 50%',
       },
     },
 
@@ -51,6 +52,7 @@ const StyledInterviewRoom = (theme: Theme) =>
       alignItems: 'center',
       gap: '1rem',
       marginBottom: '3rem',
+      flexWrap: 'wrap',
     },
 
     '.interview-list': {
@@ -71,10 +73,23 @@ const StyledInterviewRoom = (theme: Theme) =>
         },
       },
     },
+
+    [mq[0]]: {
+      '.subtit': {
+        flexDirection: 'column',
+        justifyContent: 'stretch',
+        alignItems: 'stretch',
+        gap: '2rem',
+        '> div': {
+          width: '100%',
+        },
+      },
+    },
   });
 
 const StyledModal = () =>
   css({
+    width: '50vw',
     h4: {
       marginBottom: '3rem',
     },

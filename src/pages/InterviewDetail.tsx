@@ -11,6 +11,7 @@ import { Theme, css, useTheme } from '@emotion/react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getChatData } from '../utils/Interview/interviewDetailFn';
 import { Loading } from '../components/Common';
+import { mq } from '../theme';
 
 const StyledInterviewDetail = (theme: Theme) =>
   css({
@@ -64,6 +65,12 @@ const StyledInterviewDetail = (theme: Theme) =>
           width: 'auto',
           marginRight: '0.5rem',
         },
+        '> div': {
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: '2rem',
+        },
       },
       '.prompt-box': {
         flexDirection: 'column',
@@ -104,6 +111,24 @@ const StyledInterviewDetail = (theme: Theme) =>
         width: '100%',
         marginTop: '5rem',
         gap: '10rem',
+      },
+    },
+    [mq[1]]: {
+      form: {
+        marginBottom: '4rem',
+        padding: '1rem',
+        '.radio-box p, .count-box label, .prompt-box label': {
+          fontSize: '1.6rem',
+        },
+        '.radio-box': {
+          flexWrap: 'wrap',
+        },
+      },
+      '.reply-wrap': {
+        '.reply-list': {
+          marginTop: '3rem',
+          gap: '5rem',
+        },
       },
     },
   });
@@ -231,27 +256,29 @@ const InterviewDetail = () => {
         <form onSubmit={onSubmit}>
           <div className='radio-box'>
             <p>면접 유형</p>
-            {radio.map((item, idx) => {
-              return (
-                <label key={idx}>
-                  <input
-                    type='radio'
-                    name='type'
-                    className='type'
-                    value={item}
-                    defaultChecked={
-                      (data && data[0].type === item) ||
-                      (data === undefined && item === '일반')
-                    }
-                    disabled={data && data[0].prompt !== ''}
-                    onChange={(e) =>
-                      handleOnChange(e.target.className, e.target.value)
-                    }
-                  />
-                  {item}면접
-                </label>
-              );
-            })}
+            <div>
+              {radio.map((item, idx) => {
+                return (
+                  <label key={idx}>
+                    <input
+                      type='radio'
+                      name='type'
+                      className='type'
+                      value={item}
+                      defaultChecked={
+                        (data && data[0].type === item) ||
+                        (data === undefined && item === '일반')
+                      }
+                      disabled={data && data[0].prompt !== ''}
+                      onChange={(e) =>
+                        handleOnChange(e.target.className, e.target.value)
+                      }
+                    />
+                    {item}면접
+                  </label>
+                );
+              })}
+            </div>
           </div>
           <div className='count-box'>
             <label htmlFor='count'>예상 질문 개수</label>

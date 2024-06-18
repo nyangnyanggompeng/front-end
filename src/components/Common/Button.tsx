@@ -1,5 +1,6 @@
 import { Theme, css, useTheme } from '@emotion/react';
 import { MouseEventHandler } from 'react';
+import { mq } from '../../theme';
 
 const StyledBtn = (theme: Theme) =>
   css({
@@ -30,6 +31,10 @@ const StyledBtn = (theme: Theme) =>
     '&.disable': {
       backgroundColor: `${theme.gray2}`,
       cursor: 'default',
+    },
+
+    [mq[0]]: {
+      padding: '0.5rem 1.5rem',
     },
   });
 

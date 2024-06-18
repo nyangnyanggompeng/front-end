@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { Loading } from '../Common';
+import { mq } from '../../theme';
 
 interface ReplyItemProps {
   questionNum: number;
@@ -69,6 +70,12 @@ const StyledReplyItem = (theme: Theme) =>
     },
     '&.open': {
       height: 'auto',
+    },
+
+    [mq[1]]: {
+      '>div, > ul': {
+        padding: '1rem',
+      },
     },
   });
 

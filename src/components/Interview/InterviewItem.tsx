@@ -8,6 +8,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useQueryClient } from '@tanstack/react-query';
 import { errMsg } from '../../types/Interview/ListTypes';
+import { mq } from '../../theme';
 
 interface InterviewItemProps {
   id: number;
@@ -29,13 +30,10 @@ const StyledInterviewItem = (theme: Theme) =>
     gap: '2rem',
 
     '.left': {
-      flex: '0 0 5%',
-      '.checkbox': {
-        padding: '1rem',
-      },
+      flex: '0 0 3rem',
     },
     '.mid': {
-      flexGrow: 1,
+      flex: '1 1 0',
       width: '80%',
       '.type': {
         display: 'inline-block',
@@ -72,7 +70,7 @@ const StyledInterviewItem = (theme: Theme) =>
       },
     },
     '.right': {
-      flex: '0 0 5%',
+      flex: '0 0 5rem',
       fontSize: '1.8rem',
       display: 'flex',
       alignItems: 'center',
@@ -82,6 +80,21 @@ const StyledInterviewItem = (theme: Theme) =>
       '.btn-edit': {
         '.fa-check': {
           color: `${theme.green}`,
+        },
+      },
+    },
+
+    [mq[0]]: {
+      '.mid': {
+        '.title': {
+          fontSize: '2rem',
+        },
+      },
+    },
+    [mq[1]]: {
+      '.mid': {
+        '.title': {
+          fontSize: '1.8rem',
         },
       },
     },
